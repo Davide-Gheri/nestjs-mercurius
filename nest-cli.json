@@ -1,0 +1,18 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "projects": {
+    "nestjs-mercurius": {
+      "type": "library",
+      "root": "libs/nestjs-mercurius",
+      "entryFile": "index",
+      "sourceRoot": "libs/nestjs-mercurius/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/nestjs-mercurius/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": false
+  }
+}
