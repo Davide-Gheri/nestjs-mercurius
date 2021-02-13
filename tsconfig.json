@@ -2,22 +2,22 @@
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
+    "noImplicitAny": false,
     "removeComments": true,
+    "noLib": false,
+    "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "es2017",
-    "sourceMap": true,
+    "target": "es6",
+    "sourceMap": false,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "paths": {
-      "@app/nestjs-mercurius": [
-        "libs/nestjs-mercurius/src"
-      ],
-      "@app/nestjs-mercurius/*": [
-        "libs/nestjs-mercurius/src/*"
-      ]
-    }
-  }
+    "rootDir": "./lib"
+  },
+  "include": [
+    "lib/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }
