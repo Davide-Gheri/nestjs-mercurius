@@ -36,3 +36,9 @@ input CreateUserInput {
   lastName: String
   birthDay: DateTime!
 }
+
+type Subscription {
+  userAdded: User!
+  userAddedId: String!
+  specificUserAdded(id: ID!): User!
+}

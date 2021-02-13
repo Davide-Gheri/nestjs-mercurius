@@ -5,7 +5,7 @@ import { IResolverValidationOptions } from '@nestjs/graphql/dist/interfaces/gql-
 import { MercuriusCommonOptions, MercuriusSchemaOptions } from 'mercurius';
 
 export interface MercuriusModuleOptions extends Omit<MercuriusSchemaOptions, 'schema'>, MercuriusCommonOptions {
-  schema?: GraphQLSchema | string | string[];
+  schema?: GraphQLSchema;
   path?: string;
   typeDefs?: string | string[];
   typePaths?: string[];
