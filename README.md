@@ -28,3 +28,11 @@ export class DogResolver {
   }
 }
 ```
+
+### TODO
+
+* Subscriptions
+* Upload
+* Query complexity
+* Federation
+
