@@ -6,6 +6,7 @@ import { PostType } from '../types/post.type';
 import { PostService } from '../services/post.service';
 import { CreateUserInput } from '../inputs/create-user.input';
 import { MercuriusContext } from 'mercurius';
+import { ParseIntPipe } from '@nestjs/common';
 
 function calculateAge(birthday: Date): number {
   const ageDifMs = Date.now() - birthday.getTime();
@@ -23,6 +24,13 @@ export class UserResolver {
   @Query(() => [UserType])
   users() {
     return this.userService.users();
+  }
+
+  @Query(() => UserType, { nullable: true })
+  user(
+    @Args({ name: 'id', type: () => ID }, ParseIntPipe) id: number
+  ) {
+    return this.userService.find(id);
   }
 
   @Mutation(() => UserType)
@@ -43,7 +51,7 @@ export class UserResolver {
   @ResolveField(() => Int)
   async age(
     @Parent() user: UserType,
-    @Context() ctx: any,
+    @Context('headers') headers: Record<string, any>,
   ) {
     return calculateAge(user.birthDay);
   }
@@ -52,7 +60,7 @@ export class UserResolver {
   async fullName(
     @Args({ name: 'filter', type: () => String, nullable: true }) f: never,
     @LoaderQueries() p: LoaderQuery<UserType>[],
-    @LoaderContext() ctx: any,
+    @LoaderContext('headers') headers: Record<string, any>,
   ) {
     return p.map(({ obj }) => {
       if (obj.name && obj.lastName) {

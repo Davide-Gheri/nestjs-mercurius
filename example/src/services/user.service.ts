@@ -32,6 +32,10 @@ export class UserService {
     return users;
   }
 
+  find(id: number) {
+    return users.find(user => user.id === id.toString());
+  }
+
   create(data: CreateUserInput) {
     const user = {
       ...data,

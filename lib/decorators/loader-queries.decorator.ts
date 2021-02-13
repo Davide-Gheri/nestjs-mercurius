@@ -5,6 +5,9 @@ import { MercuriusParamType } from '../mercurius-param-type.enum';
 export function LoaderQueries(): ParameterDecorator;
 export function LoaderQueries(
   ...pipes: (Type<PipeTransform> | PipeTransform)[]
+): ParameterDecorator;
+export function LoaderQueries(
+  ...pipes: (Type<PipeTransform> | PipeTransform)[]
 ): ParameterDecorator {
   return createGqlPipesParamDecorator(MercuriusParamType.LOADER_QUERIES as any)(
     ...pipes,
