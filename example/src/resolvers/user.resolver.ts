@@ -1,9 +1,10 @@
-import { Args, Context, Int, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Context, Int, Parent, Query, ResolveField, Resolver, Mutation } from '@nestjs/graphql';
 import { UserType } from '../types/user.type';
 import { LoaderQuery, LoaderQueries, LoaderContext, ResolveLoader } from '../../../lib';
 import { UserService } from '../services/user.service';
 import { PostType } from '../types/post.type';
 import { PostService } from '../services/post.service';
+import { CreateUserInput } from '../inputs/create-user.input';
 
 function calculateAge(birthday: Date): number {
   const ageDifMs = Date.now() - birthday.getTime();
@@ -21,6 +22,13 @@ export class UserResolver {
   @Query(() => [UserType])
   users() {
     return this.userService.users();
+  }
+
+  @Mutation(() => UserType)
+  createUser(
+    @Args({ name: 'input', type: () => CreateUserInput }) data: CreateUserInput,
+  ) {
+    return this.userService.create(data);
   }
 
   @ResolveField(() => Int)

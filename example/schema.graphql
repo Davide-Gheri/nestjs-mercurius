@@ -26,3 +26,13 @@ type PostType {
 type Query {
   users: [User!]!
 }
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+}
+
+input CreateUserInput {
+  name: String
+  lastName: String
+  birthDay: DateTime!
+}
