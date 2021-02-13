@@ -33,8 +33,8 @@ export interface MercuriusOptionsFactory {
 }
 
 export interface MercuriusModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
-  useExisting?: Type<MercuriusModuleOptions>;
-  useClass?: Type<MercuriusModuleOptions>;
+  useExisting?: Type<MercuriusOptionsFactory>;
+  useClass?: Type<MercuriusOptionsFactory>;
   useFactory?: (...args: any[]) => Promise<MercuriusModuleOptions> | MercuriusModuleOptions;
   inject?: any[];
 }
