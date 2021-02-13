@@ -8,3 +8,5 @@ tsconfig.json
 .prettierrc
 .commitlintrc.json
 .release-it.json
+tests
+example

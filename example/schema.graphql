@@ -29,6 +29,7 @@ type Query {
 
 type Mutation {
   createUser(input: CreateUserInput!): User!
+  uploadImage(file: Upload!): Boolean!
 }
 
 input CreateUserInput {
@@ -36,3 +37,6 @@ input CreateUserInput {
   lastName: String
   birthDay: DateTime!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

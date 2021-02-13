@@ -1,7 +1,10 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 import { Test } from '@nestjs/testing';
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import { FastifyInstance } from 'fastify';
 import { join } from 'path';
 import * as request from 'supertest';
@@ -15,7 +18,7 @@ interface Context {
 
 const graphqlSuite = suite<Context>('GraphQL request scoped');
 
-graphqlSuite.before.each(async ctx => {
+graphqlSuite.before.each(async (ctx) => {
   const module = await Test.createTestingModule({
     imports: [
       CatsModule.enableRequestScope(),
@@ -25,7 +28,9 @@ graphqlSuite.before.each(async ctx => {
     ],
   }).compile();
 
-  const app = module.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
+  const app = module.createNestApplication<NestFastifyApplication>(
+    new FastifyAdapter(),
+  );
 
   await app.init();
   const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
@@ -34,25 +39,25 @@ graphqlSuite.before.each(async ctx => {
 
   const performHttpCall = (end) =>
     request(app.getHttpServer())
-    .post('/graphql')
-    .send({
-      operationName: null,
-      variables: {},
-      query: '{\n  getCats {\n    id\n  }\n}\n',
-    })
-    .expect(200, {
-      data: {
-        getCats: [
-          {
-            id: 1,
-          },
-        ],
-      },
-    })
-    .end((err, res) => {
-      if (err) return end(err);
-      end();
-    });
+      .post('/graphql')
+      .send({
+        operationName: null,
+        variables: {},
+        query: '{\n  getCats {\n    id\n  }\n}\n',
+      })
+      .expect(200, {
+        data: {
+          getCats: [
+            {
+              id: 1,
+            },
+          ],
+        },
+      })
+      .end((err, res) => {
+        if (err) return end(err);
+        end();
+      });
 
   await new Promise((resolve) => performHttpCall(resolve));
   await new Promise((resolve) => performHttpCall(resolve));

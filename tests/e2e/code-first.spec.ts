@@ -1,7 +1,10 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 import { Test } from '@nestjs/testing';
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import { ApplicationModule } from '../code-first/app.module';
 import { createTestClient } from '../utils/create-test-client';
 
@@ -12,42 +15,47 @@ interface Context {
 
 const codeFirst = suite<Context>('Code-first');
 
-codeFirst.before.each(async ctx => {
+codeFirst.before.each(async (ctx) => {
   const module = await Test.createTestingModule({
     imports: [ApplicationModule],
   }).compile();
 
-  const app = module.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
+  const app = module.createNestApplication<NestFastifyApplication>(
+    new FastifyAdapter(),
+  );
   await app.init();
   ctx.app = app;
   ctx.mercuriusClient = createTestClient(module);
 });
 
-codeFirst.after.each(async ctx => {
+codeFirst.after.each(async (ctx) => {
   await ctx.app.close();
 });
 
-codeFirst('should return the categories result', async ({ mercuriusClient }) => {
-  const response = await mercuriusClient.query(
-    `query {
+codeFirst(
+  'should return the categories result',
+  async ({ mercuriusClient }) => {
+    const response = await mercuriusClient.query(
+      `query {
       categories {
         name
         description
         tags
       }
-    }`
-  );
+    }`,
+    );
 
-  assert.equal(response.data, {
-    categories: [
-      {
-        name: 'Category #1',
-        description: 'default value',
-        tags: [],
-      },
-    ],
-  });
-});
+    assert.equal(response.data, {
+      categories: [
+        {
+          name: 'Category #1',
+          description: 'default value',
+          tags: [],
+        },
+      ],
+    });
+  },
+);
 
 codeFirst('should return the search result', async ({ mercuriusClient }) => {
   const response = await mercuriusClient.query(
@@ -60,7 +68,7 @@ codeFirst('should return the search result', async ({ mercuriusClient }) => {
           name
         }
       }
-    }`
+    }`,
   );
 
   assert.equal(response.data, {
@@ -88,7 +96,7 @@ codeFirst(`should return query result`, async ({ mercuriusClient }) => {
         interfaceResolver
         averageRating
       }
-    }`
+    }`,
   );
 
   assert.equal(response.data, {
@@ -132,7 +140,7 @@ codeFirst(`should return query result`, async ({ mercuriusClient }) => {
         rating
         averageRating
       }
-    }`
+    }`,
   );
 
   assert.equal(response.data, {

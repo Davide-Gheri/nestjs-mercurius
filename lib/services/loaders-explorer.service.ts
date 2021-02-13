@@ -4,7 +4,10 @@ import { ModulesContainer } from '@nestjs/core/injector/modules-container';
 import { MetadataScanner } from '@nestjs/core/metadata-scanner';
 import { head, identity } from 'lodash';
 import { ExternalContextCreator } from '@nestjs/core/helpers/external-context-creator';
-import { ContextId, InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
+import {
+  ContextId,
+  InstanceWrapper,
+} from '@nestjs/core/injector/instance-wrapper';
 import { Module } from '@nestjs/core/injector/module';
 import { isUndefined } from '@nestjs/common/utils/shared.utils';
 import { extractMetadata } from '../utils/extract-metadata.util';
@@ -12,11 +15,10 @@ import { createContextId, DiscoveryService, REQUEST } from '@nestjs/core';
 import {
   PARAM_ARGS_METADATA,
   GRAPHQL_MODULE_OPTIONS,
-  FIELD_RESOLVER_MIDDLEWARE_METADATA
+  FIELD_RESOLVER_MIDDLEWARE_METADATA,
 } from '@nestjs/graphql/dist/graphql.constants';
 import { MercuriusGqlParamsFactory } from '../factories/params.factory';
 import { MercuriusModuleOptions } from '../interfaces';
-import { GqlParamtype } from '@nestjs/graphql/dist/enums/gql-paramtype.enum';
 import { MercuriusParamType } from '../mercurius-param-type.enum';
 import { REQUEST_CONTEXT_ID } from '@nestjs/core/router/request/request-constants';
 import { Injector } from '@nestjs/core/injector/injector';
@@ -54,7 +56,7 @@ export class LoadersExplorerService extends BaseExplorerService {
     );
 
     const loaders = this.flatMap(modules, (instance, moduleRef) =>
-      this.filterLoaders(instance, moduleRef)
+      this.filterLoaders(instance, moduleRef),
     );
 
     return loaders.reduce((acc, loader) => {
@@ -68,36 +70,30 @@ export class LoadersExplorerService extends BaseExplorerService {
     }, {});
   }
 
-  filterLoaders(
-    wrapper: InstanceWrapper,
-    moduleRef: Module,
-  ): LoaderMetadata[] {
+  filterLoaders(wrapper: InstanceWrapper, moduleRef: Module): LoaderMetadata[] {
     const { instance } = wrapper;
     if (!instance) {
       return undefined;
     }
     const prototype = Object.getPrototypeOf(instance);
-    const predicate = (
-      resolverType: string,
-      isLoaderResolver: boolean,
-    ) => {
+    const predicate = (resolverType: string, isLoaderResolver: boolean) => {
       if (!isUndefined(resolverType)) {
         return !isLoaderResolver;
       }
       return true;
-    }
+    };
 
     const loaders = this.metadataScanner.scanFromPrototype(
       instance,
       prototype,
-      name => {
-        return extractMetadata(instance, prototype, name, predicate)
-      }
+      (name) => {
+        return extractMetadata(instance, prototype, name, predicate);
+      },
     );
     const isRequestScoped = !wrapper.isDependencyTreeStatic();
     return loaders
-      .filter(loader => !!loader)
-      .map(loader => {
+      .filter((loader) => !!loader)
+      .map((loader) => {
         const createContext = (transform?: Function) =>
           this.createContextCallback(
             instance,
@@ -208,11 +204,11 @@ export class LoadersExplorerService extends BaseExplorerService {
 
   private registerContextProvider<T = any>(request: T, contextId: ContextId) {
     const coreModuleArray = [...this.modulesContainer.entries()]
-    .filter(
-      ([key, { metatype }]) =>
-        metatype && metatype.name === InternalCoreModule.name,
-    )
-    .map(([key, value]) => value);
+      .filter(
+        ([key, { metatype }]) =>
+          metatype && metatype.name === InternalCoreModule.name,
+      )
+      .map(([key, value]) => value);
 
     const coreModuleRef = head(coreModuleArray);
     if (!coreModuleRef) {
@@ -230,7 +226,7 @@ export class LoadersExplorerService extends BaseExplorerService {
     TContext = {},
     TArgs = { [argName: string]: any },
     TOutput = any
-    >(resolverFn: Function, instance: object, methodKey: string) {
+  >(resolverFn: Function, instance: object, methodKey: string) {
     const fieldMiddleware = Reflect.getMetadata(
       FIELD_RESOLVER_MIDDLEWARE_METADATA,
       instance[methodKey],
@@ -252,6 +248,7 @@ export class LoadersExplorerService extends BaseExplorerService {
       TSource,
       TContext,
       TArgs,
-      TOutput>(originalResolveFnFactory, middlewareFunctions);
+      TOutput
+    >(originalResolveFnFactory, middlewareFunctions);
   }
 }

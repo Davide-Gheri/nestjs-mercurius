@@ -1,7 +1,10 @@
 import { suite } from 'uvu';
 import * as request from 'supertest';
 import { AsyncClassApplicationModule } from '../graphql/async-options-class.module';
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import { Test } from '@nestjs/testing';
 import { FastifyInstance } from 'fastify';
 
@@ -11,12 +14,14 @@ interface Context {
 
 const graphqlSuite = suite<Context>('GraphQL (async class)');
 
-graphqlSuite.before.each(async ctx => {
+graphqlSuite.before.each(async (ctx) => {
   const module = await Test.createTestingModule({
     imports: [AsyncClassApplicationModule],
   }).compile();
 
-  const app = module.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
+  const app = module.createNestApplication<NestFastifyApplication>(
+    new FastifyAdapter(),
+  );
 
   await app.init();
   const fastify: FastifyInstance = app.getHttpAdapter().getInstance();

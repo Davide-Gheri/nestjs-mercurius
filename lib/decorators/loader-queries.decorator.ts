@@ -6,5 +6,7 @@ export function LoaderQueries(): ParameterDecorator;
 export function LoaderQueries(
   ...pipes: (Type<PipeTransform> | PipeTransform)[]
 ): ParameterDecorator {
-  return createGqlPipesParamDecorator(MercuriusParamType.LOADER_QUERIES as any)(...pipes);
+  return createGqlPipesParamDecorator(MercuriusParamType.LOADER_QUERIES as any)(
+    ...pipes,
+  );
 }

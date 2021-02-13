@@ -6,7 +6,7 @@ import {
   Complexity,
   GqlTypeReference,
   TypeMetadataStorage,
-  BaseTypeOptions
+  BaseTypeOptions,
 } from '@nestjs/graphql';
 import { FIELD_RESOLVER_MIDDLEWARE_METADATA } from '@nestjs/graphql/dist/graphql.constants';
 import { LazyMetadataStorage } from '@nestjs/graphql/dist/schema-builder/storages/lazy-metadata.storage';
@@ -58,38 +58,42 @@ export function ResolveLoader(
 
     options = isObject(options)
       ? {
-        name: propertyName as string,
-        ...options,
-      }
+          name: propertyName as string,
+          ...options,
+        }
       : propertyName
-        ? { name: propertyName as string }
-        : {};
+      ? { name: propertyName as string }
+      : {};
 
-    LazyMetadataStorage.store(target.constructor as Type<unknown>, function resolveLoader() {
-      let typeOptions: TypeOptions, typeFn: (type?: any) => GqlTypeReference;
-      try {
-        const implicitTypeMetadata = reflectTypeFromMetadata({
-          metadataKey: 'design:returntype',
-          prototype: target,
-          propertyKey: key,
-          explicitTypeFn: typeFunc as ReturnTypeFunc,
-          typeOptions: options as any,
+    LazyMetadataStorage.store(
+      target.constructor as Type<unknown>,
+      function resolveLoader() {
+        let typeOptions: TypeOptions, typeFn: (type?: any) => GqlTypeReference;
+        try {
+          const implicitTypeMetadata = reflectTypeFromMetadata({
+            metadataKey: 'design:returntype',
+            prototype: target,
+            propertyKey: key,
+            explicitTypeFn: typeFunc as ReturnTypeFunc,
+            typeOptions: options as any,
+          });
+          typeOptions = implicitTypeMetadata.options;
+          typeFn = implicitTypeMetadata.typeFn;
+        } catch {}
+
+        TypeMetadataStorage.addResolverPropertyMetadata({
+          kind: 'external',
+          methodName: key,
+          schemaName: options.name || key,
+          target: target.constructor,
+          typeFn,
+          typeOptions,
+          description: (options as ResolveLoaderOptions).description,
+          deprecationReason: (options as ResolveLoaderOptions)
+            .deprecationReason,
+          complexity: (options as ResolveLoaderOptions).complexity,
         });
-        typeOptions = implicitTypeMetadata.options;
-        typeFn = implicitTypeMetadata.typeFn;
-      } catch {}
-
-      TypeMetadataStorage.addResolverPropertyMetadata({
-        kind: 'external',
-        methodName: key,
-        schemaName: options.name || key,
-        target: target.constructor,
-        typeFn,
-        typeOptions,
-        description: (options as ResolveLoaderOptions).description,
-        deprecationReason: (options as ResolveLoaderOptions).deprecationReason,
-        complexity: (options as ResolveLoaderOptions).complexity,
-      });
-    });
-  }
+      },
+    );
+  };
 }
