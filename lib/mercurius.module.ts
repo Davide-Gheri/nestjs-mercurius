@@ -19,11 +19,11 @@ import {
 } from '@nestjs/graphql/dist/services';
 import { GRAPHQL_MODULE_OPTIONS } from '@nestjs/graphql/dist/graphql.constants';
 import { GraphQLSchemaBuilder } from '@nestjs/graphql/dist/graphql-schema.builder';
-import { extend, generateString, mergeDefaults, normalizeRoutePath } from '@nestjs/graphql/dist/utils';
+import { extend, generateString, normalizeRoutePath } from '@nestjs/graphql/dist/utils';
 import { GRAPHQL_MODULE_ID } from './constants';
 import { MercuriusModuleAsyncOptions, MercuriusModuleOptions, MercuriusOptionsFactory } from './interfaces';
 import { LoadersExplorerService } from './services';
-import { defaultOptions } from './utils/default-options';
+import { mergeDefaults } from './utils/merge-defaults';
 
 @Module({
   imports: [
@@ -54,7 +54,7 @@ export class MercuriusModule implements OnModuleInit {
   ) {}
 
   static forRoot(options: MercuriusModuleOptions) {
-    options = mergeDefaults(options as unknown, defaultOptions) as unknown as MercuriusModuleOptions;
+    options = mergeDefaults(options);
     return {
       module: MercuriusModule,
       providers: [
@@ -102,14 +102,14 @@ export class MercuriusModule implements OnModuleInit {
       return {
         provide: GRAPHQL_MODULE_OPTIONS,
         useFactory: async (...args: any[]) =>
-          mergeDefaults(await options.useFactory(...args) as unknown, defaultOptions),
+          mergeDefaults(await options.useFactory(...args)),
         inject: options.inject || [],
       };
     }
     return {
       provide: GRAPHQL_MODULE_OPTIONS,
       useFactory: async (optionsFactory: MercuriusOptionsFactory) =>
-        mergeDefaults(await optionsFactory.createMercuriusOptions() as unknown, defaultOptions),
+        mergeDefaults(await optionsFactory.createMercuriusOptions()),
       inject: [options.useExisting || options.useClass],
     };
   }
@@ -161,28 +161,30 @@ export class MercuriusModule implements OnModuleInit {
 
     const httpAdapter = this.httpAdapterHost.httpAdapter;
     const app: FastifyInstance = httpAdapter.getInstance();
-    const path = this.getNormalizedPath(mercuriusOptions);
 
+    // TODO refactor this
     const options: MercuriusOptions = {
-      graphiql: 'playground',
-      routes: true,
-      schema: mercuriusOptions.schema,
-      path,
       loaders: await this.loadersExplorerService.explore(),
-      // loaders: {
-      //   User: {
-      //     fullName: async (query) => {
-      //       console.log(query);
-      //       return query.map(q => 'eee');
-      //
-      //     }
-      //   }
-      // }
-      context: request => {
-        return {
-          context: false,
-        }
-      }
+      path: this.getNormalizedPath(mercuriusOptions),
+      context: mercuriusOptions.context,
+      graphiql: mercuriusOptions.graphiql,
+      routes: mercuriusOptions.routes,
+      schemaTransforms: mercuriusOptions.schemaTransforms,
+      schema: mercuriusOptions.schema,
+      playgroundSettings: mercuriusOptions.playgroundSettings,
+      playgroundHeaders: mercuriusOptions.playgroundHeaders,
+      resolvers: mercuriusOptions.resolvers,
+      jit: mercuriusOptions.jit,
+      cache: mercuriusOptions.cache || false,
+      defineMutation: mercuriusOptions.defineMutation,
+      errorHandler: mercuriusOptions.errorHandler,
+      errorFormatter: mercuriusOptions.errorFormatter,
+      queryDepth: mercuriusOptions.queryDepth,
+      validationRules: mercuriusOptions.validationRules,
+      persistedQueries: mercuriusOptions.persistedQueries,
+      persistedQueryProvider: mercuriusOptions.persistedQueryProvider,
+      allowBatchedQueries: mercuriusOptions.allowBatchedQueries,
+      // subscription: mercuriusOptions.subscription,
     }
 
     await app.register(mercurius, options);

@@ -7,10 +7,13 @@ import { UserResolver } from './resolvers/user.resolver';
 
 @Module({
   imports: [
-    MercuriusModule.forRootAsync({
-      useFactory: () => ({
-        autoSchemaFile: './schema.graphql',
-      }),
+    MercuriusModule.forRoot({
+      autoSchemaFile: './schema.graphql',
+      context: (request, reply) => {
+        return {
+          headers: request.headers,
+        }
+      },
     }),
   ],
   controllers: [AppController],
