@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { join } from 'path';
-import { MercuriusModule, MercuriusModuleOptions, MercuriusOptionsFactory } from '../../lib';
+import {
+  MercuriusModule,
+  MercuriusModuleOptions,
+  MercuriusOptionsFactory,
+} from '../../lib';
 import { CatsModule } from './cats/cats.module';
 
 class ConfigService implements MercuriusOptionsFactory {

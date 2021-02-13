@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { join } from 'path';
-import { GqlModuleOptions, GqlOptionsFactory, GraphQLModule } from '@nestjs/graphql';
+import {
+  GqlModuleOptions,
+  GqlOptionsFactory,
+  GraphQLModule,
+} from '@nestjs/graphql';
 import { CatsModule } from './cats/cats.module';
 
 class ConfigService implements GqlOptionsFactory {

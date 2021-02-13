@@ -15,5 +15,8 @@ export function LoaderContext(
   property?: string | (Type<PipeTransform> | PipeTransform),
   ...pipes: (Type<PipeTransform> | PipeTransform)[]
 ): ParameterDecorator {
-  return createGqlPipesParamDecorator(MercuriusParamType.LOADER_CONTEXT as any)(property, ...pipes);
+  return createGqlPipesParamDecorator(MercuriusParamType.LOADER_CONTEXT as any)(
+    property,
+    ...pipes,
+  );
 }

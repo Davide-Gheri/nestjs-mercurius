@@ -22,16 +22,12 @@ export function mergeDefaults(
     moduleOptions.context = (req, reply) => ({ req });
   } else if (isFunction(moduleOptions.context)) {
     moduleOptions.context = async (req, reply) => {
-
       const ctx = await (options.context as Function)(req, reply);
       return assignReqProperty(ctx, req);
     };
   } else {
     moduleOptions.context = (req, reply) => {
-      return assignReqProperty(
-        options.context as Record<string, any>,
-        req,
-      );
+      return assignReqProperty(options.context as Record<string, any>, req);
     };
   }
   return moduleOptions;
