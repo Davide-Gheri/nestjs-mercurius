@@ -155,7 +155,7 @@ export class MercuriusModule implements OnModuleInit {
   private async registerFastify(mercuriusOptions: MercuriusModuleOptions) {
     const mercurius = loadPackage(
       'mercurius',
-      'GraphQLModule',
+      'MercuriusModule',
       () => require('mercurius'),
     );
 
@@ -168,6 +168,7 @@ export class MercuriusModule implements OnModuleInit {
       path: this.getNormalizedPath(mercuriusOptions),
       context: mercuriusOptions.context,
       graphiql: mercuriusOptions.graphiql,
+      ide: mercuriusOptions.ide,
       routes: mercuriusOptions.routes,
       schemaTransforms: mercuriusOptions.schemaTransforms,
       schema: mercuriusOptions.schema,
@@ -185,6 +186,33 @@ export class MercuriusModule implements OnModuleInit {
       persistedQueryProvider: mercuriusOptions.persistedQueryProvider,
       allowBatchedQueries: mercuriusOptions.allowBatchedQueries,
       // subscription: mercuriusOptions.subscription,
+    }
+
+    if (mercuriusOptions.uploads) {
+      const mercuriusUpload = loadPackage(
+        'mercurius-upload',
+        'MercuriusModule',
+        () => require('mercurius-upload'),
+      );
+      await app.register(mercuriusUpload);
+    }
+
+    if (mercuriusOptions.altair) {
+      const altairPlugin = loadPackage(
+        'altair-fastify-plugin',
+        'MercuriusModule',
+        () => require('altair-fastify-plugin'),
+      );
+
+      options.graphiql = false;
+      options.ide = false;
+
+      await app.register(altairPlugin, {
+        baseURL: '/altair/',
+        path: '/altair',
+        ...((typeof mercuriusOptions.altair !== 'boolean') && mercuriusOptions.altair),
+        endpointURL: options.path,
+      });
     }
 
     await app.register(mercurius, options);
