@@ -49,7 +49,7 @@ export class LoadersExplorerService extends BaseExplorerService {
     super();
   }
 
-  async explore() {
+  explore() {
     const modules = this.getModules(
       this.modulesContainer,
       this.gqlOptions.include || [],

@@ -8,14 +8,23 @@ import { ImageResolver } from './resolvers/image.resolver';
 
 @Module({
   imports: [
-    MercuriusModule.forRoot({
-      autoSchemaFile: './schema.graphql',
-      altair: true,
-      context: (request, reply) => {
-        return {
-          headers: request.headers,
-        };
-      },
+    MercuriusModule.forRootAsync({
+      useFactory: () => ({
+        autoSchemaFile: './schema.graphql',
+          altair: true,
+        context: (request, reply) => {
+          return {
+            headers: request.headers,
+          }
+        },
+        subscription: {
+          context: (connection, request) => {
+            return {
+              headers: request.headers,
+            }
+          },
+        }
+      }),
     }),
   ],
   controllers: [AppController],

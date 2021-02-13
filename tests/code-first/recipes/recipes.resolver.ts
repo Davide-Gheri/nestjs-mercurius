@@ -1,11 +1,11 @@
 import { NotFoundException, UseGuards } from '@nestjs/common';
 import {
-  Args,
+  Args, Context,
   Mutation,
   Parent,
   Query,
   ResolveField,
-  Resolver,
+  Resolver, Subscription,
 } from '@nestjs/graphql';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { FilterRecipesCountArgs } from './dto/filter-recipes-count.args';
@@ -16,6 +16,7 @@ import { IRecipe, Recipe } from './models/recipe';
 import { RecipesService } from './recipes.service';
 import { SearchResultUnion } from './unions/search-result.union';
 import { Category } from './models/category';
+import { MercuriusContext } from 'mercurius';
 
 @Resolver((of) => Recipe)
 export class RecipesResolver {
@@ -60,8 +61,13 @@ export class RecipesResolver {
   @Mutation((returns) => Recipe)
   async addRecipe(
     @Args('newRecipeData') newRecipeData: NewRecipeInput,
+    @Context() ctx: MercuriusContext,
   ): Promise<Recipe> {
     const recipe = await this.recipesService.create(newRecipeData);
+    ctx.pubsub.publish({
+      topic: 'recipeAdded',
+      payload: { recipeAdded: recipe },
+    });
     return recipe;
   }
 
@@ -83,5 +89,12 @@ export class RecipesResolver {
   @Mutation((returns) => Boolean)
   async removeRecipe(@Args('id') id: string) {
     return this.recipesService.remove(id);
+  }
+
+  @Subscription((returns) => Recipe, {
+    description: 'subscription description',
+  })
+  recipeAdded(@Context() ctx: MercuriusContext) {
+    return ctx.pubsub.subscribe('recipeAdded');
   }
 }
