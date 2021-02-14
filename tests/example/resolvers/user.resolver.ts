@@ -23,7 +23,15 @@ import { PostType } from '../types/post.type';
 import { PostService } from '../services/post.service';
 import { CreateUserInput } from '../inputs/create-user.input';
 import { MercuriusContext } from 'mercurius';
-import { ParseIntPipe } from '@nestjs/common';
+import {
+  ParseIntPipe,
+  UseFilters,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { AuthGuard } from '../guards/auth.guard';
+import { LogInterceptor } from '../interceptors/log.interceptor';
+import { ForbiddenExceptionFilter } from '../filters/forbidden-exception.filter';
 
 function calculateAge(birthday: Date): number {
   const ageDifMs = Date.now() - birthday.getTime();
@@ -31,6 +39,7 @@ function calculateAge(birthday: Date): number {
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
+@UseFilters(ForbiddenExceptionFilter)
 @Resolver(() => UserType)
 export class UserResolver {
   constructor(
@@ -38,6 +47,7 @@ export class UserResolver {
     private readonly postService: PostService,
   ) {}
 
+  // @UseGuards(AuthGuard)
   @Query(() => [UserType])
   users() {
     return this.userService.users();
@@ -71,7 +81,15 @@ export class UserResolver {
     return calculateAge(user.birthDay);
   }
 
-  @ResolveLoader(() => String, { nullable: true })
+  @ResolveLoader(() => String, {
+    nullable: true,
+    middleware: [
+      async (ctx, next) => {
+        const results = await next();
+        return results.map((res) => res || 'Missing');
+      },
+    ],
+  })
   async fullName(
     @Args({ name: 'filter', type: () => String, nullable: true }) f: never,
     @LoaderQueries() p: LoaderQuery<UserType>[],
@@ -85,11 +103,14 @@ export class UserResolver {
     });
   }
 
+  @UseGuards(AuthGuard)
+  @UseInterceptors(LogInterceptor)
   @ResolveLoader(() => [PostType])
   async posts(@Parent() queries: LoaderQuery<UserType>[]) {
     return this.postService.userPostLoader(queries.map((q) => q.obj.id));
   }
 
+  @UseInterceptors(LogInterceptor)
   @Subscription(() => UserType)
   async userAdded(@Context() ctx: MercuriusContext) {
     return ctx.pubsub.subscribe('USER_ADDED');
