@@ -11,7 +11,8 @@ import { ImageResolver } from './resolvers/image.resolver';
     MercuriusModule.forRootAsync({
       useFactory: () => ({
         autoSchemaFile: './schema.graphql',
-        altair: true,
+        fieldResolverEnhancers: ['guards', 'interceptors', 'filters'],
+        // altair: true,
         context: (request, reply) => {
           return {
             headers: request.headers,
