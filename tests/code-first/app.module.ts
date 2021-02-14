@@ -9,6 +9,7 @@ import { RecipesModule } from './recipes/recipes.module';
     DirectionsModule,
     MercuriusModule.forRoot({
       autoSchemaFile: true,
+      subscription: true,
     }),
   ],
 })

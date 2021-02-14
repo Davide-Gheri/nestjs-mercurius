@@ -17,10 +17,9 @@ import {
   ResolversExplorerService,
   ScalarsExplorerService,
 } from '@nestjs/graphql/dist/services';
-import { GRAPHQL_MODULE_OPTIONS } from '@nestjs/graphql/dist/graphql.constants';
+import { GRAPHQL_MODULE_OPTIONS, GRAPHQL_MODULE_ID } from '@nestjs/graphql/dist/graphql.constants';
 import { GraphQLSchemaBuilder } from '@nestjs/graphql/dist/graphql-schema.builder';
 import { extend, generateString, normalizeRoutePath } from '@nestjs/graphql/dist/utils';
-import { GRAPHQL_MODULE_ID } from './constants';
 import { MercuriusModuleAsyncOptions, MercuriusModuleOptions, MercuriusOptionsFactory } from './interfaces';
 import { LoadersExplorerService } from './services';
 import { mergeDefaults } from './utils/merge-defaults';
@@ -127,10 +126,11 @@ export class MercuriusModule implements OnModuleInit {
         this.options.typePaths,
       )) || [];
     const mergedTypeDefs = extend(typeDefs, this.options.typeDefs);
-    const mercuriusOptions = await this.graphqlFactory.mergeOptions({
+    const mercuriusOptions: MercuriusModuleOptions = await this.graphqlFactory.mergeOptions({
       ...this.options,
       typeDefs: mergedTypeDefs,
-    } as any);
+      loaders: this.loadersExplorerService.explore(),
+    } as any) as unknown as MercuriusModuleOptions;
 
     if (this.options.definitions && this.options.definitions.path) {
       await this.graphqlFactory.generateDefinitions(
@@ -138,7 +138,7 @@ export class MercuriusModule implements OnModuleInit {
         this.options as any,
       );
     }
-    await this.registerGqlServer(mercuriusOptions as unknown as MercuriusModuleOptions);
+    await this.registerGqlServer(mercuriusOptions);
   }
 
   private async registerGqlServer(mercuriusOptions: MercuriusModuleOptions) {
@@ -162,30 +162,10 @@ export class MercuriusModule implements OnModuleInit {
     const httpAdapter = this.httpAdapterHost.httpAdapter;
     const app: FastifyInstance = httpAdapter.getInstance();
 
-    // TODO refactor this
     const options: MercuriusOptions = {
-      loaders: await this.loadersExplorerService.explore(),
-      path: this.getNormalizedPath(mercuriusOptions),
-      context: mercuriusOptions.context,
-      graphiql: mercuriusOptions.graphiql,
-      ide: mercuriusOptions.ide,
-      routes: mercuriusOptions.routes,
-      schemaTransforms: mercuriusOptions.schemaTransforms,
+      ...mercuriusOptions,
       schema: mercuriusOptions.schema,
-      playgroundSettings: mercuriusOptions.playgroundSettings,
-      playgroundHeaders: mercuriusOptions.playgroundHeaders,
-      resolvers: mercuriusOptions.resolvers,
-      jit: mercuriusOptions.jit,
-      cache: mercuriusOptions.cache || false,
-      defineMutation: mercuriusOptions.defineMutation,
-      errorHandler: mercuriusOptions.errorHandler,
-      errorFormatter: mercuriusOptions.errorFormatter,
-      queryDepth: mercuriusOptions.queryDepth,
-      validationRules: mercuriusOptions.validationRules,
-      persistedQueries: mercuriusOptions.persistedQueries,
-      persistedQueryProvider: mercuriusOptions.persistedQueryProvider,
-      allowBatchedQueries: mercuriusOptions.allowBatchedQueries,
-      // subscription: mercuriusOptions.subscription,
+      path: this.getNormalizedPath(mercuriusOptions),
     }
 
     if (mercuriusOptions.uploads) {

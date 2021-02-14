@@ -25,6 +25,7 @@ type PostType {
 
 type Query {
   users: [User!]!
+  user(id: ID!): User
 }
 
 type Mutation {
@@ -40,3 +41,9 @@ input CreateUserInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+type Subscription {
+  userAdded: User!
+  userAddedId: String!
+  specificUserAdded(id: ID!): User!
+}

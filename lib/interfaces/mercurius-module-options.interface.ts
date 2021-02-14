@@ -8,10 +8,8 @@ import { GraphQLSchema } from 'graphql';
 import { IResolverValidationOptions } from '@nestjs/graphql/dist/interfaces/gql-module-options.interface';
 import { MercuriusCommonOptions, MercuriusSchemaOptions } from 'mercurius';
 
-export interface MercuriusModuleOptions
-  extends Omit<MercuriusSchemaOptions, 'schema'>,
-    MercuriusCommonOptions {
-  schema?: GraphQLSchema | string | string[];
+export interface MercuriusModuleOptions extends Omit<MercuriusSchemaOptions, 'schema'>, MercuriusCommonOptions {
+  schema?: GraphQLSchema;
   path?: string;
   typeDefs?: string | string[];
   typePaths?: string[];
