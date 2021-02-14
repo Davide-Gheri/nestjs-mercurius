@@ -86,7 +86,7 @@ export class UserResolver {
   }
 
   @ResolveLoader(() => [PostType])
-  async posts(@LoaderQueries() queries: LoaderQuery<UserType>[]) {
+  async posts(@Parent() queries: LoaderQuery<UserType>[]) {
     return this.postService.userPostLoader(queries.map((q) => q.obj.id));
   }
 

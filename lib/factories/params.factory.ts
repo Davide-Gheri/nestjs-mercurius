@@ -20,8 +20,6 @@ export class MercuriusGqlParamsFactory implements ParamsFactory {
         return data && args[3] ? args[3][data as string] : args[3];
       case MercuriusParamType.LOADER_CONTEXT:
         return data && args[1] ? args[1][data as string] : args[1];
-      case MercuriusParamType.LOADER_QUERIES:
-        return args[0];
       default:
         return null;
     }
