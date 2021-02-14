@@ -5,6 +5,12 @@ import { UserService } from './services/user.service';
 import { PostService } from './services/post.service';
 import { UserResolver } from './resolvers/user.resolver';
 import { ImageResolver } from './resolvers/image.resolver';
+import queryComplexity, {
+  directiveEstimator,
+  fieldExtensionsEstimator,
+  simpleEstimator,
+} from 'graphql-query-complexity';
+import { ComplexityValidator } from './validation/complexity.validator';
 
 @Module({
   imports: [
@@ -25,10 +31,31 @@ import { ImageResolver } from './resolvers/image.resolver';
             };
           },
         },
+        validationRules: ({ variables, operationName }) => [
+          queryComplexity({
+            maximumComplexity: 100,
+            variables,
+            operationName,
+            estimators: [
+              fieldExtensionsEstimator(),
+              directiveEstimator(),
+              simpleEstimator({ defaultComplexity: 1 }),
+            ],
+            onComplete: (complexity: number) => {
+              console.log('Query Complexity:', complexity);
+            },
+          }),
+        ],
       }),
     }),
   ],
   controllers: [AppController],
-  providers: [UserService, PostService, UserResolver, ImageResolver],
+  providers: [
+    UserService,
+    PostService,
+    UserResolver,
+    ImageResolver,
+    ComplexityValidator,
+  ],
 })
 export class AppModule {}
