@@ -1,4 +1,3 @@
-import { mergeDefaults as nestMergedefaults } from '@nestjs/graphql/dist/utils';
 import { MercuriusModuleOptions } from '../interfaces';
 import { isFunction } from '@nestjs/common/utils/shared.utils';
 
