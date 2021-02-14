@@ -1,87 +1,134 @@
 
-## Nestjs Mercurius
+# Nestjs Mercurius
 
-WIP
+Use [Mercurius GraphQL](https://github.com/mercurius-js/mercurius) with Nestjs framework
 
-### Loader implementation
+> **Warning** still in heavy development, it is NOT production ready.
 
-```typescript
+## Install
 
-@Resolver(() => Dog)
-export class DogResolver {
-  @Query(() => [Dog])
-  dogs() {
-  ...
-  }
-
-  @ResolveLoader(() => [String])
-  owner(
-    @Args({ name: 'someFilter', type: () => String, nullable: true }) someFilter: undefined, 
-    @LoaderQueries() queries: LoaderQuery<Dog, { someFilter?: string }>[],
-    @LoaderContext() ctx: any,
-  ) {
-    // queries is an array of objects defined as { obj, params } where obj is the current object and params are the GraphQL params
-    
-    // Params must be defined as any GraphQL params with @Args decorator but must be accessed from queries[].params 
-
-    return queries.map(({ obj }) => owners[obj.name])
-  }
-}
+```bash
+npm i @nestjs/platform-fastify fastify mercurius nestjs-mercurius
 ```
 
+## Use
 
-### Subscription
-
+### Register the module
 ```typescript
-// AppModule
+import { Module } from '@nestjs/common';
 import { MercuriusModule } from 'nestjs-mercurius';
 
 @Module({
-  MercuriusModule.forRoot({
-    //...
-    subscription: {
-      context(connection, request) {
-        return {
+  imports: [
+    // Work also with async configuration (MercuriusModule.forRootAsync)
+    MercuriusModule.forRoot({
+      autoschemaFile: true,
+      context: (request, reply) => ({
+        user: request.user,
+      }),
+      subscription: {
+        context: (connection, request) => ({
           user: request.user,
-        }
+        }),
       },
-    },
-  })
+    }),
+  ],
+  providers: [
+    CatResolver,
+  ],
 })
 export class AppModule {}
-
-
-
-// DogResolver
-import { PubSub } from 'mercurius';
-import { toAsyncIterator } from 'nestjs-mercurius';
-
-//...
-@Mutation(() => Dog)
-createDog(
-  @Args({ name: 'input', type: () => CreateDogInput })) data: CreateDogInput,
-  @Context('pubsub') pubSub: PubSub,
-) {
-  const dog: Dog = {/**/};
-  pubSub.publish({
-    topic: 'DogCreated',
-    payload: { dog },
-  });
-  return dog;
-}
-
-@Subscription(() => Dog, {
-  resolve: (payload) => payload.dog, 
-  filter: (payload, variables, context) => {
-    return payload.dog.owner === context.user.id;
-  },
-})
-onDogCreated(@Context('pubsub') pubSub: PubSub) {
-  return toAsyncIterator(pubSub.subscribe('DogCreated'));
-}
-//...
 ```
 
+### The Object type
+
+```typescript
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+
+@ObjectType()
+export class Cat {
+  @Field(() => ID)
+  id: number;
+  
+  @Field()
+  name: string;
+  
+  @Field(() => Int)
+  ownerId: number;
+}
+```
+
+### The Resolver
+
+```typescript
+import { Resolver, Query, ResolveField, Parent, Mutation, Subscription, Context, Args } from '@nestjs/graphql';
+import { ParseIntPipe } from '@nestjs/common';
+import { ResolveLoader, LoaderQueries, LoaderContext, toAsyncIterator, LoaderQuery } from 'nestjs-mercurius';
+import { PubSub } from 'mercurius';
+import { groupBy } from 'lodash';
+import { Cat } from './cat';
+
+@Resolver(() => Cat)
+export class CatResolver {
+  constructor(
+    private readonly catService: CatService,
+    private readonly userService: UserService,
+  ) {}
+
+  @Query(() => [Cat])
+  cats(@Args({name: 'filter', type: () => String, nullable: true}) filter?: string) {
+    return this.catService.find(filter);
+  }
+
+  @Query(() => Cat, { nullable: true })
+  cat(@Args('id', ParseIntPipe) id: number) {
+    return this.catService.findOne(id);
+  }
+
+  @Mutation(() => Cat)
+  createCat(
+    @Args('name') name: string,
+    @Context('pubsub') pubSub: PubSub,
+    @Context('user') user: User,
+  ) {
+    const cat = new Cat();
+    cat.name = name;
+    cat.ownerId = user.id;
+    //...
+    pubSub.publish({
+      topic: 'CatCreated',
+      payload: { cat },
+    });
+    return cat;
+  }
+  
+  @Subscription(() => Cat, {
+    resolve: (payload) => payload.cat,
+    filter: (payload, vars, context) =>
+      payload.cat.ownerId !== context.user.id,
+  })
+  onCatCreated(
+    @Context('pubsub') pubSub: PubSub,
+  ) {
+    return toAsyncIterator(pubSub.subscribe('CatCreated'));
+  }
+  
+  @ResolveField(() => Int)
+  age(@Parent() cat: Cat) {
+    return 5;
+  }
+  
+  @ResolveLoader(() => User)
+  owner(
+    @LoaderQueries() queries: LoaderQuery<Cat>[],
+  ) {
+    return this.userService.findById(
+      // queries is an array of objects defined as { obj, params } where obj is the current object and params are the GraphQL params
+      queries.map(({ obj }) => obj.ownerId)
+    );
+  }
+}
+```
 
 ### TODO
 * Query complexity
