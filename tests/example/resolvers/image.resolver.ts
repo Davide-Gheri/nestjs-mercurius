@@ -20,7 +20,8 @@ export class ImageResolver implements OnModuleInit {
 
   @Mutation(() => Boolean)
   async uploadImage(
-    @Args({ name: 'file', type: () => GraphQLUpload }) image: Promise<FileUpload>,
+    @Args({ name: 'file', type: () => GraphQLUpload })
+    image: Promise<FileUpload>,
   ) {
     const { filename, createReadStream } = await image;
     const rs = createReadStream();

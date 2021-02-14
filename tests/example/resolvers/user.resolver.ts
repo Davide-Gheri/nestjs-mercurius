@@ -1,6 +1,23 @@
-import { Args, Context, Int, Parent, Query, ResolveField, Resolver, Mutation, Subscription, ID } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Int,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+  Mutation,
+  Subscription,
+  ID,
+} from '@nestjs/graphql';
 import { UserType } from '../types/user.type';
-import { LoaderQuery, LoaderQueries, LoaderContext, ResolveLoader, toAsyncIterator } from '../../../lib';
+import {
+  LoaderQuery,
+  LoaderQueries,
+  LoaderContext,
+  ResolveLoader,
+  toAsyncIterator,
+} from '../../../lib';
 import { UserService } from '../services/user.service';
 import { PostType } from '../types/post.type';
 import { PostService } from '../services/post.service';
@@ -27,9 +44,7 @@ export class UserResolver {
   }
 
   @Query(() => UserType, { nullable: true })
-  user(
-    @Args({ name: 'id', type: () => ID }, ParseIntPipe) id: number
-  ) {
+  user(@Args({ name: 'id', type: () => ID }, ParseIntPipe) id: number) {
     return this.userService.find(id);
   }
 
@@ -71,27 +86,21 @@ export class UserResolver {
   }
 
   @ResolveLoader(() => [PostType])
-  async posts(
-    @LoaderQueries() queries: LoaderQuery<UserType>[],
-  ) {
-    return this.postService.userPostLoader(queries.map(q => q.obj.id));
+  async posts(@LoaderQueries() queries: LoaderQuery<UserType>[]) {
+    return this.postService.userPostLoader(queries.map((q) => q.obj.id));
   }
 
   @Subscription(() => UserType)
-  async userAdded(
-    @Context() ctx: MercuriusContext,
-  ) {
+  async userAdded(@Context() ctx: MercuriusContext) {
     return ctx.pubsub.subscribe('USER_ADDED');
   }
 
   @Subscription(() => String, {
-    resolve: payload => {
+    resolve: (payload) => {
       return payload.userAdded.id;
     },
   })
-  async userAddedId(
-    @Context() ctx: MercuriusContext,
-  ) {
+  async userAddedId(@Context() ctx: MercuriusContext) {
     return ctx.pubsub.subscribe('USER_ADDED');
   }
 
@@ -99,7 +108,7 @@ export class UserResolver {
     filter: (payload, variables: { id: string }) => {
       return payload.userAdded.id === variables.id;
     },
-    resolve: payload => {
+    resolve: (payload) => {
       return payload.userAdded;
     },
   })
@@ -107,6 +116,6 @@ export class UserResolver {
     @Args({ name: 'id', type: () => ID }) id: string,
     @Context() ctx: MercuriusContext,
   ) {
-    return toAsyncIterator(ctx.pubsub.subscribe('USER_ADDED'))
+    return toAsyncIterator(ctx.pubsub.subscribe('USER_ADDED'));
   }
 }

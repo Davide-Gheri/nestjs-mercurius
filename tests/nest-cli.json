@@ -1,0 +1,29 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "example",
+  "monorepo": true,
+  "compilerOptions": {
+    "webpack": false,
+    "tsConfigPath": "tsconfig.build.json"
+  },
+  "projects": {
+    "example": {
+      "type": "application",
+      "root": "example",
+      "entryFile": "tests/example/main",
+      "sourceRoot": "example"
+    },
+    "code-first": {
+      "type": "application",
+      "root": "code-first",
+      "entryFile": "tests/code-first/main",
+      "sourceRoot": "code-first"
+    },
+    "graphql": {
+      "type": "application",
+      "root": "graphql",
+      "entryFile": "tests/graphql/main",
+      "sourceRoot": "graphql"
+    }
+  }
+}

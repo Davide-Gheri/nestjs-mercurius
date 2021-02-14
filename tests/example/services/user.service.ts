@@ -33,7 +33,7 @@ export class UserService {
   }
 
   find(id: number) {
-    return users.find(user => user.id === id.toString());
+    return users.find((user) => user.id === id.toString());
   }
 
   create(data: CreateUserInput) {

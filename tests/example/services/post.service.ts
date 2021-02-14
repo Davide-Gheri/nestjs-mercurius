@@ -18,7 +18,7 @@ const posts: PostType[] = [
     title: 'Post3',
     authorId: '2',
   },
-]
+];
 
 @Injectable()
 export class PostService {
@@ -28,10 +28,10 @@ export class PostService {
 
   userPostLoader(userIds: string[]) {
     const groupedPosts = groupBy(
-      posts.filter(post => userIds.includes(post.authorId)),
+      posts.filter((post) => userIds.includes(post.authorId)),
       'authorId',
     );
 
-    return userIds.map(id => groupedPosts[id] || []);
+    return userIds.map((id) => groupedPosts[id] || []);
   }
 }
