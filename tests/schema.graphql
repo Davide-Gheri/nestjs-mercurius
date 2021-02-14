@@ -7,6 +7,7 @@ type User {
   name: String
   lastName: String
   birthDay: DateTime!
+  secret: Hash
   age: Int!
   fullName(filter: String): String
   posts: [PostType!]!
@@ -16,6 +17,9 @@ type User {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+"""Hash scalar"""
+scalar Hash
 
 type PostType {
   id: ID!
@@ -37,6 +41,7 @@ input CreateUserInput {
   name: String
   lastName: String
   birthDay: DateTime!
+  secret: Hash
 }
 
 """The `Upload` scalar type represents a file upload."""

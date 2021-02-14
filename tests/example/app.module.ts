@@ -11,6 +11,7 @@ import queryComplexity, {
   simpleEstimator,
 } from 'graphql-query-complexity';
 import { ComplexityValidator } from './validation/complexity.validator';
+import { HashScalar } from './scalars/hash.scalar';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { ComplexityValidator } from './validation/complexity.validator';
     UserResolver,
     ImageResolver,
     ComplexityValidator,
+    HashScalar,
   ],
 })
 export class AppModule {}
