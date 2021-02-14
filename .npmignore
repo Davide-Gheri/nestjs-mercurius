@@ -3,10 +3,13 @@
 lib
 index.ts
 package-lock.json
+yarn.lock
 .eslintrc.js
+.eslintignore
 tsconfig.json
 .prettierrc
 .commitlintrc.json
 .release-it.json
 tests
-example
+.husky
+node_modules
