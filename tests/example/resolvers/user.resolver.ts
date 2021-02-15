@@ -9,6 +9,7 @@ import {
   Mutation,
   Subscription,
   ID,
+  Directive,
 } from '@nestjs/graphql';
 import { UserType } from '../types/user.type';
 import {
@@ -49,7 +50,9 @@ export class UserResolver {
   ) {}
 
   // @UseGuards(AuthGuard)
-  @Query(() => [UserType])
+  @Query(() => [UserType], {
+    complexity: (options) => options.childComplexity + 5,
+  })
   users() {
     return this.userService.users();
   }
@@ -74,7 +77,7 @@ export class UserResolver {
     return user;
   }
 
-  @ResolveField(() => Int)
+  @ResolveField(() => Int, { complexity: 5 })
   async age(
     @Parent() user: UserType,
     @Context('headers') headers: Record<string, any>,
@@ -84,6 +87,9 @@ export class UserResolver {
 
   @ResolveLoader(() => String, {
     nullable: true,
+    complexity: (options) => {
+      return 5;
+    },
     middleware: [
       async (ctx, next) => {
         const results = await next();
@@ -97,7 +103,6 @@ export class UserResolver {
     @LoaderContext('headers') headers: Record<string, any>,
     @Header('authorization') auth?: string,
   ) {
-    console.log(auth);
     return p.map(({ obj }) => {
       if (obj.name && obj.lastName) {
         return `${obj.name} ${obj.lastName}`;

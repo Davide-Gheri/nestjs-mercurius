@@ -11,7 +11,7 @@ import {
 import { Module } from '@nestjs/core/injector/module';
 import { isUndefined } from '@nestjs/common/utils/shared.utils';
 import { extractMetadata } from '../utils/extract-metadata.util';
-import { createContextId, DiscoveryService, REQUEST } from '@nestjs/core';
+import { createContextId, REQUEST } from '@nestjs/core';
 import {
   PARAM_ARGS_METADATA,
   GRAPHQL_MODULE_OPTIONS,
@@ -42,7 +42,6 @@ export class LoadersExplorerService extends BaseExplorerService {
     private readonly modulesContainer: ModulesContainer,
     private readonly metadataScanner: MetadataScanner,
     private readonly externalContextCreator: ExternalContextCreator,
-    private readonly discoveryService: DiscoveryService,
     @Inject(GRAPHQL_MODULE_OPTIONS)
     private readonly gqlOptions: MercuriusModuleOptions,
   ) {

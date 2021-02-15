@@ -8,6 +8,7 @@ export const users: UserType[] = [
     name: 'foo',
     lastName: 'bar',
     birthDay: new Date(),
+    secret: 'supersecret',
   },
   {
     id: '2',
