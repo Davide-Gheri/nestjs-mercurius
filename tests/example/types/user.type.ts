@@ -1,7 +1,8 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { HashScalar } from '../scalars/hash.scalar';
 import { JSONResolver } from 'graphql-scalars';
 
+@Directive('@key(fields: "id")')
 @ObjectType('User')
 export class UserType {
   @Field(() => ID)
