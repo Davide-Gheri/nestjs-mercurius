@@ -12,6 +12,7 @@ import queryComplexity, {
 } from 'graphql-query-complexity';
 import { ComplexityValidator } from './validation/complexity.validator';
 import { HashScalar } from './scalars/hash.scalar';
+import { JSONResolver } from 'graphql-scalars';
 
 @Module({
   imports: [
@@ -19,6 +20,9 @@ import { HashScalar } from './scalars/hash.scalar';
       useFactory: () => ({
         autoSchemaFile: './schema.graphql',
         fieldResolverEnhancers: ['guards', 'interceptors', 'filters'],
+        resolvers: {
+          JSON: JSONResolver,
+        },
         // altair: true,
         context: (request, reply) => {
           return {

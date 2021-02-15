@@ -43,6 +43,7 @@
     "fastify": "^3.11.0",
     "graphql": "^15.5.0",
     "graphql-query-complexity": "^0.7.2",
+    "graphql-scalars": "^1.7.0",
     "graphql-tag": "^2.11.0",
     "husky": "5",
     "lint-staged": "^10.5.4",

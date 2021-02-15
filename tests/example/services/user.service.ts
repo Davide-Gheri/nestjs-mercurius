@@ -9,6 +9,9 @@ export const users: UserType[] = [
     lastName: 'bar',
     birthDay: new Date(),
     secret: 'supersecret',
+    meta: {
+      foo: 'bar',
+    },
   },
   {
     id: '2',

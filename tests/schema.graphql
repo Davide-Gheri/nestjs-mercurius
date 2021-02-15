@@ -5,9 +5,10 @@
 type User {
   id: ID!
   name: String
-  lastName: String
+  lastName: String!
   birthDay: DateTime!
   secret: Hash
+  meta: JSON
   age: Int!
   fullName(filter: String): String
   posts: [PostType!]!
@@ -20,6 +21,11 @@ scalar DateTime
 
 """Hash scalar"""
 scalar Hash
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
 
 type PostType {
   id: ID!
@@ -39,9 +45,10 @@ type Mutation {
 
 input CreateUserInput {
   name: String
-  lastName: String
+  lastName: String = "noone"
   birthDay: DateTime!
   secret: Hash
+  meta: JSON
 }
 
 """The `Upload` scalar type represents a file upload."""

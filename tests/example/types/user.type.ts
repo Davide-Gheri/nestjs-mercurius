@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { HashScalar } from '../scalars/hash.scalar';
+import { JSONResolver } from 'graphql-scalars';
 
 @ObjectType('User')
 export class UserType {
@@ -9,7 +10,7 @@ export class UserType {
   @Field({ nullable: true })
   name?: string;
 
-  @Field({ nullable: true })
+  @Field({ defaultValue: 'noone' })
   lastName?: string;
 
   @Field(() => Date)
@@ -17,4 +18,7 @@ export class UserType {
 
   @Field(() => HashScalar, { nullable: true })
   secret?: string;
+
+  @Field(() => JSONResolver, { nullable: true })
+  meta?: any;
 }
