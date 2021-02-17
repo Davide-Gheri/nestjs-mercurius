@@ -4,13 +4,14 @@ import {
   Enhancer,
 } from '@nestjs/graphql';
 import { ModuleMetadata, Type } from '@nestjs/common';
-import { GraphQLSchema, ValidationRule } from 'graphql';
+import { GraphQLSchema } from 'graphql';
 import { IResolverValidationOptions } from '@nestjs/graphql/dist/interfaces/gql-module-options.interface';
-import { MercuriusCommonOptions, MercuriusSchemaOptions } from 'mercurius';
+import { MercuriusSchemaOptions } from 'mercurius';
+import { BaseMercuriusModuleOptions } from './base-mercurius-module-options.interface';
 
 export interface MercuriusModuleOptions
   extends Omit<MercuriusSchemaOptions, 'schema'>,
-    MercuriusCommonOptions {
+    BaseMercuriusModuleOptions {
   schema?: GraphQLSchema | string;
   path?: string;
   typeDefs?: string | string[];
@@ -28,15 +29,9 @@ export interface MercuriusModuleOptions
   } & DefinitionsGeneratorOptions;
   autoSchemaFile?: boolean | string;
   buildSchemaOptions?: BuildSchemaOptions;
-  useGlobalPrefix?: boolean;
   transformAutoSchemaFile?: boolean;
   sortSchema?: boolean;
   fieldResolverEnhancers?: Enhancer[];
-
-  validationRules?: ValidationRules;
-
-  uploads?: boolean | FileUploadOptions;
-  altair?: boolean | import('altair-fastify-plugin').AltairFastifyPluginOptions;
 }
 
 export interface MercuriusOptionsFactory {
@@ -54,18 +49,3 @@ export interface MercuriusModuleAsyncOptions
   ) => Promise<MercuriusModuleOptions> | MercuriusModuleOptions;
   inject?: any[];
 }
-
-export interface FileUploadOptions {
-  //Max allowed non-file multipart form field size in bytes; enough for your queries (default: 1 MB).
-  maxFieldSize?: number;
-  //Max allowed file size in bytes (default: Infinity).
-  maxFileSize?: number;
-  //Max allowed number of files (default: Infinity).
-  maxFiles?: number;
-}
-
-export type ValidationRules = (params: {
-  source: string;
-  variables?: Record<string, any>;
-  operationName?: string;
-}) => ValidationRule[];

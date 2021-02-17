@@ -1,4 +1,5 @@
 export * from './mercurius.module';
+export * from './mercurius-gateway.module';
 export * from './constants';
 export * from './interfaces';
 export * from './decorators';

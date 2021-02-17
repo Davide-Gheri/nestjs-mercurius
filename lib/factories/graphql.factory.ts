@@ -11,7 +11,8 @@ import {
   ScalarsExplorerService,
 } from '@nestjs/graphql/dist/services';
 import { GraphQLSchemaBuilder } from '@nestjs/graphql/dist/graphql-schema.builder';
-import { MercuriusModuleOptions, ValidationRules } from '../interfaces';
+import { MercuriusModuleOptions } from '../interfaces';
+import { ValidationRules } from '../interfaces/base-mercurius-module-options.interface';
 import {
   LoadersExplorerService,
   ValidationRuleExplorerService,
