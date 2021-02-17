@@ -1,4 +1,4 @@
-import { printSchema } from 'graphql';
+import { GraphQLSchema, printSchema } from 'graphql';
 import { MercuriusOptions } from 'mercurius';
 import { FastifyInstance } from 'fastify';
 import {
@@ -42,7 +42,7 @@ import {
   ValidationRuleExplorerService,
 } from './services';
 import { mergeDefaults } from './utils/merge-defaults';
-import { GraphQLFactory } from './graphql.factory';
+import { GraphQLFactory } from './factories/graphql.factory';
 
 @Module({
   imports: [GraphQLSchemaBuilderModule],
@@ -144,12 +144,17 @@ export class MercuriusModule implements OnModuleInit {
         this.options.typePaths,
       )) || [];
     const mergedTypeDefs = extend(typeDefs, this.options.typeDefs);
-    const mercuriusOptions = (await this.graphqlFactory.mergeOptions({
+
+    const mercuriusOptions = ((await this.graphqlFactory.mergeOptions({
       ...this.options,
       typeDefs: mergedTypeDefs,
-    })) as MercuriusModuleOptions;
+    } as any)) as unknown) as MercuriusModuleOptions;
 
-    if (this.options.definitions && this.options.definitions.path) {
+    if (
+      this.options.definitions &&
+      this.options.definitions.path &&
+      mercuriusOptions.schema instanceof GraphQLSchema
+    ) {
       await this.graphqlFactory.generateDefinitions(
         printSchema(mercuriusOptions.schema),
         this.options as any,

@@ -11,7 +11,7 @@ import { MercuriusCommonOptions, MercuriusSchemaOptions } from 'mercurius';
 export interface MercuriusModuleOptions
   extends Omit<MercuriusSchemaOptions, 'schema'>,
     MercuriusCommonOptions {
-  schema?: GraphQLSchema;
+  schema?: GraphQLSchema | string;
   path?: string;
   typeDefs?: string | string[];
   typePaths?: string[];
