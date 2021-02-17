@@ -13,9 +13,9 @@ interface Context {
   mercuriusClient: ReturnType<typeof createTestClient>;
 }
 
-const codeFirst = suite<Context>('Code-first');
+const graphqlSuite = suite<Context>('Code-first');
 
-codeFirst.before.each(async (ctx) => {
+graphqlSuite.before.each(async (ctx) => {
   const module = await Test.createTestingModule({
     imports: [ApplicationModule],
   }).compile();
@@ -28,11 +28,11 @@ codeFirst.before.each(async (ctx) => {
   ctx.mercuriusClient = createTestClient(module);
 });
 
-codeFirst.after.each(async (ctx) => {
+graphqlSuite.after.each(async (ctx) => {
   await ctx.app.close();
 });
 
-codeFirst(
+graphqlSuite(
   'should return the categories result',
   async ({ mercuriusClient }) => {
     const response = await mercuriusClient.query(
@@ -57,7 +57,7 @@ codeFirst(
   },
 );
 
-codeFirst('should return the search result', async ({ mercuriusClient }) => {
+graphqlSuite('should return the search result', async ({ mercuriusClient }) => {
   const response = await mercuriusClient.query(
     `query {
       search {
@@ -83,7 +83,7 @@ codeFirst('should return the search result', async ({ mercuriusClient }) => {
   });
 });
 
-codeFirst(`should return query result`, async ({ mercuriusClient }) => {
+graphqlSuite(`should return query result`, async ({ mercuriusClient }) => {
   const response = await mercuriusClient.query(
     `query {
       recipes {
@@ -129,7 +129,7 @@ codeFirst(`should return query result`, async ({ mercuriusClient }) => {
   });
 });
 
-codeFirst(`should return query result`, async ({ mercuriusClient }) => {
+graphqlSuite(`should return query result`, async ({ mercuriusClient }) => {
   const response = await mercuriusClient.query(
     `query {
       recipes {
@@ -169,4 +169,4 @@ codeFirst(`should return query result`, async ({ mercuriusClient }) => {
   });
 });
 
-codeFirst.run();
+graphqlSuite.run();

@@ -4,58 +4,19 @@
 
 type User {
   id: ID!
-  name: String
-  lastName: String!
-  birthDay: DateTime!
-  secret: Hash
-  meta: JSON
-  age: Int!
-  fullName(filter: String): String
-  posts: [PostType!]!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  authorId: Float!
+  public: Boolean
+  publishedAt: DateTime!
+  author: User!
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
-
-"""Hash scalar"""
-scalar Hash
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
-
-type PostType {
-  id: ID!
-  title: String!
-  authorId: String!
-}
-
-type Query {
-  users: [User!]!
-  user(id: ID!): User
-}
-
-type Mutation {
-  createUser(input: CreateUserInput!): User!
-  uploadImage(file: Upload!): Boolean!
-}
-
-input CreateUserInput {
-  name: String
-  lastName: String = "noone"
-  birthDay: DateTime!
-  secret: Hash
-  meta: JSON
-}
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
-type Subscription {
-  userAdded: User!
-  userAddedId: String!
-  specificUserAdded(id: ID!): User!
-}

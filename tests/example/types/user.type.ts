@@ -1,17 +1,16 @@
-import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { HashScalar } from '../scalars/hash.scalar';
 import { JSONResolver } from 'graphql-scalars';
 
-@Directive('@key(fields: "id")')
 @ObjectType('User')
 export class UserType {
   @Field(() => ID)
   id: string;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   name?: string;
 
-  @Field({ defaultValue: 'noone' })
+  @Field({ nullable: true })
   lastName?: string;
 
   @Field(() => Date)

@@ -9,8 +9,6 @@ import {
   Mutation,
   Subscription,
   ID,
-  Directive,
-  ResolveReference,
 } from '@nestjs/graphql';
 import { UserType } from '../types/user.type';
 import {
@@ -112,7 +110,7 @@ export class UserResolver {
     });
   }
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @UseInterceptors(LogInterceptor)
   @ResolveLoader(() => [PostType])
   async posts(@Parent() queries: LoaderQuery<UserType>[]) {
@@ -147,10 +145,5 @@ export class UserResolver {
     @Context() ctx: MercuriusContext,
   ) {
     return toAsyncIterator(ctx.pubsub.subscribe('USER_ADDED'));
-  }
-
-  @ResolveReference()
-  resolveReference(ref: { __typename: string; id: number }) {
-    return this.userService.find(ref.id);
   }
 }
