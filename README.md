@@ -132,6 +132,11 @@ export class CatResolver {
 
 ## Federation
 
+Install necessary dependencies
+```typescript
+npm i @apollo/federation
+```
+
 ### The Gateway
 
 ```typescript
