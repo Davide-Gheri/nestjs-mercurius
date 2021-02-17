@@ -1,3 +1,5 @@
+# [0.1.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.1.0-beta.1...0.1.0) (2021-02-17)
+
 * test: resolvers merging with third party resolvers (58184dc)
 * Merge pull request #4 from Davide-Gheri/feature/query-complexity (881952f)
 * ci: run only on 1 os (5b740c4)
