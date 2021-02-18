@@ -2,9 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
+type User implements Person {
   id: ID!
   name: String
+  uniqueName: String!
+  uniqueId: String!
   lastName: String!
   birthDay: DateTime!
   secret: Hash
@@ -12,6 +14,13 @@ type User {
   age: Int!
   fullName(filter: String): String
   posts: [PostType!]!
+}
+
+interface Person {
+  id: ID!
+  name: String
+  uniqueName: String!
+  uniqueId: String!
 }
 
 """
@@ -31,12 +40,21 @@ type PostType {
   id: ID!
   title: String!
   authorId: String!
+  status: Status!
+}
+
+enum Status {
+  PUBLISHED
+  DRAFT
 }
 
 type Query {
   users: [User!]!
   user(id: ID!): User
+  search: [SearchUnion!]!
 }
+
+union SearchUnion = PostType | User
 
 type Mutation {
   createUser(input: CreateUserInput!): User!

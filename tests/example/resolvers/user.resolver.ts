@@ -8,8 +8,9 @@ import {
   Resolver,
   Mutation,
   Subscription,
-  ID,
   Directive,
+  ID,
+  Info,
 } from '@nestjs/graphql';
 import { UserType } from '../types/user.type';
 import {
@@ -111,7 +112,7 @@ export class UserResolver {
     });
   }
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @UseInterceptors(LogInterceptor)
   @ResolveLoader(() => [PostType])
   async posts(@Parent() queries: LoaderQuery<UserType>[]) {

@@ -23,8 +23,7 @@ import { MercuriusParamType } from '../mercurius-param-type.enum';
 import { REQUEST_CONTEXT_ID } from '@nestjs/core/router/request/request-constants';
 import { Injector } from '@nestjs/core/injector/injector';
 import { InternalCoreModule } from '@nestjs/core/injector/internal-core-module';
-import { GraphQLResolveInfo } from 'graphql';
-import { decorateFieldResolverWithMiddleware } from '@nestjs/graphql/dist/utils/decorate-field-resolver.util';
+import { decorateLoaderResolverWithMiddleware } from '../utils/decorate-loader-resolver.util';
 
 interface LoaderMetadata {
   type: string;
@@ -239,15 +238,12 @@ export class LoadersExplorerService extends BaseExplorerService {
       return resolverFn;
     }
 
-    const originalResolveFnFactory = (
-      ...args: [TSource, TArgs, TContext, GraphQLResolveInfo]
-    ) => () => resolverFn(...args);
+    const originalResolveFnFactory = (...args: [TSource, TContext]) => () =>
+      resolverFn(...args);
 
-    return decorateFieldResolverWithMiddleware<
-      TSource,
-      TContext,
-      TArgs,
-      TOutput
-    >(originalResolveFnFactory, middlewareFunctions);
+    return decorateLoaderResolverWithMiddleware<TSource, TContext, TOutput>(
+      originalResolveFnFactory,
+      middlewareFunctions,
+    );
   }
 }

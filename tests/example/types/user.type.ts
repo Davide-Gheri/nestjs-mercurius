@@ -1,13 +1,17 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Directive, Extensions, Field, ID, ObjectType } from '@nestjs/graphql';
 import { HashScalar } from '../scalars/hash.scalar';
 import { JSONResolver } from 'graphql-scalars';
+import { Person } from './person.interface';
 
-@ObjectType('User')
-export class UserType {
+@ObjectType('User', {
+  implements: [Person],
+})
+export class UserType implements Person {
   @Field(() => ID)
   id: string;
 
-  @Field({ nullable: true })
+  @Extensions({ role: 'ADMIN' })
+  @Field(() => String, { nullable: true })
   name?: string;
 
   @Field({ defaultValue: 'noone' })
