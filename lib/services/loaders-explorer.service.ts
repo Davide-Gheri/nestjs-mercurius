@@ -1,35 +1,47 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { BaseExplorerService } from '@nestjs/graphql/dist/services';
+import { head, identity } from 'lodash';
+import { Loader, MercuriusLoaders } from 'mercurius';
+import { FastifyReply } from 'fastify';
+import { createContextId, REQUEST } from '@nestjs/core';
 import { ModulesContainer } from '@nestjs/core/injector/modules-container';
 import { MetadataScanner } from '@nestjs/core/metadata-scanner';
-import { head, identity } from 'lodash';
 import { ExternalContextCreator } from '@nestjs/core/helpers/external-context-creator';
+import { REQUEST_CONTEXT_ID } from '@nestjs/core/router/request/request-constants';
+import { Injector } from '@nestjs/core/injector/injector';
+import { InternalCoreModule } from '@nestjs/core/injector/internal-core-module';
 import {
   ContextId,
   InstanceWrapper,
 } from '@nestjs/core/injector/instance-wrapper';
 import { Module } from '@nestjs/core/injector/module';
+import { Inject, Injectable } from '@nestjs/common';
 import { isUndefined } from '@nestjs/common/utils/shared.utils';
-import { extractMetadata } from '../utils/extract-metadata.util';
-import { createContextId, REQUEST } from '@nestjs/core';
+import { FieldMiddleware, TypeMetadataStorage } from '@nestjs/graphql';
+import { BaseExplorerService } from '@nestjs/graphql/dist/services';
+import { ObjectTypeMetadata } from '@nestjs/graphql/dist/schema-builder/metadata/object-type.metadata';
 import {
   PARAM_ARGS_METADATA,
   GRAPHQL_MODULE_OPTIONS,
   FIELD_RESOLVER_MIDDLEWARE_METADATA,
 } from '@nestjs/graphql/dist/graphql.constants';
 import { MercuriusGqlParamsFactory } from '../factories/params.factory';
-import { MercuriusModuleOptions } from '../interfaces';
+import {
+  LoaderQuery,
+  MercuriusModuleOptions,
+  LoaderCtx,
+  LoaderMiddleware,
+} from '../interfaces';
 import { MercuriusParamType } from '../mercurius-param-type.enum';
-import { REQUEST_CONTEXT_ID } from '@nestjs/core/router/request/request-constants';
-import { Injector } from '@nestjs/core/injector/injector';
-import { InternalCoreModule } from '@nestjs/core/injector/internal-core-module';
+import { extractMetadata } from '../utils/extract-metadata.util';
 import { decorateLoaderResolverWithMiddleware } from '../utils/decorate-loader-resolver.util';
 
 interface LoaderMetadata {
   type: string;
   methodName: string;
   name: string;
-  callback: Function;
+  callback: Loader;
+  opts?: {
+    cache: boolean;
+  };
 }
 
 @Injectable()
@@ -47,7 +59,7 @@ export class LoadersExplorerService extends BaseExplorerService {
     super();
   }
 
-  explore() {
+  explore(): MercuriusLoaders {
     const modules = this.getModules(
       this.modulesContainer,
       this.gqlOptions.include || [],
@@ -63,9 +75,10 @@ export class LoadersExplorerService extends BaseExplorerService {
       }
       acc[loader.type][loader.name] = {
         loader: loader.callback,
+        opts: loader.opts,
       };
       return acc;
-    }, {});
+    }, {} as MercuriusLoaders);
   }
 
   filterLoaders(wrapper: InstanceWrapper, moduleRef: Module): LoaderMetadata[] {
@@ -81,17 +94,28 @@ export class LoadersExplorerService extends BaseExplorerService {
       return true;
     };
 
-    const loaders = this.metadataScanner.scanFromPrototype(
+    const loaders: Omit<
+      LoaderMetadata,
+      'callback' | 'opts'
+    >[] = this.metadataScanner.scanFromPrototype(
       instance,
       prototype,
       (name) => {
         return extractMetadata(instance, prototype, name, predicate);
       },
     );
+
     const isRequestScoped = !wrapper.isDependencyTreeStatic();
     return loaders
       .filter((loader) => !!loader)
       .map((loader) => {
+        const objectTypeMetadata = this.getObjectTypeMetadataByName(
+          loader.type,
+        );
+        const fieldOptions = objectTypeMetadata?.properties.find(
+          (p) => p.schemaName === loader.name,
+        )?.options as { opts?: { cache: boolean } };
+
         const createContext = (transform?: Function) =>
           this.createContextCallback(
             instance,
@@ -104,6 +128,7 @@ export class LoadersExplorerService extends BaseExplorerService {
           );
         return {
           ...loader,
+          opts: fieldOptions?.opts,
           callback: createContext(),
         };
       });
@@ -220,19 +245,20 @@ export class LoadersExplorerService extends BaseExplorerService {
   }
 
   private registerFieldMiddlewareIfExists<
-    TSource extends object = any,
-    TContext = {},
+    TSource extends LoaderQuery[] = any,
+    TContext extends LoaderCtx = LoaderCtx,
     TArgs = { [argName: string]: any },
     TOutput = any
-  >(resolverFn: Function, instance: object, methodKey: string) {
+  >(resolverFn: Loader, instance: object, methodKey: string) {
     const fieldMiddleware = Reflect.getMetadata(
       FIELD_RESOLVER_MIDDLEWARE_METADATA,
       instance[methodKey],
     );
 
-    const middlewareFunctions = (
-      this.gqlOptions?.buildSchemaOptions?.fieldMiddleware || []
-    ).concat(fieldMiddleware || []);
+    const middlewareFunctions = ((this.gqlOptions?.buildSchemaOptions
+      ?.fieldMiddleware || []) as FieldMiddleware<TArgs, TContext>[]).concat(
+      fieldMiddleware || [],
+    );
 
     if (middlewareFunctions?.length === 0) {
       return resolverFn;
@@ -244,6 +270,14 @@ export class LoadersExplorerService extends BaseExplorerService {
     return decorateLoaderResolverWithMiddleware<TSource, TContext, TOutput>(
       originalResolveFnFactory,
       middlewareFunctions,
+    );
+  }
+
+  private getObjectTypeMetadataByName(
+    name: string,
+  ): ObjectTypeMetadata | undefined {
+    return TypeMetadataStorage.getObjectTypesMetadata().find(
+      (m) => m.name === name,
     );
   }
 }
