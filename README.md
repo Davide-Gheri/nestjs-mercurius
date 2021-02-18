@@ -118,7 +118,7 @@ export class CatResolver {
     return 5;
   }
   
-  @ResolveLoader(() => User)
+  @ResolveLoader(() => User, { opts: { cache: false } })
   owner(
     @LoaderQueries() queries: LoaderQuery<Cat>[],
   ) {
@@ -131,6 +131,5 @@ export class CatResolver {
 ```
 
 ### TODO
-* Query complexity
 * Federation
 
