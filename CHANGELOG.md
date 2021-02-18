@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.1.0...0.2.0) (2021-02-18)
+
+
+### Features
+
+* loader middleware, testing unions/enums/interfaces ([35e25e3](https://github.com/Davide-Gheri/nestjs-mercurius/commit/35e25e384a8951a80816ada6f72ad0c3d323a56b))
+
 # [0.1.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.1.0-beta.1...0.1.0) (2021-02-17)
 
 * test: resolvers merging with third party resolvers (58184dc)
