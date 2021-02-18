@@ -1,3 +1,11 @@
+# [0.3.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.2.0...0.3.0) (2021-02-18)
+
+
+### Features
+
+* add opts object to loaders ([2a94abf](https://github.com/Davide-Gheri/nestjs-mercurius/commit/2a94abfd6bca0f0f6b16a96da0d19e3b09836c4f))
+* ResolveLoader accepts optional opts object ([5ad6dfe](https://github.com/Davide-Gheri/nestjs-mercurius/commit/5ad6dfeb45b9213c1fbc041fe0be236d679ba32f))
+
 # [0.2.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.1.0...0.2.0) (2021-02-18)
 
 
