@@ -35,8 +35,6 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "altair-fastify-plugin": "^3.1.0",
-    "apollo-server": "^2.21.0",
-    "@apollo/federation": "^0.21.0",
     "class-transformer": "^0.3.2",
     "class-validator": "^0.13.1",
     "eslint": "^7.20.0",
@@ -76,8 +74,7 @@
   },
   "optionalDependencies": {
     "altair-fastify-plugin": "^3.1.0",
-    "mercurius-upload": "^1.1.1",
-    "@apollo/federation": "^0.21.0"
+    "mercurius-upload": "^1.1.1"
   },
   "lint-staged": {
     "*.ts": [

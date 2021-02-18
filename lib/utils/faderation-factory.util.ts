@@ -9,22 +9,42 @@ import {
   GraphQLSchema,
   isObjectType,
   parse,
+  printSchema,
+  visit,
+  print,
+  GraphQLDirective,
+  DirectiveNode,
 } from 'graphql';
 import { MER_ERR_GQL_GATEWAY_INVALID_SCHEMA } from 'mercurius/lib/errors';
 import { loadPackage } from '@nestjs/common/utils/load-package.util';
 
-const BASE_FEDERATION_TYPES = `
-  scalar _Any
-  scalar _FieldSet
-  directive @external on FIELD_DEFINITION
-  directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
-  directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
-  directive @key(fields: _FieldSet!) on OBJECT | INTERFACE
-  directive @extends on OBJECT | INTERFACE
-`;
+const federationDirectives = [
+  {
+    name: 'key',
+    typeDef: `directive @key(fields: _FieldSet!) on OBJECT | INTERFACE`,
+  },
+  {
+    name: 'extends',
+    typeDef: `directive @extends on OBJECT | INTERFACE`,
+  },
+  {
+    name: 'external',
+    typeDef: `directive @external on FIELD_DEFINITION`,
+  },
+  {
+    name: 'requires',
+    typeDef: `directive @requires(fields: _FieldSet!) on FIELD_DEFINITION`,
+  },
+  {
+    name: 'provides',
+    typeDef: `directive @provides(fields: _FieldSet!) on FIELD_DEFINITION`,
+  },
+];
 
 export const FEDERATION_SCHEMA = `
-  ${BASE_FEDERATION_TYPES}
+  scalar _Any
+  scalar _FieldSet
+  ${federationDirectives.map((fd) => fd.typeDef).join('\n')}
   type _Service {
     sdl: String
   }
@@ -66,14 +86,7 @@ function addTypeNameToResult(result, typename) {
  * @param schema
  */
 export function transformFederatedSchema(schema: GraphQLSchema) {
-  // FIXME remove this dependency
-  // but graphql#printSchema does not print necessary federation directives
-  const { printSchema } = loadPackage(
-    '@apollo/federation',
-    'FederationFactory',
-    () => require('@apollo/federation'),
-  );
-  const schemaString = printSchema(schema);
+  const schemaString = printWithFederationDirectives(schema);
 
   schema = extendSchema(schema, parse(FEDERATION_SCHEMA), {
     assumeValidSDL: true,
@@ -159,4 +172,56 @@ export function transformFederatedSchema(schema: GraphQLSchema) {
   }
 
   return schema;
+}
+
+function isFederationDirective(
+  directive: GraphQLDirective | DirectiveNode,
+): boolean {
+  const name =
+    typeof directive.name === 'string' ? directive.name : directive.name.value;
+  return federationDirectives.some((fd) => fd.name === name);
+}
+
+function printWithFederationDirectives(schema: GraphQLSchema) {
+  const sdl = printSchema(schema);
+  let currentType: GraphQLObjectType;
+  const modifiedAST = visit(parse(sdl), {
+    ObjectTypeDefinition(node) {
+      currentType = schema.getType(node.name.value) as GraphQLObjectType;
+
+      return {
+        ...node,
+        directives: currentType.astNode?.directives.filter(
+          isFederationDirective,
+        ),
+      };
+    },
+    InterfaceTypeDefinition(node) {
+      currentType = schema.getType(node.name.value) as GraphQLObjectType;
+
+      return {
+        ...node,
+        directives: currentType.astNode?.directives.filter(
+          isFederationDirective,
+        ),
+      };
+    },
+    FieldDefinition(node) {
+      const fieldDef = currentType.getFields()[node.name.value];
+
+      return {
+        ...node,
+        directives: fieldDef.astNode?.directives.filter(isFederationDirective),
+      };
+    },
+    Field(node) {
+      const fieldDef = currentType.getFields()[node.name.value];
+
+      return {
+        ...node,
+        directives: fieldDef.astNode?.directives.filter(isFederationDirective),
+      };
+    },
+  });
+  return print(modifiedAST);
 }
