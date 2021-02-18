@@ -1,8 +1,8 @@
-import { LoaderMiddleware } from '../interfaces/loader-middleware.interface';
+import { LoaderQuery, LoaderMiddleware, LoaderCtx } from '../interfaces';
 
 export function decorateLoaderResolverWithMiddleware<
-  TSource extends object = any,
-  TContext = {},
+  TSource extends LoaderQuery[] = any,
+  TContext extends LoaderCtx = LoaderCtx,
   TOutput = any
 >(
   originalResolveFnFactory: (...args: [TSource, TContext]) => Function,

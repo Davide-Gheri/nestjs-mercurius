@@ -97,6 +97,9 @@ export class UserResolver {
         return results.map((res) => res || 'Missing');
       },
     ],
+    opts: {
+      cache: false,
+    },
   })
   async fullName(
     @Args({ name: 'filter', type: () => String, nullable: true }) f: never,
