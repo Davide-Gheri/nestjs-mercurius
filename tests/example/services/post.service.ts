@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PostType } from '../types/post.type';
 import { groupBy } from 'lodash';
 
-const posts: PostType[] = [
+export const posts: PostType[] = [
   {
     id: '1',
     title: 'Post1',

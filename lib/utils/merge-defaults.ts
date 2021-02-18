@@ -7,7 +7,7 @@ const defaultOptions: MercuriusModuleOptions = {
   routes: true,
   path: '/graphql',
   fieldResolverEnhancers: [],
-  cache: false,
+  cache: true,
 };
 
 export function mergeDefaults(

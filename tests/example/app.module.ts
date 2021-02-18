@@ -5,14 +5,12 @@ import { UserService } from './services/user.service';
 import { PostService } from './services/post.service';
 import { UserResolver } from './resolvers/user.resolver';
 import { ImageResolver } from './resolvers/image.resolver';
-import queryComplexity, {
-  directiveEstimator,
-  fieldExtensionsEstimator,
-  simpleEstimator,
-} from 'graphql-query-complexity';
 import { ComplexityValidator } from './validation/complexity.validator';
 import { HashScalar } from './scalars/hash.scalar';
 import { JSONResolver } from 'graphql-scalars';
+import { UpperCaseDirective } from './directives/upper-case.directive';
+import { PersonResolver } from './resolvers/person.resolver';
+import { SearchResolver } from './resolvers/search.resolver';
 
 @Module({
   imports: [
@@ -22,6 +20,23 @@ import { JSONResolver } from 'graphql-scalars';
         fieldResolverEnhancers: ['guards', 'interceptors', 'filters'],
         resolvers: {
           JSON: JSONResolver,
+        },
+        schemaDirectives: {
+          uppercase: UpperCaseDirective,
+        },
+        buildSchemaOptions: {
+          fieldMiddleware: [
+            async (ctx, next) => {
+              const value = await next();
+
+              const { info } = ctx;
+              const extensions = info?.parentType.getFields()[info.fieldName]
+                .extensions;
+              //...
+
+              return value;
+            },
+          ],
         },
         // altair: true,
         context: (request, reply) => {
@@ -36,21 +51,6 @@ import { JSONResolver } from 'graphql-scalars';
             };
           },
         },
-        validationRules: ({ variables, operationName }) => [
-          queryComplexity({
-            maximumComplexity: 100,
-            variables,
-            operationName,
-            estimators: [
-              fieldExtensionsEstimator(),
-              directiveEstimator(),
-              simpleEstimator({ defaultComplexity: 1 }),
-            ],
-            onComplete: (complexity: number) => {
-              console.log('Query Complexity:', complexity);
-            },
-          }),
-        ],
       }),
     }),
   ],
@@ -58,8 +58,10 @@ import { JSONResolver } from 'graphql-scalars';
   providers: [
     UserService,
     PostService,
+    PersonResolver,
     UserResolver,
     ImageResolver,
+    SearchResolver,
     ComplexityValidator,
     HashScalar,
   ],

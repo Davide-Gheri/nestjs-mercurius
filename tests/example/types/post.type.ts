@@ -1,4 +1,13 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
+
+export enum Status {
+  PUBLISHED,
+  DRAFT,
+}
+
+registerEnumType(Status, {
+  name: 'Status',
+});
 
 @ObjectType()
 export class PostType {
@@ -10,4 +19,7 @@ export class PostType {
 
   @Field()
   authorId: string;
+
+  @Field(() => Status, { defaultValue: Status.DRAFT })
+  status?: Status;
 }
