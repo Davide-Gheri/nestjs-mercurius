@@ -57,9 +57,12 @@ type Query {
 union SearchUnion = PostType | User
 
 type Mutation {
-  createUser(input: CreateUserInput!): User!
   uploadImage(file: Upload!): Boolean!
+  createUser(input: CreateUserInput!): User!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input CreateUserInput {
   name: String
@@ -68,9 +71,6 @@ input CreateUserInput {
   secret: Hash
   meta: JSON
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 type Subscription {
   userAdded: User!

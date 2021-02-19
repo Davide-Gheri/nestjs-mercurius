@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PostType } from '../types/post.type';
+import { PostType } from '../../../types/post.type';
 import { groupBy } from 'lodash';
 
 export const posts: PostType[] = [

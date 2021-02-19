@@ -1,6 +1,6 @@
 import { createUnionType, Query, Resolver } from '@nestjs/graphql';
-import { PostType } from '../types/post.type';
-import { UserType } from '../types/user.type';
+import { PostType } from '../../../types/post.type';
+import { UserType } from '../../../types/user.type';
 import { users } from '../services/user.service';
 import { posts } from '../services/post.service';
 

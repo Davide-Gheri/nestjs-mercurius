@@ -1,6 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { Person } from '../types/person.interface';
-import { LoaderQuery, ResolveLoader } from '../../../lib';
+import { Person } from '../../../types/person.interface';
+import { LoaderQuery, ResolveLoader } from '../../../../../lib';
 
 @Resolver(() => Person)
 export class PersonResolver {

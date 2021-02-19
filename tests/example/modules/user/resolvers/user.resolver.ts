@@ -8,33 +8,30 @@ import {
   Resolver,
   Mutation,
   Subscription,
-  Directive,
   ID,
-  Info,
 } from '@nestjs/graphql';
-import { UserType } from '../types/user.type';
+import { UserType } from '../../../types/user.type';
+import { PostType } from '../../../types/post.type';
 import {
   LoaderQuery,
-  LoaderQueries,
-  LoaderContext,
   ResolveLoader,
   toAsyncIterator,
-} from '../../../lib';
+} from '../../../../../lib';
 import { UserService } from '../services/user.service';
-import { PostType } from '../types/post.type';
 import { PostService } from '../services/post.service';
 import { CreateUserInput } from '../inputs/create-user.input';
 import { MercuriusContext } from 'mercurius';
 import {
   ParseIntPipe,
   UseFilters,
-  UseGuards,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '../guards/auth.guard';
-import { LogInterceptor } from '../interceptors/log.interceptor';
-import { ForbiddenExceptionFilter } from '../filters/forbidden-exception.filter';
-import { Header } from '../decorators/header.decorator';
+import { LogInterceptor } from '../../../interceptors/log.interceptor';
+import { ForbiddenExceptionFilter } from '../../../filters/forbidden-exception.filter';
+import { Header } from '../../../decorators/header.decorator';
+import { FullNameArgs } from '../inputs/full-name.args';
+import { AuthGuard } from '../../../guards/auth.guard';
 
 function calculateAge(birthday: Date): number {
   const ageDifMs = Date.now() - birthday.getTime();
@@ -50,7 +47,6 @@ export class UserResolver {
     private readonly postService: PostService,
   ) {}
 
-  // @UseGuards(AuthGuard)
   @Query(() => [UserType], {
     complexity: (options) => options.childComplexity + 5,
   })
@@ -69,12 +65,7 @@ export class UserResolver {
     @Context() ctx: MercuriusContext,
   ) {
     const user = this.userService.create(data);
-    ctx.pubsub.publish({
-      topic: 'USER_ADDED',
-      payload: {
-        userAdded: user,
-      },
-    });
+
     return user;
   }
 
@@ -102,9 +93,9 @@ export class UserResolver {
     },
   })
   async fullName(
-    @Args({ name: 'filter', type: () => String, nullable: true }) f: never,
-    @LoaderQueries() p: LoaderQuery<UserType>[],
-    @LoaderContext('headers') headers: Record<string, any>,
+    @Args({ type: () => FullNameArgs }) args: FullNameArgs[],
+    @Parent() p: LoaderQuery<UserType>[],
+    @Context() ctx: Record<string, any>,
     @Header('authorization') auth?: string,
   ) {
     return p.map(({ obj }) => {
@@ -115,7 +106,7 @@ export class UserResolver {
     });
   }
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @UseInterceptors(LogInterceptor)
   @ResolveLoader(() => [PostType])
   async posts(@Parent() queries: LoaderQuery<UserType>[]) {

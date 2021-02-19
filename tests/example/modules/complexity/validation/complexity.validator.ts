@@ -4,11 +4,13 @@ import {
   fieldExtensionsEstimator,
   simpleEstimator,
 } from 'graphql-query-complexity';
-import { ValidationRule } from '../../../lib';
-import { ValidationRuleHost } from '../../../lib';
+import { ValidationRuleHost, ValidationRule } from '../../../../../lib';
+import { ConfigService } from '../config.service';
 
 @ValidationRule()
 export class ComplexityValidator implements ValidationRuleHost {
+  constructor(private readonly configService: ConfigService) {}
+
   validate(
     params: {
       source: string;
@@ -18,7 +20,7 @@ export class ComplexityValidator implements ValidationRuleHost {
     context: ValidationContext,
   ): ASTVisitor {
     return new QueryComplexity(context, {
-      maximumComplexity: 100,
+      maximumComplexity: this.configService.maxComplexity,
       variables: params.variables,
       operationName: params.operationName,
       estimators: [
