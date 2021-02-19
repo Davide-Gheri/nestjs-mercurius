@@ -132,6 +132,109 @@ export class CatResolver {
 }
 ```
 
-### TODO
-* Federation
+## Federation
 
+Install necessary dependencies
+```typescript
+npm i @apollo/federation
+```
+
+### The Gateway
+
+```typescript
+import { Module } from '@nestjs/common';
+import { MercuriusGatewayModule } from 'nestjs-mercurius';
+
+@Module({
+  imports: [
+    MercuriusGatewayModule.forRoot({
+      graphiql: 'playground',
+      subscription: true,
+      gateway: {
+        pollingInterval: 10000,
+        services: [
+          {
+            name: 'users',
+            url: 'https://....',
+            wsUrl: 'wss://...',
+          },
+          {
+            name: 'pets',
+            url: 'https://...',
+            rewriteHeaders: headers => headers,
+          },
+        ],
+      },
+    }),
+  ],
+})
+export class GatewayModule {}
+```
+
+### The Service
+
+```typescript
+import { Module } from '@nestjs/common';
+import { MercuriusModule } from './mercurius.module';
+import { User } from './user';
+import { PetResolver, UserResolver } from './resolvers';
+
+@Module({
+  imports: [
+    MercuriusModule.forRoot({
+      autoSchemaFile: true,
+      federationMetadata: true,
+      buildSchemaOptions: {
+        orphanedTypes: [User],
+      },
+      //...
+    }),
+  ],
+  providers: [
+    PetResolver,
+    UserResolver,
+  ],
+})
+export class PetModule {}
+```
+
+### The Resolver
+
+```typescript
+import { Resolver, ResolveReference } from '@nestjs/graphql';
+import { Pet } from './pet';
+import { Reference } from './reference.interface';
+
+@Resolver(() => Pet)
+export class PetResolver {
+  constructor(
+    private readonly petService: PetService,
+  ) {}
+
+  @ResolveReference()
+  resolveReference(ref: Reference<'Pet', 'id'>) {
+    return this.petService.findOne(ref.id);
+  }
+}
+```
+
+Resolve reference could also be defined as Loader, potentially improving performance:
+
+```typescript
+import { ResolveReferenceLoader } from './resolve-reference-loader.decorator';
+import { LoaderQuery } from './loader.interface';
+
+@Resolver(() => Pet)
+export class PetResolver {
+  constructor(
+    private readonly petService: PetService,
+  ) {}
+
+  @ResolveReferenceLoader()
+  resolveReference(refs: LoaderQuery<Reference<'Pet', 'id'>>) {
+    return this.petService.findById(
+      refs.map(({ obj }) => obj.id)
+    );
+  }
+}
+```

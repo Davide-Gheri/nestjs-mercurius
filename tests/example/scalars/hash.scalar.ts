@@ -15,6 +15,7 @@ export class HashScalar implements CustomScalar<string, string> {
   description = 'Hash scalar';
 
   parseValue(value: string): string {
+    console.log('hash parseV');
     return crypto
       .createDecipheriv(algo, key, iv)
       .update(value, 'base64')
@@ -22,6 +23,7 @@ export class HashScalar implements CustomScalar<string, string> {
   }
 
   serialize(value: string): string {
+    console.log('hash serialize');
     return crypto
       .createCipheriv(algo, key, iv)
       .update(value)
@@ -29,6 +31,7 @@ export class HashScalar implements CustomScalar<string, string> {
   }
 
   parseLiteral(ast: ValueNode): string {
+    console.log('hash parseL');
     if (ast.kind === Kind.STRING) {
       return this.parseValue(ast.value);
     }

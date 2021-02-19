@@ -4,6 +4,10 @@ import {
   RESOLVER_TYPE_METADATA,
 } from '@nestjs/graphql/dist/graphql.constants';
 import { LOADER_PROPERTY_METADATA } from '../constants';
+import {
+  RESOLVER_REFERENCE_KEY,
+  RESOLVER_REFERENCE_METADATA,
+} from '@nestjs/graphql/dist/federation/federation.constants';
 
 export function extractMetadata(
   instance: Record<string, any>,
@@ -21,13 +25,21 @@ export function extractMetadata(
     callback,
   );
 
+  const isReferenceResolver = !!Reflect.getMetadata(
+    RESOLVER_REFERENCE_METADATA,
+    callback,
+  );
+
   const resolverName = Reflect.getMetadata(RESOLVER_NAME_METADATA, callback);
 
   if (filterPredicate(resolverType, isLoaderResolver)) {
     return null;
   }
 
-  const name = resolverName || methodName;
+  const name = isReferenceResolver
+    ? RESOLVER_REFERENCE_KEY
+    : resolverName || methodName;
+
   return {
     type: resolverType,
     methodName,

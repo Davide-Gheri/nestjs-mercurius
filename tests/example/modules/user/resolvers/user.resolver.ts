@@ -106,7 +106,7 @@ export class UserResolver {
     });
   }
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @UseInterceptors(LogInterceptor)
   @ResolveLoader(() => [PostType])
   async posts(@Parent() queries: LoaderQuery<UserType>[]) {

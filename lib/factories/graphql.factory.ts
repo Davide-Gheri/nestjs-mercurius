@@ -1,8 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { GraphQLSchema } from 'graphql';
 import {
   GraphQLAstExplorer,
-  GraphQLFactory as NestGraphQLFactory,
   GraphQLSchemaHost,
+  GraphQLFactory as NestGraphQLFactory,
 } from '@nestjs/graphql';
 import {
   PluginsExplorerService,
@@ -10,12 +11,13 @@ import {
   ScalarsExplorerService,
 } from '@nestjs/graphql/dist/services';
 import { GraphQLSchemaBuilder } from '@nestjs/graphql/dist/graphql-schema.builder';
-import { extend } from '@nestjs/graphql/dist/utils';
-import { MercuriusModuleOptions, ValidationRules } from './interfaces';
+import { MercuriusModuleOptions } from '../interfaces';
+import { ValidationRules } from '../interfaces/base-mercurius-module-options.interface';
 import {
   LoadersExplorerService,
   ValidationRuleExplorerService,
-} from './services';
+} from '../services';
+import { transformFederatedSchema } from '../utils/faderation-factory.util';
 
 @Injectable()
 export class GraphQLFactory extends NestGraphQLFactory {
@@ -24,18 +26,17 @@ export class GraphQLFactory extends NestGraphQLFactory {
   constructor(
     resolversExplorerService: ResolversExplorerService,
     scalarsExplorerService: ScalarsExplorerService,
-    // FIXME this should be removed since Plugins are not supported by Mercurius
-    pluginsExplorerService: PluginsExplorerService,
+    pluginExplorerService: PluginsExplorerService,
     graphqlAstExplorer: GraphQLAstExplorer,
     gqlSchemaBuilder: GraphQLSchemaBuilder,
     gqlSchemaHost: GraphQLSchemaHost,
-    private readonly loaderExplorerService: LoadersExplorerService,
-    private readonly validationRuleExplorerService: ValidationRuleExplorerService,
+    protected readonly loaderExplorerService: LoadersExplorerService,
+    protected readonly validationRuleExplorerService: ValidationRuleExplorerService,
   ) {
     super(
       resolversExplorerService,
       scalarsExplorerService,
-      pluginsExplorerService,
+      pluginExplorerService,
       graphqlAstExplorer,
       gqlSchemaBuilder,
       gqlSchemaHost,
@@ -43,11 +44,20 @@ export class GraphQLFactory extends NestGraphQLFactory {
   }
 
   async mergeOptions(options?: any): Promise<any> {
+    if (options.federationMetadata) {
+      options.buildSchemaOptions = {
+        ...options.buildSchemaOptions,
+        skipCheck: true,
+      };
+    }
     const parentOptions = ((await super.mergeOptions(
       options as any,
-    )) as unknown) as MercuriusModuleOptions;
-    if ((parentOptions as any).plugins?.length) {
-      const pluginNames = (parentOptions as any).plugins
+    )) as unknown) as MercuriusModuleOptions & {
+      plugins: any[];
+      schema: GraphQLSchema;
+    };
+    if (parentOptions.plugins?.length) {
+      const pluginNames = parentOptions.plugins
         .map((p) => p.name)
         .filter(Boolean);
       this.logger.warn(
@@ -56,16 +66,15 @@ export class GraphQLFactory extends NestGraphQLFactory {
         )}`,
       );
     }
-    delete (parentOptions as any).plugins;
-
-    parentOptions.loaders = extend(
-      parentOptions.loaders || {},
-      this.loaderExplorerService.explore(),
-    );
-
+    delete parentOptions.plugins;
+    parentOptions.loaders = this.loaderExplorerService.explore();
     parentOptions.validationRules = this.mergeValidationRules(
-      parentOptions.validationRules,
+      options.validationRules,
     );
+
+    if (options.federationMetadata) {
+      parentOptions.schema = transformFederatedSchema(parentOptions.schema);
+    }
 
     return parentOptions;
   }

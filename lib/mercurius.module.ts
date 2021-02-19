@@ -1,6 +1,4 @@
-import { printSchema } from 'graphql';
-import { MercuriusOptions } from 'mercurius';
-import { FastifyInstance } from 'fastify';
+import { GraphQLSchema, printSchema } from 'graphql';
 import {
   DynamicModule,
   Inject,
@@ -10,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { ApplicationConfig, HttpAdapterHost } from '@nestjs/core';
 import { MetadataScanner } from '@nestjs/core/metadata-scanner';
-import { loadPackage } from '@nestjs/common/utils/load-package.util';
 import {
   GraphQLTypesLoader,
   GraphQLSchemaBuilderModule,
@@ -27,11 +24,7 @@ import {
   GRAPHQL_MODULE_ID,
 } from '@nestjs/graphql/dist/graphql.constants';
 import { GraphQLSchemaBuilder } from '@nestjs/graphql/dist/graphql-schema.builder';
-import {
-  extend,
-  generateString,
-  normalizeRoutePath,
-} from '@nestjs/graphql/dist/utils';
+import { extend, generateString } from '@nestjs/graphql/dist/utils';
 import {
   MercuriusModuleAsyncOptions,
   MercuriusModuleOptions,
@@ -42,8 +35,9 @@ import {
   ValidationRuleExplorerService,
 } from './services';
 import { mergeDefaults } from './utils/merge-defaults';
-import { GraphQLFactory } from './graphql.factory';
 import { MercuriusCoreModule } from './mercurius-core.module';
+import { GraphQLFactory } from './factories/graphql.factory';
+import { BaseMercuriusModule } from './base-mercurius.module';
 
 @Module({
   imports: [GraphQLSchemaBuilderModule, MercuriusCoreModule],
@@ -61,15 +55,19 @@ import { MercuriusCoreModule } from './mercurius-core.module';
     ValidationRuleExplorerService,
   ],
 })
-export class MercuriusModule implements OnModuleInit {
+export class MercuriusModule
+  extends BaseMercuriusModule<MercuriusModuleOptions>
+  implements OnModuleInit {
   constructor(
-    private readonly httpAdapterHost: HttpAdapterHost,
-    @Inject(GRAPHQL_MODULE_OPTIONS)
-    private readonly options: MercuriusModuleOptions,
     private readonly graphqlFactory: GraphQLFactory,
     private readonly graphqlTypesLoader: GraphQLTypesLoader,
-    private readonly applicationConfig: ApplicationConfig,
-  ) {}
+    @Inject(GRAPHQL_MODULE_OPTIONS)
+    protected readonly options: MercuriusModuleOptions,
+    protected readonly applicationConfig: ApplicationConfig,
+    protected readonly httpAdapterHost: HttpAdapterHost,
+  ) {
+    super(httpAdapterHost, applicationConfig, options);
+  }
 
   static forRoot(options: MercuriusModuleOptions) {
     options = mergeDefaults(options);
@@ -145,87 +143,22 @@ export class MercuriusModule implements OnModuleInit {
         this.options.typePaths,
       )) || [];
     const mergedTypeDefs = extend(typeDefs, this.options.typeDefs);
-    const mercuriusOptions = (await this.graphqlFactory.mergeOptions({
+
+    const mercuriusOptions = ((await this.graphqlFactory.mergeOptions({
       ...this.options,
       typeDefs: mergedTypeDefs,
-    })) as MercuriusModuleOptions;
+    } as any)) as unknown) as MercuriusModuleOptions;
 
-    if (this.options.definitions && this.options.definitions.path) {
+    if (
+      this.options.definitions &&
+      this.options.definitions.path &&
+      mercuriusOptions.schema instanceof GraphQLSchema
+    ) {
       await this.graphqlFactory.generateDefinitions(
         printSchema(mercuriusOptions.schema),
         this.options as any,
       );
     }
     await this.registerGqlServer(mercuriusOptions);
-  }
-
-  private async registerGqlServer(mercuriusOptions: MercuriusModuleOptions) {
-    const httpAdapter = this.httpAdapterHost.httpAdapter;
-    const platformName = httpAdapter.getType();
-
-    if (platformName === 'fastify') {
-      await this.registerFastify(mercuriusOptions);
-    } else {
-      throw new Error(`No support for current HttpAdapter: ${platformName}`);
-    }
-  }
-
-  private async registerFastify(mercuriusOptions: MercuriusModuleOptions) {
-    const mercurius = loadPackage('mercurius', 'MercuriusModule', () =>
-      require('mercurius'),
-    );
-
-    const httpAdapter = this.httpAdapterHost.httpAdapter;
-    const app: FastifyInstance = httpAdapter.getInstance();
-
-    const options: MercuriusOptions = {
-      ...mercuriusOptions,
-      schema: mercuriusOptions.schema,
-      path: this.getNormalizedPath(mercuriusOptions),
-    };
-
-    if (mercuriusOptions.uploads) {
-      const mercuriusUpload = loadPackage(
-        'mercurius-upload',
-        'MercuriusModule',
-        () => require('mercurius-upload'),
-      );
-      await app.register(
-        mercuriusUpload,
-        typeof mercuriusOptions.uploads !== 'boolean'
-          ? mercuriusOptions.uploads
-          : undefined,
-      );
-    }
-
-    if (mercuriusOptions.altair) {
-      const altairPlugin = loadPackage(
-        'altair-fastify-plugin',
-        'MercuriusModule',
-        () => require('altair-fastify-plugin'),
-      );
-
-      options.graphiql = false;
-      options.ide = false;
-
-      await app.register(altairPlugin, {
-        baseURL: '/altair/',
-        path: '/altair',
-        ...(typeof mercuriusOptions.altair !== 'boolean' &&
-          mercuriusOptions.altair),
-        endpointURL: options.path,
-      });
-    }
-
-    await app.register(mercurius, options);
-  }
-
-  private getNormalizedPath(mercuriusOptions: MercuriusModuleOptions): string {
-    const prefix = this.applicationConfig.getGlobalPrefix();
-    const useGlobalPrefix = prefix && this.options.useGlobalPrefix;
-    const gqlOptionsPath = normalizeRoutePath(mercuriusOptions.path);
-    return useGlobalPrefix
-      ? normalizeRoutePath(prefix) + gqlOptionsPath
-      : gqlOptionsPath;
   }
 }
