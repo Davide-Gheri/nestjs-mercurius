@@ -72,9 +72,7 @@
     "fastify": "^3.12.0",
     "graphql": "^15.5.0",
     "mercurius": "^7.0.0",
-    "reflect-metadata": "^0.1.13"
-  },
-  "optionalDependencies": {
+    "reflect-metadata": "^0.1.13",
     "altair-fastify-plugin": "^3.2.1",
     "mercurius-upload": "^1.1.1",
     "@apollo/federation": "^0.21.0"
