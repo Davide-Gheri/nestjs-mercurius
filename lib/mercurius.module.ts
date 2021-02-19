@@ -43,9 +43,10 @@ import {
 } from './services';
 import { mergeDefaults } from './utils/merge-defaults';
 import { GraphQLFactory } from './graphql.factory';
+import { MercuriusCoreModule } from './mercurius-core.module';
 
 @Module({
-  imports: [GraphQLSchemaBuilderModule],
+  imports: [GraphQLSchemaBuilderModule, MercuriusCoreModule],
   providers: [
     GraphQLFactory,
     MetadataScanner,
