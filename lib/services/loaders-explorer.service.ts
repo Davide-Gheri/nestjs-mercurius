@@ -1,6 +1,5 @@
 import { head, identity } from 'lodash';
 import { Loader, MercuriusLoaders } from 'mercurius';
-import { FastifyReply } from 'fastify';
 import { createContextId, REQUEST } from '@nestjs/core';
 import { ModulesContainer } from '@nestjs/core/injector/modules-container';
 import { MetadataScanner } from '@nestjs/core/metadata-scanner';
@@ -23,16 +22,12 @@ import {
   GRAPHQL_MODULE_OPTIONS,
   FIELD_RESOLVER_MIDDLEWARE_METADATA,
 } from '@nestjs/graphql/dist/graphql.constants';
-import { MercuriusGqlParamsFactory } from '../factories/params.factory';
-import {
-  LoaderQuery,
-  MercuriusModuleOptions,
-  LoaderCtx,
-  LoaderMiddleware,
-} from '../interfaces';
+import { LoaderGqlParamsFactory } from '../factories/params.factory';
+import { LoaderQuery, MercuriusModuleOptions, LoaderCtx } from '../interfaces';
 import { MercuriusParamType } from '../mercurius-param-type.enum';
 import { extractMetadata } from '../utils/extract-metadata.util';
 import { decorateLoaderResolverWithMiddleware } from '../utils/decorate-loader-resolver.util';
+import { GqlParamtype } from '@nestjs/graphql/dist/enums/gql-paramtype.enum';
 
 interface LoaderMetadata {
   type: string;
@@ -46,7 +41,7 @@ interface LoaderMetadata {
 
 @Injectable()
 export class LoadersExplorerService extends BaseExplorerService {
-  private readonly gqlParamsFactory = new MercuriusGqlParamsFactory();
+  private readonly gqlParamsFactory = new LoaderGqlParamsFactory();
   private readonly injector = new Injector();
 
   constructor(
@@ -155,7 +150,7 @@ export class LoadersExplorerService extends BaseExplorerService {
     if (isRequestScoped) {
       const loaderCallback = async (...args: any[]) => {
         const gqlContext = paramsFactory.exchangeKeyForValue(
-          MercuriusParamType.LOADER_CONTEXT,
+          GqlParamtype.CONTEXT,
           undefined,
           args,
         );

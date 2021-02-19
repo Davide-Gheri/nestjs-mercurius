@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import {
   GraphQLAstExplorer,
   GraphQLFactory as NestGraphQLFactory,
@@ -19,6 +19,8 @@ import {
 
 @Injectable()
 export class GraphQLFactory extends NestGraphQLFactory {
+  private readonly logger = new Logger(GraphQLFactory.name);
+
   constructor(
     resolversExplorerService: ResolversExplorerService,
     scalarsExplorerService: ScalarsExplorerService,
@@ -44,6 +46,16 @@ export class GraphQLFactory extends NestGraphQLFactory {
     const parentOptions = ((await super.mergeOptions(
       options as any,
     )) as unknown) as MercuriusModuleOptions;
+    if ((parentOptions as any).plugins?.length) {
+      const pluginNames = (parentOptions as any).plugins
+        .map((p) => p.name)
+        .filter(Boolean);
+      this.logger.warn(
+        `Plugins are not supported by Mercurius, ignoring: ${pluginNames.join(
+          ', ',
+        )}`,
+      );
+    }
     delete (parentOptions as any).plugins;
 
     parentOptions.loaders = extend(
