@@ -1,3 +1,18 @@
+# [0.5.0-beta.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.4.0...0.5.0-beta.0) (2021-02-19)
+
+
+### Bug Fixes
+
+* merge error ([23d0ced](https://github.com/Davide-Gheri/nestjs-mercurius/commit/23d0cedc728ee9218cdf8463617ea8445c4493eb))
+
+
+### Features
+
+* **federation:** define federation service ([688cea2](https://github.com/Davide-Gheri/nestjs-mercurius/commit/688cea22edb6bdc1e4e0de049005f1737ea83563))
+* **federation:** gateway module ([5c835f0](https://github.com/Davide-Gheri/nestjs-mercurius/commit/5c835f067cd996c9a6faab5e026441ccde38cb1e))
+* **federation:** need a custom graphql factory ([e2b1bf8](https://github.com/Davide-Gheri/nestjs-mercurius/commit/e2b1bf874408270ef8cd8a06a711a866ed9e7bab))
+* **federation:** need a custom graphql factory ([989aace](https://github.com/Davide-Gheri/nestjs-mercurius/commit/989aace729987e437793f699eda81f41912c9ea4))
+
 # [0.4.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.3.0...0.4.0) (2021-02-19)
 
 
