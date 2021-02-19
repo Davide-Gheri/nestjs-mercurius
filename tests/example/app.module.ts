@@ -1,67 +1,60 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { MercuriusModule } from '../../lib';
-import { UserService } from './services/user.service';
-import { PostService } from './services/post.service';
-import { UserResolver } from './resolvers/user.resolver';
 import { ImageResolver } from './resolvers/image.resolver';
-import queryComplexity, {
-  directiveEstimator,
-  fieldExtensionsEstimator,
-  simpleEstimator,
-} from 'graphql-query-complexity';
-import { ComplexityValidator } from './validation/complexity.validator';
 import { HashScalar } from './scalars/hash.scalar';
 import { JSONResolver } from 'graphql-scalars';
+import { UpperCaseDirective } from './directives/upper-case.directive';
+import { ComplexityModule } from './modules/complexity/complexity.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
     MercuriusModule.forRootAsync({
-      useFactory: () => ({
-        autoSchemaFile: './schema.graphql',
-        fieldResolverEnhancers: ['guards', 'interceptors', 'filters'],
-        resolvers: {
-          JSON: JSONResolver,
-        },
-        // altair: true,
-        context: (request, reply) => {
-          return {
-            headers: request.headers,
-          };
-        },
-        subscription: {
-          context: (connection, request) => {
+      useFactory: () => {
+        return {
+          autoSchemaFile: './schema.graphql',
+          fieldResolverEnhancers: ['guards', 'interceptors', 'filters'],
+          resolvers: {
+            JSON: JSONResolver,
+          },
+          schemaDirectives: {
+            uppercase: UpperCaseDirective,
+          },
+          buildSchemaOptions: {
+            fieldMiddleware: [
+              async (ctx, next) => {
+                const value = await next();
+
+                const { info } = ctx;
+                const extensions = info?.parentType.getFields()[info.fieldName]
+                  .extensions;
+                //...
+
+                return value;
+              },
+            ],
+          },
+          // altair: true,
+          context: (request, reply) => {
             return {
               headers: request.headers,
             };
           },
-        },
-        validationRules: ({ variables, operationName }) => [
-          queryComplexity({
-            maximumComplexity: 100,
-            variables,
-            operationName,
-            estimators: [
-              fieldExtensionsEstimator(),
-              directiveEstimator(),
-              simpleEstimator({ defaultComplexity: 1 }),
-            ],
-            onComplete: (complexity: number) => {
-              console.log('Query Complexity:', complexity);
+          subscription: {
+            context: (connection, request) => {
+              return {
+                headers: request.headers,
+              };
             },
-          }),
-        ],
-      }),
+          },
+        };
+      },
     }),
+    ComplexityModule,
+    UserModule,
   ],
   controllers: [AppController],
-  providers: [
-    UserService,
-    PostService,
-    UserResolver,
-    ImageResolver,
-    ComplexityValidator,
-    HashScalar,
-  ],
+  providers: [ImageResolver, HashScalar],
 })
 export class AppModule {}

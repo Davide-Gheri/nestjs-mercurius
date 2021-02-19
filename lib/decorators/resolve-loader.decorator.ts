@@ -13,14 +13,17 @@ import { LazyMetadataStorage } from '@nestjs/graphql/dist/schema-builder/storage
 import { TypeOptions } from '@nestjs/graphql/dist/interfaces/type-options.interface';
 import { reflectTypeFromMetadata } from '@nestjs/graphql/dist/utils/reflection.utilts';
 import { LOADER_NAME_METADATA, LOADER_PROPERTY_METADATA } from '../constants';
+import { LoaderMiddleware } from '../interfaces';
 
 export interface ResolveLoaderOptions extends BaseTypeOptions {
   name?: string;
-  nullable?: any;
   description?: string;
   deprecationReason?: string;
   complexity?: Complexity;
-  middleware?: FieldMiddleware[];
+  middleware?: LoaderMiddleware[];
+  opts?: {
+    cache?: boolean;
+  };
 }
 
 export function ResolveLoader(

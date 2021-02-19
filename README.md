@@ -5,6 +5,8 @@ Use [Mercurius GraphQL](https://github.com/mercurius-js/mercurius) with Nestjs f
 
 > **Warning** still in heavy development, it is NOT production ready.
 
+Visit the [Wiki](https://github.com/Davide-Gheri/nestjs-mercurius/wiki)
+
 ## Install
 
 ```bash
@@ -118,7 +120,7 @@ export class CatResolver {
     return 5;
   }
   
-  @ResolveLoader(() => User)
+  @ResolveLoader(() => User, { opts: { cache: false } })
   owner(
     @LoaderQueries() queries: LoaderQuery<Cat>[],
   ) {

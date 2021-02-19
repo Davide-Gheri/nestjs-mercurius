@@ -1,41 +1,47 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { BaseExplorerService } from '@nestjs/graphql/dist/services';
+import { head, identity } from 'lodash';
+import { Loader, MercuriusLoaders } from 'mercurius';
+import { createContextId, REQUEST } from '@nestjs/core';
 import { ModulesContainer } from '@nestjs/core/injector/modules-container';
 import { MetadataScanner } from '@nestjs/core/metadata-scanner';
-import { head, identity } from 'lodash';
 import { ExternalContextCreator } from '@nestjs/core/helpers/external-context-creator';
+import { REQUEST_CONTEXT_ID } from '@nestjs/core/router/request/request-constants';
+import { Injector } from '@nestjs/core/injector/injector';
+import { InternalCoreModule } from '@nestjs/core/injector/internal-core-module';
 import {
   ContextId,
   InstanceWrapper,
 } from '@nestjs/core/injector/instance-wrapper';
 import { Module } from '@nestjs/core/injector/module';
+import { Inject, Injectable } from '@nestjs/common';
 import { isUndefined } from '@nestjs/common/utils/shared.utils';
-import { extractMetadata } from '../utils/extract-metadata.util';
-import { createContextId, REQUEST } from '@nestjs/core';
+import { FieldMiddleware, TypeMetadataStorage } from '@nestjs/graphql';
+import { BaseExplorerService } from '@nestjs/graphql/dist/services';
+import { ObjectTypeMetadata } from '@nestjs/graphql/dist/schema-builder/metadata/object-type.metadata';
 import {
   PARAM_ARGS_METADATA,
   GRAPHQL_MODULE_OPTIONS,
   FIELD_RESOLVER_MIDDLEWARE_METADATA,
 } from '@nestjs/graphql/dist/graphql.constants';
-import { MercuriusGqlParamsFactory } from '../factories/params.factory';
-import { MercuriusModuleOptions } from '../interfaces';
+import { LoaderGqlParamsFactory } from '../factories/params.factory';
+import { LoaderQuery, MercuriusModuleOptions, LoaderCtx } from '../interfaces';
 import { MercuriusParamType } from '../mercurius-param-type.enum';
-import { REQUEST_CONTEXT_ID } from '@nestjs/core/router/request/request-constants';
-import { Injector } from '@nestjs/core/injector/injector';
-import { InternalCoreModule } from '@nestjs/core/injector/internal-core-module';
-import { GraphQLResolveInfo } from 'graphql';
-import { decorateFieldResolverWithMiddleware } from '@nestjs/graphql/dist/utils/decorate-field-resolver.util';
+import { extractMetadata } from '../utils/extract-metadata.util';
+import { decorateLoaderResolverWithMiddleware } from '../utils/decorate-loader-resolver.util';
+import { GqlParamtype } from '@nestjs/graphql/dist/enums/gql-paramtype.enum';
 
 interface LoaderMetadata {
   type: string;
   methodName: string;
   name: string;
-  callback: Function;
+  callback: Loader;
+  opts?: {
+    cache: boolean;
+  };
 }
 
 @Injectable()
 export class LoadersExplorerService extends BaseExplorerService {
-  private readonly gqlParamsFactory = new MercuriusGqlParamsFactory();
+  private readonly gqlParamsFactory = new LoaderGqlParamsFactory();
   private readonly injector = new Injector();
 
   constructor(
@@ -48,7 +54,7 @@ export class LoadersExplorerService extends BaseExplorerService {
     super();
   }
 
-  explore() {
+  explore(): MercuriusLoaders {
     const modules = this.getModules(
       this.modulesContainer,
       this.gqlOptions.include || [],
@@ -64,9 +70,10 @@ export class LoadersExplorerService extends BaseExplorerService {
       }
       acc[loader.type][loader.name] = {
         loader: loader.callback,
+        opts: loader.opts,
       };
       return acc;
-    }, {});
+    }, {} as MercuriusLoaders);
   }
 
   filterLoaders(wrapper: InstanceWrapper, moduleRef: Module): LoaderMetadata[] {
@@ -82,17 +89,28 @@ export class LoadersExplorerService extends BaseExplorerService {
       return true;
     };
 
-    const loaders = this.metadataScanner.scanFromPrototype(
+    const loaders: Omit<
+      LoaderMetadata,
+      'callback' | 'opts'
+    >[] = this.metadataScanner.scanFromPrototype(
       instance,
       prototype,
       (name) => {
         return extractMetadata(instance, prototype, name, predicate);
       },
     );
+
     const isRequestScoped = !wrapper.isDependencyTreeStatic();
     return loaders
       .filter((loader) => !!loader)
       .map((loader) => {
+        const objectTypeMetadata = this.getObjectTypeMetadataByName(
+          loader.type,
+        );
+        const fieldOptions = objectTypeMetadata?.properties.find(
+          (p) => p.schemaName === loader.name,
+        )?.options as { opts?: { cache: boolean } };
+
         const createContext = (transform?: Function) =>
           this.createContextCallback(
             instance,
@@ -105,6 +123,7 @@ export class LoadersExplorerService extends BaseExplorerService {
           );
         return {
           ...loader,
+          opts: fieldOptions?.opts,
           callback: createContext(),
         };
       });
@@ -131,7 +150,7 @@ export class LoadersExplorerService extends BaseExplorerService {
     if (isRequestScoped) {
       const loaderCallback = async (...args: any[]) => {
         const gqlContext = paramsFactory.exchangeKeyForValue(
-          MercuriusParamType.LOADER_CONTEXT,
+          GqlParamtype.CONTEXT,
           undefined,
           args,
         );
@@ -221,33 +240,39 @@ export class LoadersExplorerService extends BaseExplorerService {
   }
 
   private registerFieldMiddlewareIfExists<
-    TSource extends object = any,
-    TContext = {},
+    TSource extends LoaderQuery[] = any,
+    TContext extends LoaderCtx = LoaderCtx,
     TArgs = { [argName: string]: any },
     TOutput = any
-  >(resolverFn: Function, instance: object, methodKey: string) {
+  >(resolverFn: Loader, instance: object, methodKey: string) {
     const fieldMiddleware = Reflect.getMetadata(
       FIELD_RESOLVER_MIDDLEWARE_METADATA,
       instance[methodKey],
     );
 
-    const middlewareFunctions = (
-      this.gqlOptions?.buildSchemaOptions?.fieldMiddleware || []
-    ).concat(fieldMiddleware || []);
+    const middlewareFunctions = ((this.gqlOptions?.buildSchemaOptions
+      ?.fieldMiddleware || []) as FieldMiddleware<TArgs, TContext>[]).concat(
+      fieldMiddleware || [],
+    );
 
     if (middlewareFunctions?.length === 0) {
       return resolverFn;
     }
 
-    const originalResolveFnFactory = (
-      ...args: [TSource, TArgs, TContext, GraphQLResolveInfo]
-    ) => () => resolverFn(...args);
+    const originalResolveFnFactory = (...args: [TSource, TContext]) => () =>
+      resolverFn(...args);
 
-    return decorateFieldResolverWithMiddleware<
-      TSource,
-      TContext,
-      TArgs,
-      TOutput
-    >(originalResolveFnFactory, middlewareFunctions);
+    return decorateLoaderResolverWithMiddleware<TSource, TContext, TOutput>(
+      originalResolveFnFactory,
+      middlewareFunctions,
+    );
+  }
+
+  private getObjectTypeMetadataByName(
+    name: string,
+  ): ObjectTypeMetadata | undefined {
+    return TypeMetadataStorage.getObjectTypesMetadata().find(
+      (m) => m.name === name,
+    );
   }
 }

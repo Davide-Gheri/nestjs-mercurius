@@ -35,11 +35,12 @@ import {
   ValidationRuleExplorerService,
 } from './services';
 import { mergeDefaults } from './utils/merge-defaults';
+import { MercuriusCoreModule } from './mercurius-core.module';
 import { GraphQLFactory } from './factories/graphql.factory';
 import { BaseMercuriusModule } from './base-mercurius.module';
 
 @Module({
-  imports: [GraphQLSchemaBuilderModule],
+  imports: [GraphQLSchemaBuilderModule, MercuriusCoreModule],
   providers: [
     GraphQLFactory,
     MetadataScanner,

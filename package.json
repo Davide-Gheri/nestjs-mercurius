@@ -1,6 +1,6 @@
 {
   "name": "nestjs-mercurius",
-  "version": "0.1.0-beta.1",
+  "version": "0.4.0",
   "main": "index.js",
   "repository": "https://@github.com:Davide-Gheri/nestjs-mercurius.git",
   "author": "Davide Gheri <davide@davidegheri.com>",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-angular": "^11.0.0",
+    "@graphql-tools/utils": "^7.5.0",
     "@nestjs/common": "^7.6.12",
     "@nestjs/core": "^7.6.12",
     "@nestjs/platform-fastify": "^7.6.12",
@@ -32,20 +33,19 @@
     "@types/graphql-upload": "^8.0.4",
     "@types/jest": "^26.0.20",
     "@types/supertest": "^2.0.10",
-    "@typescript-eslint/eslint-plugin": "^4.15.0",
-    "@typescript-eslint/parser": "^4.15.0",
-    "altair-fastify-plugin": "^3.1.0",
-    "apollo-server": "^2.21.0",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "altair-fastify-plugin": "^3.2.1",
     "@apollo/federation": "^0.21.0",
-    "class-transformer": "^0.3.2",
+    "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
-    "fastify": "^3.11.0",
+    "fastify": "^3.12.0",
     "graphql": "^15.5.0",
     "graphql-query-complexity": "^0.7.2",
-    "graphql-scalars": "^1.7.0",
+    "graphql-scalars": "^1.7.1",
     "graphql-tag": "^2.11.0",
     "husky": "5",
     "lint-staged": "^10.5.4",
@@ -63,19 +63,19 @@
     "uvu": "^0.5.1"
   },
   "dependencies": {
-    "@nestjs/graphql": "^7.9.8"
+    "@nestjs/graphql": "^7.9.9"
   },
   "peerDependencies": {
     "@nestjs/common": "^7.6.12",
     "@nestjs/core": "^7.6.12",
     "@nestjs/platform-fastify": "^7.6.12",
-    "fastify": "^3.11.0",
+    "fastify": "^3.12.0",
     "graphql": "^15.5.0",
     "mercurius": "^7.0.0",
     "reflect-metadata": "^0.1.13"
   },
   "optionalDependencies": {
-    "altair-fastify-plugin": "^3.1.0",
+    "altair-fastify-plugin": "^3.2.1",
     "mercurius-upload": "^1.1.1",
     "@apollo/federation": "^0.21.0"
   },
