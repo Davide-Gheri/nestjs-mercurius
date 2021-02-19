@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.3.0...0.4.0) (2021-02-19)
+
+
+### Features
+
+* **pubsub:** global pubsub host' ([064640b](https://github.com/Davide-Gheri/nestjs-mercurius/commit/064640b5c64a68c21456810864bfcf59d7c2e76c))
+
 # [0.3.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.2.0...0.3.0) (2021-02-18)
 
 
