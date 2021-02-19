@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { GraphQLSchema } from 'graphql';
 import {
   GraphQLAstExplorer,
@@ -21,6 +21,8 @@ import { transformFederatedSchema } from '../utils/faderation-factory.util';
 
 @Injectable()
 export class GraphQLFactory extends NestGraphQLFactory {
+  private readonly logger = new Logger(GraphQLFactory.name);
+
   constructor(
     resolversExplorerService: ResolversExplorerService,
     scalarsExplorerService: ScalarsExplorerService,
@@ -54,6 +56,16 @@ export class GraphQLFactory extends NestGraphQLFactory {
       plugins: unknown;
       schema: GraphQLSchema;
     };
+    if ((parentOptions as any).plugins?.length) {
+      const pluginNames = (parentOptions as any).plugins
+        .map((p) => p.name)
+        .filter(Boolean);
+      this.logger.warn(
+        `Plugins are not supported by Mercurius, ignoring: ${pluginNames.join(
+          ', ',
+        )}`,
+      );
+    }
     delete parentOptions.plugins;
     parentOptions.loaders = this.loaderExplorerService.explore();
     parentOptions.validationRules = this.mergeValidationRules(
