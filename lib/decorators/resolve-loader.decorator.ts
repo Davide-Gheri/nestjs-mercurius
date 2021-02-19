@@ -17,7 +17,6 @@ import { LoaderMiddleware } from '../interfaces';
 
 export interface ResolveLoaderOptions extends BaseTypeOptions {
   name?: string;
-  nullable?: any;
   description?: string;
   deprecationReason?: string;
   complexity?: Complexity;
