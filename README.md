@@ -65,7 +65,7 @@ export class Cat {
 ```typescript
 import { Resolver, Query, ResolveField, Parent, Mutation, Subscription, Context, Args } from '@nestjs/graphql';
 import { ParseIntPipe } from '@nestjs/common';
-import { ResolveLoader, LoaderQueries, LoaderContext, toAsyncIterator, LoaderQuery } from 'nestjs-mercurius';
+import { ResolveLoader, toAsyncIterator, LoaderQuery } from 'nestjs-mercurius';
 import { PubSub } from 'mercurius';
 import { groupBy } from 'lodash';
 import { Cat } from './cat';
@@ -122,7 +122,7 @@ export class CatResolver {
   
   @ResolveLoader(() => User, { opts: { cache: false } })
   owner(
-    @LoaderQueries() queries: LoaderQuery<Cat>[],
+    @Parent() queries: LoaderQuery<Cat>[],
   ) {
     return this.userService.findById(
       // queries is an array of objects defined as { obj, params } where obj is the current object and params are the GraphQL params
