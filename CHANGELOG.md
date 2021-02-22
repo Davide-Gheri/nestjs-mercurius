@@ -1,3 +1,10 @@
+## [0.5.1](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.5.0...0.5.1) (2021-02-22)
+
+
+### Bug Fixes
+
+* removed peer dep typings ([d448836](https://github.com/Davide-Gheri/nestjs-mercurius/commit/d448836a0d42293be102c01358cdcc74e8cb5684))
+
 # [0.5.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.5.0-beta.1...0.5.0) (2021-02-22)
 
 * Merge pull request #18 from Davide-Gheri/feature/interface-loaders (8d92191)
