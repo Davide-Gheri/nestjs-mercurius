@@ -4377,10 +4377,10 @@ mercurius-upload@^1.1.1:
     fastify-plugin "^2.3.4"
     graphql-upload "^11.0.0"
 
-mercurius@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.0.0.tgz#d0c4f89b675263dfaeea2f2e83ef5a5b421c583d"
-  integrity sha512-tAV6QtXefi7bea8J4dVKZLbMee+ZY0r4qtkc94NA9ZOX54R+spukQ+ZQQm9p8WnXo4Z8hMOIEzGk84++Hbr6iQ==
+mercurius@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.1.0.tgz#961fd34bd5a803c99cbfd6b19c6eda9853ee3db7"
+  integrity sha512-T/i865xuFu/eUv127YnIO3M48NKXEIFtvXKXwZrxBFdvAqIEckgLHasqJa0GBlwfkPZyzXUVyV6nchu2C6i3yQ==
   dependencies:
     "@types/isomorphic-form-data" "^2.0.0"
     end-of-stream "^1.4.4"
@@ -4396,7 +4396,7 @@ mercurius@^7.0.0:
     promise.allsettled "^1.0.2"
     readable-stream "^3.5.0"
     secure-json-parse "^2.2.0"
-    single-user-cache "^0.3.0"
+    single-user-cache "^0.4.0"
     tiny-lru "^7.0.2"
     undici "^3.0.0"
     ws "^7.4.2"
@@ -5695,10 +5695,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
 
-single-user-cache@^0.3.0:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/single-user-cache/-/single-user-cache-0.3.1.tgz#3c42372caf8260441b6e87be0555c6a27ff19747"
-  integrity sha512-Axn+MfT1tR3WqSERWdEckqPLwxd21L9nAXwj3ZyyHfqtNOXbP8OvwaIqAYX8Yywckg9dKxLaoDigQcXMbNSiTA==
+single-user-cache@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/single-user-cache/-/single-user-cache-0.4.0.tgz#9e44e1393b34b9c5728d24afac6d28c41f7751fe"
+  integrity sha512-aUJDbwD+ZEVqffkFCy71xgiLT0/KHE0Fmi3+lsVoWcURI/gmSU3nwc9b9Kq34ZXZR9MqFw2YdS3r1r6UjYMyTg==
   dependencies:
     safe-stable-stringify "^1.1.0"
 
