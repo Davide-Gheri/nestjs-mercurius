@@ -1,6 +1,5 @@
 import { ParamData } from '@nestjs/common';
 import { GqlParamtype } from '@nestjs/graphql/dist/enums/gql-paramtype.enum';
-import { MercuriusParamType } from '../mercurius-param-type.enum';
 import { isLoaderContext } from '../utils/is-loader-context';
 import { GqlParamsFactory } from '@nestjs/graphql/dist/factories/params.factory';
 
@@ -18,7 +17,7 @@ export class LoaderGqlParamsFactory extends GqlParamsFactory {
       return super.exchangeKeyForValue(type, data, args);
     }
 
-    switch (type as GqlParamtype | MercuriusParamType) {
+    switch (type) {
       case GqlParamtype.ROOT:
         return args[0];
       case GqlParamtype.ARGS:

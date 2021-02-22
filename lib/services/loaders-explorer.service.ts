@@ -12,7 +12,7 @@ import {
   InstanceWrapper,
 } from '@nestjs/core/injector/instance-wrapper';
 import { Module } from '@nestjs/core/injector/module';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Type } from '@nestjs/common';
 import { isUndefined } from '@nestjs/common/utils/shared.utils';
 import { FieldMiddleware, TypeMetadataStorage } from '@nestjs/graphql';
 import { BaseExplorerService } from '@nestjs/graphql/dist/services';
@@ -24,19 +24,37 @@ import {
 } from '@nestjs/graphql/dist/graphql.constants';
 import { LoaderGqlParamsFactory } from '../factories/params.factory';
 import { LoaderQuery, MercuriusModuleOptions, LoaderCtx } from '../interfaces';
-import { MercuriusParamType } from '../mercurius-param-type.enum';
 import { extractMetadata } from '../utils/extract-metadata.util';
 import { decorateLoaderResolverWithMiddleware } from '../utils/decorate-loader-resolver.util';
 import { GqlParamtype } from '@nestjs/graphql/dist/enums/gql-paramtype.enum';
+import { getInterfacesArray } from '@nestjs/graphql/dist/schema-builder/utils/get-interfaces-array.util';
 
 interface LoaderMetadata {
   type: string;
   methodName: string;
   name: string;
   callback: Loader;
+  interfaces: string[];
   opts?: {
     cache: boolean;
   };
+  instance: Type<unknown>;
+  prototype: any;
+  wrapper: InstanceWrapper;
+  isRequestScoped: boolean;
+  moduleRef: Module;
+}
+
+interface ObjectTypeLoaders {
+  objectTypeMetadata: ObjectTypeMetadata;
+  interfaces: string[];
+  loaders: Record<
+    string,
+    {
+      loader: Loader;
+      opts?: { cache: boolean };
+    }
+  >;
 }
 
 @Injectable()
@@ -60,23 +78,66 @@ export class LoadersExplorerService extends BaseExplorerService {
       this.gqlOptions.include || [],
     );
 
+    /**
+     * Get all loader methods from all application instances
+     */
     const loaders = this.flatMap(modules, (instance, moduleRef) =>
       this.filterLoaders(instance, moduleRef),
     );
 
-    return loaders.reduce((acc, loader) => {
+    /**
+     * From the retrieved loaders, create a Loader tree and add useful metadata
+     * ObjectType: {
+     *   loaders: {
+     *     // Mercurius compatible Loader structure
+     *     [field]: {
+     *       loader: Function,
+     *       opts: Object
+     *     }
+     *   },
+     *   objectTypeMetadata: ObjectTypeMetadata, // current ObjectType metadata
+     *   interfaces: string[] // all interfaces that this ObjectType implements
+     * }
+     */
+    const typeLoaders = loaders.reduce((acc, loader) => {
       if (!acc[loader.type]) {
-        acc[loader.type] = {};
+        // Get loader type metadata and cache it
+        const objectTypeMetadata = this.getObjectTypeMetadataByName(
+          loader.type,
+        );
+        acc[loader.type] = {
+          objectTypeMetadata,
+          interfaces: this.getObjectTypeInterfaces(objectTypeMetadata),
+          loaders: {},
+        };
       }
-      acc[loader.type][loader.name] = {
-        loader: loader.callback,
-        opts: loader.opts,
-      };
+      // Create the Mercurius Loader object for the current loader metadata
+      acc[loader.type].loaders[loader.name] = this.createLoader(
+        loader,
+        acc[loader.type].objectTypeMetadata,
+      );
+      return acc;
+    }, {} as Record<string, ObjectTypeLoaders>);
+
+    /**
+     * For each entity in the Loader tree, merge its loader functions with the ones defined on its interfaces
+     */
+    return Object.entries(typeLoaders).reduce((acc, [type, metadata]: any) => {
+      acc[type] = this.mergeInterfaceLoaders(metadata, typeLoaders);
       return acc;
     }, {} as MercuriusLoaders);
   }
 
-  filterLoaders(wrapper: InstanceWrapper, moduleRef: Module): LoaderMetadata[] {
+  /**
+   * Check if the passed instance has ResolveLoader decorated methods
+   * return ResolveLoader methods metadata
+   * @param wrapper
+   * @param moduleRef
+   */
+  filterLoaders(
+    wrapper: InstanceWrapper,
+    moduleRef: Module,
+  ): Omit<LoaderMetadata, 'callback' | 'opts'>[] {
     const { instance } = wrapper;
     if (!instance) {
       return undefined;
@@ -89,47 +150,100 @@ export class LoadersExplorerService extends BaseExplorerService {
       return true;
     };
 
-    const loaders: Omit<
-      LoaderMetadata,
-      'callback' | 'opts'
-    >[] = this.metadataScanner.scanFromPrototype(
+    const isRequestScoped = !wrapper.isDependencyTreeStatic();
+
+    return this.metadataScanner.scanFromPrototype(
       instance,
       prototype,
       (name) => {
-        return extractMetadata(instance, prototype, name, predicate);
-      },
-    );
-
-    const isRequestScoped = !wrapper.isDependencyTreeStatic();
-    return loaders
-      .filter((loader) => !!loader)
-      .map((loader) => {
-        const objectTypeMetadata = this.getObjectTypeMetadataByName(
-          loader.type,
-        );
-        const fieldOptions = objectTypeMetadata?.properties.find(
-          (p) => p.schemaName === loader.name,
-        )?.options as { opts?: { cache: boolean } };
-
-        const createContext = (transform?: Function) =>
-          this.createContextCallback(
+        const meta = extractMetadata(instance, prototype, name, predicate);
+        if (meta) {
+          return {
+            ...meta,
             instance,
             prototype,
             wrapper,
             moduleRef,
-            loader,
             isRequestScoped,
-            transform,
-          );
-        return {
-          ...loader,
-          opts: fieldOptions?.opts,
-          callback: createContext(),
-        };
-      });
+          };
+        }
+      },
+    );
   }
 
-  createContextCallback<T extends Record<string, any>>(
+  /**
+   * From a given ObjectType metadata, get the interfaces names that implements
+   * @param objectTypeMetadata
+   * @private
+   */
+  private getObjectTypeInterfaces(objectTypeMetadata: ObjectTypeMetadata) {
+    return objectTypeMetadata?.interfaces
+      ? getInterfacesArray(objectTypeMetadata.interfaces)
+          .map((type) =>
+            TypeMetadataStorage.getInterfaceMetadataByTarget(
+              type as Type<unknown>,
+            ),
+          )
+          .filter(Boolean)
+          .map((meta) => meta.name)
+      : [];
+  }
+
+  /**
+   * Add interface defined loaders to current ObjectType loaders
+   * @param metadata
+   * @param typeLoaders
+   * @private
+   */
+  private mergeInterfaceLoaders(
+    metadata: ObjectTypeLoaders,
+    typeLoaders: Record<string, ObjectTypeLoaders>,
+  ) {
+    const { interfaces } = metadata;
+    interfaces.forEach((interfaceName) => {
+      const interfaceMetadata = typeLoaders[interfaceName];
+      if (interfaceMetadata) {
+        metadata.loaders = {
+          ...interfaceMetadata.loaders,
+          ...metadata.loaders,
+        };
+      }
+    });
+    return metadata.loaders;
+  }
+
+  /**
+   * Create a Mercurius Loader from the loader metadata
+   * @param loader
+   * @param objectTypeMetadata
+   * @private
+   */
+  private createLoader(
+    loader: Omit<LoaderMetadata, 'callback' | 'opts'>,
+    objectTypeMetadata: ObjectTypeMetadata,
+  ): { loader: Loader; opts?: { cache: boolean } } {
+    const fieldOptions = objectTypeMetadata?.properties.find(
+      (p) => p.schemaName === loader.name,
+    )?.options as { opts?: { cache: boolean } };
+
+    const createContext = (transform?: Function) =>
+      this.createContextCallback(
+        loader.instance,
+        loader.prototype,
+        loader.wrapper,
+        loader.moduleRef,
+        loader,
+        loader.isRequestScoped,
+        transform,
+      );
+
+    return {
+      opts: fieldOptions?.opts,
+      loader: createContext(),
+    };
+  }
+
+  private createContextCallback<T extends Record<string, any>>(
     instance: T,
     prototype: any,
     wrapper: InstanceWrapper,

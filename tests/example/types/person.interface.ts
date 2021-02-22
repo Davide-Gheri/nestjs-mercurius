@@ -1,6 +1,6 @@
 import { Directive, Field, ID, InterfaceType } from '@nestjs/graphql';
 
-@InterfaceType()
+@InterfaceType('IPerson')
 export abstract class Person {
   @Field(() => ID)
   id: string;

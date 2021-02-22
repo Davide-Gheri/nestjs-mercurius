@@ -1,4 +1,4 @@
-import { Directive, Extensions, Field, ID, ObjectType } from '@nestjs/graphql';
+import { Extensions, Field, ID, ObjectType } from '@nestjs/graphql';
 import { HashScalar } from '../scalars/hash.scalar';
 import { JSONResolver } from 'graphql-scalars';
 import { Person } from './person.interface';

@@ -140,6 +140,30 @@ gqlSuite(
   },
 );
 
+gqlSuite(
+  'should return interface loader value',
+  async ({ mercuriusClient }) => {
+    const response = await mercuriusClient.query(
+      `
+    query cat($id: ID!) {
+      cat(id: $id) {
+        aField
+      }    
+    }
+  `,
+      {
+        variables: { id: 1 },
+      },
+    );
+
+    assert.equal(response.data, {
+      cat: {
+        aField: 'lorem',
+      },
+    });
+  },
+);
+
 gqlSuite('should return union', async ({ mercuriusClient }) => {
   const response = await mercuriusClient.query(`
     query {
