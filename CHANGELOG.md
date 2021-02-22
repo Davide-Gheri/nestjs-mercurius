@@ -1,3 +1,5 @@
+# [0.5.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.5.0-beta.1...0.5.0) (2021-02-22)
+
 * Merge pull request #18 from Davide-Gheri/feature/interface-loaders (8d92191)
 * Merge branch 'master' into feature/interface-loaders (ea2f035)
 * Merge pull request #19 from Davide-Gheri/dependabot/npm_and_yarn/eslint-config-prettier-8.0.0 (79529a4)
