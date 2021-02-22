@@ -6,7 +6,7 @@ export interface BaseMercuriusModuleOptions extends MercuriusCommonOptions {
   useGlobalPrefix?: boolean;
   uploads?: boolean | FileUploadOptions;
   validationRules?: ValidationRules;
-  altair?: boolean | import('altair-fastify-plugin').AltairFastifyPluginOptions;
+  altair?: boolean | any;
 }
 
 export interface FileUploadOptions {
