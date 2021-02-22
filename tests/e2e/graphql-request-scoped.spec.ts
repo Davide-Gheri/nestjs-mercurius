@@ -71,3 +71,5 @@ graphqlSuite.after.each(async ({ app }) => {
 graphqlSuite('should create resolver for each incoming request', () => {
   assert.equal(CatsRequestScopedService.COUNTER, 3);
 });
+
+graphqlSuite.run();

@@ -12,6 +12,7 @@ import { Cat } from '../types/cat';
 import { Species } from '../species.enum';
 import { CatService } from '../services/cat.service';
 import { DogService } from '../services/dog.service';
+import { LoaderQuery, ResolveLoader } from '../../../lib';
 
 export const DomesticAnimal = createUnionType({
   name: 'DomesticAnimal',
@@ -53,5 +54,10 @@ export class AnimalResolver {
   @ResolveField(() => Boolean)
   hasPaws(@Parent() animal: Animal) {
     return true;
+  }
+
+  @ResolveLoader(() => String)
+  aField(@Parent() queries: LoaderQuery<Animal>[]) {
+    return queries.map(({ obj }) => 'lorem');
   }
 }

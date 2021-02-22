@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User implements Person {
+type User implements IPerson {
   id: ID!
   name: String
   uniqueName: String!
@@ -16,7 +16,7 @@ type User implements Person {
   posts: [PostType!]!
 }
 
-interface Person {
+interface IPerson {
   id: ID!
   name: String
   uniqueName: String!
