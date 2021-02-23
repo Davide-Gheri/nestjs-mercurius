@@ -416,12 +416,12 @@
   resolved "https://registry.yarnpkg.com/@nestjs/mapped-types/-/mapped-types-0.3.0.tgz#1dcf178c198e948c548ca803850e2eba639900d4"
   integrity sha512-AdWVTOg3AhAEcVhPGgUJiLbLXb7L5Pe7vc20YQ0oOXP/KD/nJj0I3BcytVdBhzmgepol67BdivNUvo27Hx3Ndw==
 
-"@nestjs/platform-fastify@^7.6.12":
-  version "7.6.12"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-fastify/-/platform-fastify-7.6.12.tgz#db629d43543bd0699a72bbd5d8459b714efdf215"
-  integrity sha512-ycklKxuty/CzXXZYKnpV3kIqWPS2qmGwwACIrvX1uGuho3DmI/xdFJZPFPnp0WNS+42js9+ygFhhkx5RxXqbJw==
+"@nestjs/platform-fastify@^7.6.13":
+  version "7.6.13"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-fastify/-/platform-fastify-7.6.13.tgz#15b62f600f12216ff39edeaa78c33b331a5c7f56"
+  integrity sha512-wZ6ALoyovb8aRjMieROndi+bjzkuBilh3qBAV3sorjwpD8NSRrI/j4DsUdDcmexDfPSZH+mj9Bi7Z5cFtdjiRg==
   dependencies:
-    fastify "3.11.0"
+    fastify "3.12.0"
     fastify-cors "5.2.0"
     fastify-formbody "5.0.0"
     light-my-request "4.4.1"
@@ -2888,29 +2888,7 @@ fastify-websocket@^3.0.0:
     fastify-plugin "^3.0.0"
     ws "^7.4.2"
 
-fastify@3.11.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.11.0.tgz#2464c9a715603e6941308f55572d08a27ea7f2a6"
-  integrity sha512-xc0mTG3cZhBrpsHh5M+xujA/xAIfBCn6DLOWPqCbIBkt0TtfeDaXpBEtlejWp13eM8SZbyXnHcR6PJaOajbY/A==
-  dependencies:
-    abstract-logging "^2.0.0"
-    ajv "^6.12.2"
-    avvio "^7.1.2"
-    fast-json-stringify "^2.2.1"
-    fastify-error "^0.3.0"
-    fastify-warning "^0.2.0"
-    find-my-way "^3.0.5"
-    flatstr "^1.0.12"
-    light-my-request "^4.2.0"
-    pino "^6.2.1"
-    proxy-addr "^2.0.5"
-    readable-stream "^3.4.0"
-    rfdc "^1.1.4"
-    secure-json-parse "^2.0.0"
-    semver "^7.3.2"
-    tiny-lru "^7.0.0"
-
-fastify@^3.12.0:
+fastify@3.12.0, fastify@^3.12.0:
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.12.0.tgz#b5e3500a98ed63934d01d5949801f5ea2dc5cd17"
   integrity sha512-xSVzP88dkwBRl/vSm8AnMB3ICOd5p0M/ea9fJWOx0WnC8x4r1WfOUUEHeyxcwlfWoiDDtsHe7DwyeSPrfmfzqQ==
@@ -3079,11 +3057,6 @@ formidable@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/formidable/-/formidable-1.2.2.tgz#bf69aea2972982675f00865342b982986f6b8dd9"
   integrity sha512-V8gLm+41I/8kguQ4/o1D3RIHRmhYFG4pnNyonvua+40rqcEmT4+V71yaZ3B457xbbgCsCfjSPi65u/W6vK1U5Q==
-
-forwarded@~0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
-  integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
 fresh@0.5.2:
   version "0.5.2"
@@ -3689,11 +3662,6 @@ ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
   integrity sha1-vd7XARQpCCjAoDnnLvJfWq7ENUo=
-
-ipaddr.js@1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
-  integrity sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==
 
 ipaddr.js@^2.0.0:
   version "2.0.0"
@@ -5198,14 +5166,6 @@ protocols@^1.1.0, protocols@^1.4.0:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/protocols/-/protocols-1.4.8.tgz#48eea2d8f58d9644a4a32caae5d5db290a075ce8"
   integrity sha512-IgjKyaUSjsROSO8/D49Ab7hP8mJgTYcqApOqdPhLoPxAplXmkp+zRvsrSQjFn5by0rhm4VH0GAUELIPpx7B1yg==
-
-proxy-addr@^2.0.5:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.6.tgz#fdc2336505447d3f2f2c638ed272caf614bbb2bf"
-  integrity sha512-dh/frvCBVmSsDYzw6n926jv974gddhkFPfiN8hPOi30Wax25QZyZEGveluCgliBnqmuM+UJmBErbAUFIoDbjOw==
-  dependencies:
-    forwarded "~0.1.2"
-    ipaddr.js "1.9.1"
 
 pump@^3.0.0:
   version "3.0.0"
