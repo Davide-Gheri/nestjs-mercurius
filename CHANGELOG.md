@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.5.1...0.6.0) (2021-02-23)
+
+
+### Features
+
+* **hooks:** add mercurius hooks support ([23b4f3a](https://github.com/Davide-Gheri/nestjs-mercurius/commit/23b4f3a670786ab89310653ea9d6549eaaa4bfa9))
+
 ## [0.5.1](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.5.0...0.5.1) (2021-02-22)
 
 
