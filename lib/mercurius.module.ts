@@ -31,6 +31,7 @@ import {
   MercuriusOptionsFactory,
 } from './interfaces';
 import {
+  HookExplorerService,
   LoadersExplorerService,
   ValidationRuleExplorerService,
 } from './services';
@@ -53,6 +54,7 @@ import { BaseMercuriusModule } from './base-mercurius.module';
     GraphQLSchemaHost,
     LoadersExplorerService,
     ValidationRuleExplorerService,
+    HookExplorerService,
   ],
 })
 export class MercuriusModule
@@ -65,8 +67,9 @@ export class MercuriusModule
     protected readonly options: MercuriusModuleOptions,
     protected readonly applicationConfig: ApplicationConfig,
     protected readonly httpAdapterHost: HttpAdapterHost,
+    protected readonly hookExplorerService: HookExplorerService,
   ) {
-    super(httpAdapterHost, applicationConfig, options);
+    super(httpAdapterHost, applicationConfig, options, hookExplorerService);
   }
 
   static forRoot(options: MercuriusModuleOptions) {

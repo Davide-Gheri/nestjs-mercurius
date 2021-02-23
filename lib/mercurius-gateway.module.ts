@@ -14,8 +14,11 @@ import {
   MercuriusGatewayModuleAsyncOptions,
   MercuriusGatewayModuleOptions,
 } from './interfaces';
+import { HookExplorerService } from './services';
 
-@Module({})
+@Module({
+  providers: [HookExplorerService],
+})
 export class MercuriusGatewayModule
   extends BaseMercuriusModule<MercuriusGatewayModuleOptions>
   implements OnModuleInit {
@@ -24,8 +27,9 @@ export class MercuriusGatewayModule
     protected readonly applicationConfig: ApplicationConfig,
     @Inject(GRAPHQL_GATEWAY_MODULE_OPTIONS)
     protected readonly options: MercuriusGatewayModuleOptions,
+    protected readonly hookExplorerService: HookExplorerService,
   ) {
-    super(httpAdapterHost, applicationConfig, options);
+    super(httpAdapterHost, applicationConfig, options, hookExplorerService);
   }
 
   static forRoot(options: MercuriusGatewayModuleOptions): DynamicModule {
