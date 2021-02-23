@@ -16,5 +16,6 @@ import { UpperCaseDirective } from '../example/directives/upper-case.directive';
     }),
   ],
   providers: [CatService, DogService, AnimalResolver, CatResolver],
+  exports: [CatService],
 })
 export class AppModule {}

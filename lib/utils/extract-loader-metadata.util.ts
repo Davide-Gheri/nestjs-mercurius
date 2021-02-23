@@ -9,7 +9,7 @@ import {
   RESOLVER_REFERENCE_METADATA,
 } from '@nestjs/graphql/dist/federation/federation.constants';
 
-export function extractMetadata(
+export function extractLoaderMetadata(
   instance: Record<string, any>,
   prototype: any,
   methodName: string,

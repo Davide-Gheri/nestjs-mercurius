@@ -5,6 +5,7 @@ import { MercuriusOptions } from 'mercurius';
 import { normalizeRoutePath } from '@nestjs/graphql/dist/utils';
 import { ApplicationConfig, HttpAdapterHost } from '@nestjs/core';
 import { BaseMercuriusModuleOptions } from './interfaces/base-mercurius-module-options.interface';
+import { HookExplorerService } from './services';
 
 export abstract class BaseMercuriusModule<
   Opts extends BaseMercuriusModuleOptions
@@ -13,6 +14,7 @@ export abstract class BaseMercuriusModule<
     protected readonly httpAdapterHost: HttpAdapterHost,
     protected readonly applicationConfig: ApplicationConfig,
     protected readonly options: Opts,
+    protected readonly hookExplorerService: HookExplorerService,
   ) {}
 
   protected async registerGqlServer(mercuriusOptions: Opts) {
@@ -73,6 +75,8 @@ export abstract class BaseMercuriusModule<
     }
 
     await app.register(mercurius, options);
+
+    this.addHooks(app);
   }
 
   protected getNormalizedPath(mercuriusOptions: Opts): string {
@@ -82,5 +86,13 @@ export abstract class BaseMercuriusModule<
     return useGlobalPrefix
       ? normalizeRoutePath(prefix) + gqlOptionsPath
       : gqlOptionsPath;
+  }
+
+  protected addHooks(app: FastifyInstance) {
+    const hooks = this.hookExplorerService.explore();
+
+    hooks.forEach((hook) => {
+      app.graphql.addHook(hook.name as any, hook.callback as any);
+    });
   }
 }

@@ -24,7 +24,7 @@ import {
 } from '@nestjs/graphql/dist/graphql.constants';
 import { LoaderGqlParamsFactory } from '../factories/params.factory';
 import { LoaderQuery, MercuriusModuleOptions, LoaderCtx } from '../interfaces';
-import { extractMetadata } from '../utils/extract-metadata.util';
+import { extractLoaderMetadata } from '../utils/extract-loader-metadata.util';
 import { decorateLoaderResolverWithMiddleware } from '../utils/decorate-loader-resolver.util';
 import { GqlParamtype } from '@nestjs/graphql/dist/enums/gql-paramtype.enum';
 import { getInterfacesArray } from '@nestjs/graphql/dist/schema-builder/utils/get-interfaces-array.util';
@@ -156,7 +156,12 @@ export class LoadersExplorerService extends BaseExplorerService {
       instance,
       prototype,
       (name) => {
-        const meta = extractMetadata(instance, prototype, name, predicate);
+        const meta = extractLoaderMetadata(
+          instance,
+          prototype,
+          name,
+          predicate,
+        );
         if (meta) {
           return {
             ...meta,
