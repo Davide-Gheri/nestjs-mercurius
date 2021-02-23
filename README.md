@@ -3,8 +3,6 @@
 
 Use [Mercurius GraphQL](https://github.com/mercurius-js/mercurius) with Nestjs framework
 
-> **Warning** still in heavy development, it is NOT production ready.
-
 Visit the [Wiki](https://github.com/Davide-Gheri/nestjs-mercurius/wiki)
 
 ## Install
@@ -238,3 +236,21 @@ export class PetResolver {
   }
 }
 ```
+
+## Hooks
+
+Register mercurius hooks as service methods, using the `@GraphQLHook()` decorator
+
+```typescript
+import { GraphQLHook } from 'nestjs-mercurius';
+
+@Injectable()
+export class HookService {
+  @GraphQLHook('preValidation')
+  async onPreValidation(schema: GraphQLSchema, source: DocumentNode, context: any) {
+   //...
+  }
+}
+```
+
+
