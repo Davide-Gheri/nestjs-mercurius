@@ -34,14 +34,6 @@ export class HookExplorerService extends BaseExplorerService {
     }
     const prototype = Object.getPrototypeOf(instance);
 
-    const fieldResolverEnhancers = this.gqlOptions.fieldResolverEnhancers || [];
-
-    const contextOptions = {
-      guards: fieldResolverEnhancers.includes('guards'),
-      filters: fieldResolverEnhancers.includes('filters'),
-      interceptors: fieldResolverEnhancers.includes('interceptors'),
-    };
-
     const hooks = this.metadataScanner.scanFromPrototype(
       instance,
       prototype,
