@@ -34,17 +34,8 @@ export class HookExplorerService extends BaseExplorerService {
     }
     const prototype = Object.getPrototypeOf(instance);
 
-    const hooks = this.metadataScanner.scanFromPrototype(
-      instance,
-      prototype,
-      (name) => extractHookMetadata(instance, prototype, name),
+    return this.metadataScanner.scanFromPrototype(instance, prototype, (name) =>
+      extractHookMetadata(instance, prototype, name),
     );
-
-    return hooks.map((metadata) => {
-      return {
-        ...metadata,
-        callback: metadata.callback.bind(instance),
-      };
-    });
   }
 }

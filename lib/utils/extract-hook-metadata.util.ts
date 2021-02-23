@@ -32,6 +32,6 @@ export function extractHookMetadata(
   return {
     name: hookName,
     methodName,
-    callback,
+    callback: callback.bind(instance),
   } as HookMetadata<typeof hookName>;
 }
