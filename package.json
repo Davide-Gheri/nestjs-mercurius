@@ -63,7 +63,7 @@
     "uvu": "^0.5.1"
   },
   "dependencies": {
-    "@nestjs/graphql": "^7.9.9"
+    "@nestjs/graphql": "^7.9.10"
   },
   "peerDependencies": {
     "@apollo/federation": "^0.21.0",
