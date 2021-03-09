@@ -137,17 +137,17 @@
     resolve-global "1.0.0"
     yargs "^16.2.0"
 
-"@commitlint/config-angular-type-enum@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/config-angular-type-enum/-/config-angular-type-enum-12.0.0.tgz#edfb8d5fbd361e3f19b19d833e326bccbd6bd5ee"
-  integrity sha512-fJWHE8Ey8Li+H4jnnREG/xw5spJSgAg+wKBZwtoGQBzxFZ/DO/g5oo/P07nvXR1q89Ow5+f3a7K2oOJyt0i0hQ==
+"@commitlint/config-angular-type-enum@^12.0.1":
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-angular-type-enum/-/config-angular-type-enum-12.0.1.tgz#46ad2dd5258dbb0eb2f26accf8f5849339d68f7b"
+  integrity sha512-0qETLi7f7BineQruIBjyzHFfvDfh9FTEbMs+oTAfl+cDKTLJYI5W6eKGjI3MPg5+8sxUtzh6pJ+Dp3LFOpawTQ==
 
-"@commitlint/config-angular@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/config-angular/-/config-angular-12.0.0.tgz#aedc0b46c0f97a8225d52372e5581af697621ffc"
-  integrity sha512-V3PngSVvDV7bHdETptwuY5J+FBo48UGDjmztWPp4Mb63msW/Og5DR6+CHOPsjF0WDrtKFgi+PWD48sOQL1xPQw==
+"@commitlint/config-angular@^12.0.1":
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-angular/-/config-angular-12.0.1.tgz#080d96db84752f17ffed06bd81c46bb4bf7e3188"
+  integrity sha512-LuhglC8lh+5zdl+hjNunhH1b4Uj70w/TbdWna6CTvpuR59WSZSFZhIxutN2Fjuf1jlHGkx2bC9ZiOQW01YQNTA==
   dependencies:
-    "@commitlint/config-angular-type-enum" "^12.0.0"
+    "@commitlint/config-angular-type-enum" "^12.0.1"
 
 "@commitlint/ensure@^12.0.1":
   version "12.0.1"
@@ -272,10 +272,10 @@
     is-absolute "^1.0.0"
     is-negated-glob "^1.0.0"
 
-"@eslint/eslintrc@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.3.0.tgz#d736d6963d7003b6514e6324bec9c602ac340318"
-  integrity sha512-1JTKgrOKAHVivSvOYw+sJOunkBjUOvjqWk1DPja7ZFhIS2mX/4EgTT8M7eTK9jrKhL/FvXXEbQwIs3pg1xp3dg==
+"@eslint/eslintrc@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.4.0.tgz#99cc0a0584d72f1df38b900fb062ba995f395547"
+  integrity sha512-2ZPCc+uNbjV5ERJr+aKSPRwZgKd2z11x0EgLvb1PURmUrn9QNRXFqje0Ldq454PfAVyaJYyrDvvIKSFP4NnBog==
   dependencies:
     ajv "^6.12.4"
     debug "^4.1.1"
@@ -284,7 +284,6 @@
     ignore "^4.0.6"
     import-fresh "^3.2.1"
     js-yaml "^3.13.1"
-    lodash "^4.17.20"
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
@@ -1142,19 +1141,19 @@ ajv@^7.0.2:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-altair-fastify-plugin@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/altair-fastify-plugin/-/altair-fastify-plugin-3.2.1.tgz#6960e41bc41889b5a31ea64da126b011c5260457"
-  integrity sha512-S6KLQ4++mJHFxIP1AL9b6bbKKMSPBexLa3+AwqC1TG/LmlkC1yBJjdU/M8IyGbN1b6dLm4veABxwvJmYV43ceQ==
+altair-fastify-plugin@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/altair-fastify-plugin/-/altair-fastify-plugin-3.2.2.tgz#8bb411d31a2634df5daab0d490303c29e472e8bf"
+  integrity sha512-9nsZTCev69u/yxzgYaM/ChX3MEqD1nXnidM4hp7g94K7rm49NS8FpZB1fECELwTeQfXtrJZeG46/cBiVZsILIg==
   dependencies:
-    altair-static "^3.2.1"
+    altair-static "^3.2.2"
     fastify-plugin "^2.3.4"
     fastify-static "^3.2.1"
 
-altair-static@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-3.2.1.tgz#1f6fe53c62c96b59d894fb0b908b4580d873e55e"
-  integrity sha512-dafTKkxeBjA9r3z5tZZeRewqOURcGeyVoQvqv0hiFdUAFnlvRlO36OacJrKZOvPbEpa/qrD08ETeC+W3fwEa7w==
+altair-static@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-3.2.2.tgz#940ded3e96064f43637d661a27eeaaa35c7db186"
+  integrity sha512-D+JxxDqAr1GmxtRLVePsoedtyWV6EfUXFN1jXht1vryE5KJ9Hqnfg7b8ZTbHHWdtC9psCuTDlJcR6/7XXpRpGQ==
 
 ansi-align@^3.0.0:
   version "3.0.0"
@@ -2594,13 +2593,13 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-2.0.0.tgz#21fdc8fbcd9c795cc0321f0563702095751511a8"
   integrity sha512-QudtT6av5WXels9WjIM7qz1XD1cWGvX4gGXvp/zBn9nXG02D0utdU3Em2m/QjTnrsk6bBjmCygl3rmj118msQQ==
 
-eslint@^7.20.0:
-  version "7.20.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.20.0.tgz#db07c4ca4eda2e2316e7aa57ac7fc91ec550bdc7"
-  integrity sha512-qGi0CTcOGP2OtCQBgWZlQjcTuP0XkIpYFj25XtRTQSHC+umNnp7UMshr2G8SLsRFYDdAPFeHOsiteadmMH02Yw==
+eslint@^7.21.0:
+  version "7.21.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.21.0.tgz#4ecd5b8c5b44f5dedc9b8a110b01bbfeb15d1c83"
+  integrity sha512-W2aJbXpMNofUp0ztQaF40fveSsJBjlSCSWpy//gzfTvwC+USs/nceBrKmlJOiM8r1bLwP2EuYkCqArn/6QTIgg==
   dependencies:
     "@babel/code-frame" "7.12.11"
-    "@eslint/eslintrc" "^0.3.0"
+    "@eslint/eslintrc" "^0.4.0"
     ajv "^6.10.0"
     chalk "^4.0.0"
     cross-spawn "^7.0.2"
@@ -2613,7 +2612,7 @@ eslint@^7.20.0:
     espree "^7.3.1"
     esquery "^1.4.0"
     esutils "^2.0.2"
-    file-entry-cache "^6.0.0"
+    file-entry-cache "^6.0.1"
     functional-red-black-tree "^1.0.1"
     glob-parent "^5.0.0"
     globals "^12.1.0"
@@ -2898,10 +2897,10 @@ figures@^3.0.0, figures@^3.2.0:
   dependencies:
     escape-string-regexp "^1.0.5"
 
-file-entry-cache@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-6.0.0.tgz#7921a89c391c6d93efec2169ac6bf300c527ea0a"
-  integrity sha512-fqoO76jZ3ZnYrXLDRxBR1YvOvc0k844kcOg40bgsPrE25LAb/PDqTY+ho64Xh2c8ZXgIKldchCFHczG2UVRcWA==
+file-entry-cache@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-6.0.1.tgz#211b2dd9659cb0394b073e7323ac3c933d522027"
+  integrity sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==
   dependencies:
     flat-cache "^3.0.4"
 
