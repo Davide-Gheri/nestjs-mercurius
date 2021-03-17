@@ -4400,10 +4400,10 @@ mercurius-upload@^1.1.1:
     fastify-plugin "^2.3.4"
     graphql-upload "^11.0.0"
 
-mercurius@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.1.0.tgz#961fd34bd5a803c99cbfd6b19c6eda9853ee3db7"
-  integrity sha512-T/i865xuFu/eUv127YnIO3M48NKXEIFtvXKXwZrxBFdvAqIEckgLHasqJa0GBlwfkPZyzXUVyV6nchu2C6i3yQ==
+mercurius@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.2.0.tgz#9dd9e9626ff7e2e0eb8357d5263092dd403c3175"
+  integrity sha512-phPCMTJV6JnsiLZht0lYRVTZzRW/6WMD8Rdsisp+eGgbgdYyN74UfwaqpXXYM+L6vxyfzGM/BaA4AZMN4CAA1A==
   dependencies:
     "@types/isomorphic-form-data" "^2.0.0"
     end-of-stream "^1.4.4"
