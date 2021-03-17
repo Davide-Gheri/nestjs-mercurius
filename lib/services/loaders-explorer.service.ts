@@ -47,6 +47,7 @@ interface LoaderMetadata {
 
 interface ObjectTypeLoaders {
   objectTypeMetadata: ObjectTypeMetadata;
+  isInterface: boolean;
   interfaces: string[];
   loaders: Record<
     string,
@@ -106,6 +107,7 @@ export class LoadersExplorerService extends BaseExplorerService {
           loader.type,
         );
         acc[loader.type] = {
+          isInterface: !objectTypeMetadata,
           objectTypeMetadata,
           interfaces: this.getObjectTypeInterfaces(objectTypeMetadata),
           loaders: {},
@@ -122,10 +124,12 @@ export class LoadersExplorerService extends BaseExplorerService {
     /**
      * For each entity in the Loader tree, merge its loader functions with the ones defined on its interfaces
      */
-    return Object.entries(typeLoaders).reduce((acc, [type, metadata]: any) => {
-      acc[type] = this.mergeInterfaceLoaders(metadata, typeLoaders);
-      return acc;
-    }, {} as MercuriusLoaders);
+    return Object.entries(typeLoaders)
+      .filter(([, metadata]) => !metadata.isInterface)
+      .reduce((acc, [type, metadata]: any) => {
+        acc[type] = this.mergeInterfaceLoaders(metadata, typeLoaders);
+        return acc;
+      }, {} as MercuriusLoaders);
   }
 
   /**
