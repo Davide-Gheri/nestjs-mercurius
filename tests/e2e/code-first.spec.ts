@@ -226,4 +226,40 @@ gqlSuite('should filter union return', async ({ mercuriusClient }) => {
   });
 });
 
+gqlSuite(
+  'should return the interface resolved types',
+  async ({ mercuriusClient }) => {
+    const response = await mercuriusClient.query(`
+    query {
+      animals {
+        ... on Animal {
+          id
+          species
+          hasPaws
+        }
+        ...on Dog {
+          age
+        }
+        ... on Cat {
+          lives
+        }
+      }
+    }
+  `);
+
+    assert.equal(response.data, {
+      animals: [
+        ...expectedDogs.map((d) => ({
+          ...d,
+          hasPaws: true,
+        })),
+        ...expectedCats.map((c) => ({
+          ...c,
+          hasPaws: true,
+        })),
+      ],
+    });
+  },
+);
+
 gqlSuite.run();

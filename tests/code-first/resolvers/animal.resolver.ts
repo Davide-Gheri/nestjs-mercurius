@@ -36,6 +36,11 @@ export class AnimalResolver {
     private readonly dogService: DogService,
   ) {}
 
+  @Query(() => [Animal])
+  animals() {
+    return [...this.dogService.dogs(), ...this.catService.cats()];
+  }
+
   @Query(() => [DomesticAnimal])
   domesticAnimals(
     @Args({ name: 'species', type: () => Species, nullable: true })
