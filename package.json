@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "format": "prettier **/**/*.ts --ignore-path ./.prettierignore --write",
-    "lint": "eslint 'lib/**/*.ts' --fix",
+    "lint": "eslint 'lib/**/*.ts'",
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "precommit": "lint-staged",
     "prepublish:npm": "npm run build",
