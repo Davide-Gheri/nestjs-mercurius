@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.6.0...0.7.0) (2021-03-17)
+
+
+### Bug Fixes
+
+* **loader:** remove interface loaders as it breaks resolve type fn ([c3de299](https://github.com/Davide-Gheri/nestjs-mercurius/commit/c3de299ddf8249792f79db9fd4723581c8c1cc61))
+
 # [0.6.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.5.1...0.6.0) (2021-02-23)
 
 
