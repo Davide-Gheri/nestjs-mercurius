@@ -3319,10 +3319,10 @@ graphql-query-complexity@^0.7.2:
   dependencies:
     lodash.get "^4.4.2"
 
-graphql-scalars@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/graphql-scalars/-/graphql-scalars-1.8.0.tgz#bdbe78ef799fd18a6fded27c81bee711ca7b3204"
-  integrity sha512-XBFQmvOFspiIj+qEQe7mPBN0abn7N8UkKHqJffMJgt7UQx+WExg0GaiJta5iTrFYl1y63EaFZnG4FtHbMZAD0Q==
+graphql-scalars@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/graphql-scalars/-/graphql-scalars-1.9.0.tgz#fd3171cafc6f51b71d58f6a8ff89ea97477c16d3"
+  integrity sha512-31bBDnHdBapb2wknLCjNzTSjKfVEtm+0HxI7DKM7jQ4Uipk1o1aMUCYCkYunmRDdgQaI03u1MD5KutLf7yHnvw==
   dependencies:
     tslib "~2.1.0"
 
@@ -4364,10 +4364,10 @@ mercurius-upload@^1.1.1:
     fastify-plugin "^2.3.4"
     graphql-upload "^11.0.0"
 
-mercurius@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.1.0.tgz#961fd34bd5a803c99cbfd6b19c6eda9853ee3db7"
-  integrity sha512-T/i865xuFu/eUv127YnIO3M48NKXEIFtvXKXwZrxBFdvAqIEckgLHasqJa0GBlwfkPZyzXUVyV6nchu2C6i3yQ==
+mercurius@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.2.0.tgz#9dd9e9626ff7e2e0eb8357d5263092dd403c3175"
+  integrity sha512-phPCMTJV6JnsiLZht0lYRVTZzRW/6WMD8Rdsisp+eGgbgdYyN74UfwaqpXXYM+L6vxyfzGM/BaA4AZMN4CAA1A==
   dependencies:
     "@types/isomorphic-form-data" "^2.0.0"
     end-of-stream "^1.4.4"
