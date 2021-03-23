@@ -48,7 +48,7 @@ interface LoaderMetadata {
 interface ObjectTypeLoaders {
   objectTypeMetadata: ObjectTypeMetadata;
   isInterface: boolean;
-  interfaces: string[];
+  concretes?: Set<string>;
   loaders: Record<
     string,
     {
@@ -86,6 +86,8 @@ export class LoadersExplorerService extends BaseExplorerService {
       this.filterLoaders(instance, moduleRef),
     );
 
+    const objectTypesByInterface = this.getInterfacesImplementations();
+
     /**
      * From the retrieved loaders, create a Loader tree and add useful metadata
      * ObjectType: {
@@ -106,10 +108,13 @@ export class LoadersExplorerService extends BaseExplorerService {
         const objectTypeMetadata = this.getObjectTypeMetadataByName(
           loader.type,
         );
+        const isInterface = !objectTypeMetadata;
         acc[loader.type] = {
-          isInterface: !objectTypeMetadata,
+          isInterface,
+          concretes: isInterface
+            ? objectTypesByInterface[loader.type] || new Set<string>()
+            : undefined,
           objectTypeMetadata,
-          interfaces: this.getObjectTypeInterfaces(objectTypeMetadata),
           loaders: {},
         };
       }
@@ -124,12 +129,22 @@ export class LoadersExplorerService extends BaseExplorerService {
     /**
      * For each entity in the Loader tree, merge its loader functions with the ones defined on its interfaces
      */
-    return Object.entries(typeLoaders)
-      .filter(([, metadata]) => !metadata.isInterface)
-      .reduce((acc, [type, metadata]: any) => {
-        acc[type] = this.mergeInterfaceLoaders(metadata, typeLoaders);
-        return acc;
-      }, {} as MercuriusLoaders);
+    return Object.entries(typeLoaders).reduce((acc, [type, metadata]) => {
+      if (metadata.isInterface) {
+        metadata.concretes.forEach((value) => {
+          acc[value] = {
+            ...acc[value],
+            ...metadata.loaders,
+          };
+        });
+      } else {
+        acc[type] = {
+          ...acc[type],
+          ...metadata.loaders,
+        };
+      }
+      return acc;
+    }, {} as MercuriusLoaders);
   }
 
   /**
@@ -181,44 +196,22 @@ export class LoadersExplorerService extends BaseExplorerService {
   }
 
   /**
-   * From a given ObjectType metadata, get the interfaces names that implements
-   * @param objectTypeMetadata
+   * Get a map of all Interfaces and their ObjectType implementations
    * @private
    */
-  private getObjectTypeInterfaces(objectTypeMetadata: ObjectTypeMetadata) {
-    return objectTypeMetadata?.interfaces
-      ? getInterfacesArray(objectTypeMetadata.interfaces)
-          .map((type) =>
-            TypeMetadataStorage.getInterfaceMetadataByTarget(
-              type as Type<unknown>,
-            ),
-          )
-          .filter(Boolean)
-          .map((meta) => meta.name)
-      : [];
-  }
-
-  /**
-   * Add interface defined loaders to current ObjectType loaders
-   * @param metadata
-   * @param typeLoaders
-   * @private
-   */
-  private mergeInterfaceLoaders(
-    metadata: ObjectTypeLoaders,
-    typeLoaders: Record<string, ObjectTypeLoaders>,
-  ) {
-    const { interfaces } = metadata;
-    interfaces.forEach((interfaceName) => {
-      const interfaceMetadata = typeLoaders[interfaceName];
-      if (interfaceMetadata) {
-        metadata.loaders = {
-          ...interfaceMetadata.loaders,
-          ...metadata.loaders,
-        };
-      }
-    });
-    return metadata.loaders;
+  private getInterfacesImplementations(): Record<string, Set<string>> {
+    return TypeMetadataStorage.getObjectTypesMetadata().reduce((acc, curr) => {
+      getInterfacesArray(curr.interfaces).forEach((interfaceTarget) => {
+        const int = TypeMetadataStorage.getInterfaceMetadataByTarget(
+          interfaceTarget as Type<unknown>,
+        );
+        if (!acc[int.name]) {
+          acc[int.name] = new Set();
+        }
+        acc[int.name].add(curr.name);
+      });
+      return acc;
+    }, {} as Record<string, Set<string>>);
   }
 
   /**

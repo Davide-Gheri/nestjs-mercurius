@@ -48,10 +48,18 @@ enum Status {
   DRAFT
 }
 
+type Customer implements IPerson {
+  id: ID!
+  name: String
+  uniqueName: String!
+  uniqueId: String!
+}
+
 type Query {
   users: [User!]!
   user(id: ID!): User
   search: [SearchUnion!]!
+  customers: [Customer!]!
 }
 
 union SearchUnion = PostType | User
