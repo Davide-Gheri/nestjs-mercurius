@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.7.0...0.8.0) (2021-03-23)
+
+
+### Bug Fixes
+
+* **loader:** correct interface loader inherit ([6e6357f](https://github.com/Davide-Gheri/nestjs-mercurius/commit/6e6357fb0a635a988d6bd6dfeae6eb396acd475a))
+
 # [0.7.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.6.0...0.7.0) (2021-03-17)
 
 
