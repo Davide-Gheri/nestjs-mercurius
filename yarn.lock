@@ -415,10 +415,10 @@
   resolved "https://registry.yarnpkg.com/@nestjs/mapped-types/-/mapped-types-0.3.0.tgz#1dcf178c198e948c548ca803850e2eba639900d4"
   integrity sha512-AdWVTOg3AhAEcVhPGgUJiLbLXb7L5Pe7vc20YQ0oOXP/KD/nJj0I3BcytVdBhzmgepol67BdivNUvo27Hx3Ndw==
 
-"@nestjs/platform-fastify@^7.6.14":
-  version "7.6.14"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-fastify/-/platform-fastify-7.6.14.tgz#191ae8e0c8564c65ad95d1a0e609c78c1e3ddad3"
-  integrity sha512-xfGq8XVXpDIKzFFkslD0sK5kgKYtr1wqzToTpmsV/UJJVNdr+2V/WnGrpSiHf58X1Ci4ffhz6YVVZaZjIbKghA==
+"@nestjs/platform-fastify@^7.6.15":
+  version "7.6.15"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-fastify/-/platform-fastify-7.6.15.tgz#f0faa25e77a566f0d4eb99ebe3c39aa95360b1c6"
+  integrity sha512-WwtVaIKw3+5zSCANr3oquPbwwd1yEhpSMwPzLj9TZLwQ0KusqT+dH6xNYOQV9Gk8M/ZjubPxZCeIIuTRirHwBg==
   dependencies:
     fastify "3.14.0"
     fastify-cors "5.2.0"
