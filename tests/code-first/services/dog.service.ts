@@ -24,7 +24,7 @@ export class DogService {
     return dogs;
   }
 
-  god(id: number) {
+  dog(id: number) {
     dogs.find((c) => c.id === id);
   }
 
