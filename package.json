@@ -34,7 +34,7 @@
     "@types/graphql-upload": "^8.0.4",
     "@types/jest": "^26.0.21",
     "@types/supertest": "^2.0.10",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.19.0",
     "altair-fastify-plugin": "^3.2.2",
     "class-transformer": "^0.4.0",
