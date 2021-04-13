@@ -1,6 +1,6 @@
 {
   "name": "nestjs-mercurius",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "main": "index.js",
   "repository": "https://@github.com:Davide-Gheri/nestjs-mercurius.git",
   "author": "Davide Gheri <davide@davidegheri.com>",

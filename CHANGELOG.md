@@ -1,3 +1,10 @@
+## [0.8.1](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.8.0...0.8.1) (2021-04-13)
+
+
+### Bug Fixes
+
+* **gateway:** hookservice dependencies ([85f1cf8](https://github.com/Davide-Gheri/nestjs-mercurius/commit/85f1cf81495a419a44cfb295cb724f6b63061518))
+
 # [0.8.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.7.0...0.8.0) (2021-03-23)
 
 
