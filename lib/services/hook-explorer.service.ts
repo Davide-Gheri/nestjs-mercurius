@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import { BaseExplorerService } from '@nestjs/graphql/dist/services';
 import { ModulesContainer } from '@nestjs/core/injector/modules-container';
 import { GRAPHQL_MODULE_OPTIONS } from '@nestjs/graphql/dist/graphql.constants';
@@ -12,8 +12,9 @@ export class HookExplorerService extends BaseExplorerService {
   constructor(
     private readonly modulesContainer: ModulesContainer,
     private readonly metadataScanner: MetadataScanner,
+    @Optional()
     @Inject(GRAPHQL_MODULE_OPTIONS)
-    private readonly gqlOptions: MercuriusModuleOptions,
+    private readonly gqlOptions?: MercuriusModuleOptions,
   ) {
     super();
   }
@@ -21,7 +22,7 @@ export class HookExplorerService extends BaseExplorerService {
   explore() {
     const modules = this.getModules(
       this.modulesContainer,
-      this.gqlOptions.include || [],
+      this.gqlOptions?.include || [],
     );
 
     return this.flatMap(modules, (instance) => this.filterHooks(instance));

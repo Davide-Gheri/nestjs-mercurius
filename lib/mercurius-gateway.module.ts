@@ -15,9 +15,10 @@ import {
   MercuriusGatewayModuleOptions,
 } from './interfaces';
 import { HookExplorerService } from './services';
+import { MetadataScanner } from '@nestjs/core/metadata-scanner';
 
 @Module({
-  providers: [HookExplorerService],
+  providers: [MetadataScanner, HookExplorerService],
 })
 export class MercuriusGatewayModule
   extends BaseMercuriusModule<MercuriusGatewayModuleOptions>
