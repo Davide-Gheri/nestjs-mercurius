@@ -65,7 +65,6 @@ import { Resolver, Query, ResolveField, Parent, Mutation, Subscription, Context,
 import { ParseIntPipe } from '@nestjs/common';
 import { ResolveLoader, toAsyncIterator, LoaderQuery } from 'nestjs-mercurius';
 import { PubSub } from 'mercurius';
-import { groupBy } from 'lodash';
 import { Cat } from './cat';
 
 @Resolver(() => Cat)
