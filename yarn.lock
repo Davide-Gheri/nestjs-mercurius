@@ -12,12 +12,12 @@
     core-js "^3.4.0"
     lodash.xorby "^4.7.0"
 
-"@apollo/federation@^0.21.0":
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/@apollo/federation/-/federation-0.21.0.tgz#df834b7ac884c5cdb0d0e69f5345dd0ee038b0fc"
-  integrity sha512-v4cmNa4307UrWPIY7oqqGNZGRigg4PJ30T864vMylAU75IcDk/7XUI0AMlaJbYQzndldNnHeeoWkIyRTLN2wGA==
+"@apollo/federation@^0.23.2":
+  version "0.23.2"
+  resolved "https://registry.yarnpkg.com/@apollo/federation/-/federation-0.23.2.tgz#5dd9abcbc40e6233555c47e2f83deade6436cd85"
+  integrity sha512-O3ZuKdjYpxyl9UAvE8dHK5dkHzS7DYagwR8Ts3oB3O4BshHh/9+SoPvyKQSDw25ZZXx2/87OZMvZWM8OSE4cgw==
   dependencies:
-    apollo-graphql "^0.6.0"
+    apollo-graphql "^0.9.2"
     lodash.xorby "^4.7.0"
 
 "@apollo/gateway@^0.17.0":
@@ -1312,6 +1312,15 @@ apollo-graphql@^0.6.0:
     apollo-env "^0.6.5"
     lodash.sortby "^4.7.0"
 
+apollo-graphql@^0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/apollo-graphql/-/apollo-graphql-0.9.2.tgz#750ca9a97b59c868426defc95d9d9e1733ae4bdf"
+  integrity sha512-+c/vqC2LPq3e5kO7MfBxDDiljzLog/THZr9Pd46HVaKAhHUxFL0rJEbT17VhjdOoZGWFWLYG7x9hiN6EQD1xZQ==
+  dependencies:
+    core-js-pure "^3.10.2"
+    lodash.sortby "^4.7.0"
+    sha.js "^2.4.11"
+
 apollo-link@^1.2.14:
   version "1.2.14"
   resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.14.tgz#3feda4b47f9ebba7f4160bef8b977ba725b684d9"
@@ -2194,6 +2203,11 @@ cookiejar@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.2.tgz#dd8a235530752f988f9a0844f3fc589e3111125c"
   integrity sha512-Mw+adcfzPxcPeI+0WlvRrr/3lGVO0bD75SxX6811cxSh1Wbxx7xZBGK1eVtDf6si8rg2lhnUjsVLMFMfbRIuwA==
+
+core-js-pure@^3.10.2:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.11.0.tgz#e07f25a8f616d178ec16b0354b008ad28b20b2f0"
+  integrity sha512-PxEiQGjzC+5qbvE7ZIs5Zn6BynNeZO9zHhrrWmkRff2SZLq0CE/H5LuZOJHhmOQ8L38+eMzEHAmPYWrUtDfuDQ==
 
 core-js@^3.0.1, core-js@^3.4.0:
   version "3.8.3"
