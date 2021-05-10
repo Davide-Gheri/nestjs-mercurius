@@ -334,10 +334,10 @@
     camel-case "4.1.1"
     tslib "~2.0.1"
 
-"@graphql-tools/utils@^7.0.0", "@graphql-tools/utils@^7.1.2", "@graphql-tools/utils@^7.7.2":
-  version "7.7.2"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-7.7.2.tgz#3d3a7cd97821339cf364591dec0b50a92e5da0ee"
-  integrity sha512-whR/2gAt76njm0x7nLdTs3GG9uSSU9bx7oVurVGWgfEbhYuDaVRVsvfMhx9T1Zz9ICcmGMwzBquc1ng9mlG/WA==
+"@graphql-tools/utils@^7.0.0", "@graphql-tools/utils@^7.1.2", "@graphql-tools/utils@^7.9.1":
+  version "7.9.1"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-7.9.1.tgz#265e12a0b8a396be97f459599f2f1150fceee4b1"
+  integrity sha512-k4bQWsOnSJSW7suBnVUJf3Sc8uXuvIYLHXujbEoSrwOEHjC+707GvXbQ7rg+8l7v8NMgpyARyuKFlqz3cfoxBQ==
   dependencies:
     "@ardatan/aggregate-error" "0.0.6"
     camel-case "4.1.2"
