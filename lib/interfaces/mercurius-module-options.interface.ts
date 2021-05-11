@@ -5,7 +5,7 @@ import {
 } from '@nestjs/graphql';
 import { ModuleMetadata, Type } from '@nestjs/common';
 import { GraphQLSchema } from 'graphql';
-import { IResolverValidationOptions } from '@nestjs/graphql/dist/interfaces/gql-module-options.interface';
+import { IResolverValidationOptions } from '@graphql-tools/utils';
 import { MercuriusSchemaOptions } from 'mercurius';
 import { BaseMercuriusModuleOptions } from './base-mercurius-module-options.interface';
 
