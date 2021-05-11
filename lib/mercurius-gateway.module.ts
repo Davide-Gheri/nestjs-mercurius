@@ -13,6 +13,7 @@ import { BaseMercuriusModule } from './base-mercurius.module';
 import {
   MercuriusGatewayModuleAsyncOptions,
   MercuriusGatewayModuleOptions,
+  MercuriusGatewayOptionsFactory,
 } from './interfaces';
 import { HookExplorerService } from './services';
 import { MetadataScanner } from '@nestjs/core/metadata-scanner';
@@ -22,7 +23,8 @@ import { MetadataScanner } from '@nestjs/core/metadata-scanner';
 })
 export class MercuriusGatewayModule
   extends BaseMercuriusModule<MercuriusGatewayModuleOptions>
-  implements OnModuleInit {
+  implements OnModuleInit
+{
   constructor(
     protected readonly httpAdapterHost: HttpAdapterHost,
     protected readonly applicationConfig: ApplicationConfig,
@@ -90,8 +92,8 @@ export class MercuriusGatewayModule
 
     return {
       provide: GRAPHQL_GATEWAY_MODULE_OPTIONS,
-      useFactory: (optionsFactory: any) =>
-        optionsFactory.createGatewayOptions(),
+      useFactory: (optionsFactory: MercuriusGatewayOptionsFactory) =>
+        optionsFactory.createMercuriusGatewayOptions(),
       inject: [options.useExisting || options.useClass],
     };
   }
