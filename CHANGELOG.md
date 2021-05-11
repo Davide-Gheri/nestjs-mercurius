@@ -1,3 +1,11 @@
+# [0.9.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.8.1...0.9.0) (2021-05-11)
+
+
+### Bug Fixes
+
+* **gateway:** wrong function call on gateway options factory ([675d4e1](https://github.com/Davide-Gheri/nestjs-mercurius/commit/675d4e1673fccaf1cfd8c7770a5035fc02e2f766))
+* Fixed import ([9f4b972](https://github.com/Davide-Gheri/nestjs-mercurius/commit/9f4b97203b703096dd788fc3c383007b830aa5dc))
+
 ## [0.8.1](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.8.0...0.8.1) (2021-04-13)
 
 
