@@ -2,18 +2,18 @@
 # yarn lockfile v1
 
 
-"@apollo/federation@^0.21.0":
-  version "0.21.2"
-  resolved "https://registry.yarnpkg.com/@apollo/federation/-/federation-0.21.2.tgz#2ced655254c704d248d9ffb581137e363b5d9e27"
-  integrity sha512-ZQ2TcRv7QO/84+SKFQrhppg+s0EcwBfSPT27DcoLYfEj8tsNjbUmsyxiH5CE2NJtG0F8y520nIM8tQ9wUrePsg==
-  dependencies:
-    apollo-graphql "^0.6.0"
-    lodash.xorby "^4.7.0"
-
 "@apollo/federation@^0.23.2":
   version "0.23.2"
   resolved "https://registry.yarnpkg.com/@apollo/federation/-/federation-0.23.2.tgz#5dd9abcbc40e6233555c47e2f83deade6436cd85"
   integrity sha512-O3ZuKdjYpxyl9UAvE8dHK5dkHzS7DYagwR8Ts3oB3O4BshHh/9+SoPvyKQSDw25ZZXx2/87OZMvZWM8OSE4cgw==
+  dependencies:
+    apollo-graphql "^0.9.2"
+    lodash.xorby "^4.7.0"
+
+"@apollo/federation@^0.25.0":
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/@apollo/federation/-/federation-0.25.0.tgz#9318ef58d04468ce7cbc7202fd173a580f9647ed"
+  integrity sha512-HspsFSatOhBwDSbYq7WyrtalhX98ShOrzT1Knwj/VHLGfFbLsbREpx191S8D2Wr6ew8LhqCcUkfNrrTBB1l3XA==
   dependencies:
     apollo-graphql "^0.9.2"
     lodash.xorby "^4.7.0"
@@ -1205,7 +1205,7 @@ apollo-datasource@^0.9.0:
     apollo-server-caching "^0.7.0"
     apollo-server-env "^3.1.0"
 
-apollo-env@0.6.6, apollo-env@^0.6.6:
+apollo-env@0.6.6:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/apollo-env/-/apollo-env-0.6.6.tgz#d7880805c4e96ee3d4142900a405176a04779438"
   integrity sha512-hXI9PjJtzmD34XviBU+4sPMOxnifYrHVmxpjykqI/dUD2G3yTiuRaiQqwRwB2RCdwC1Ug/jBfoQ/NHDTnnjndQ==
@@ -1224,14 +1224,6 @@ apollo-env@^0.10.0:
     core-js "^3.0.1"
     node-fetch "^2.6.1"
     sha.js "^2.4.11"
-
-apollo-graphql@^0.6.0:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/apollo-graphql/-/apollo-graphql-0.6.1.tgz#d0bf0aff76f445de3da10e08f6974f1bf65f5753"
-  integrity sha512-ZRXAV+k+hboCVS+FW86FW/QgnDR7gm/xMUwJPGXEbV53OLGuQQdIT0NCYK7AzzVkCfsbb7NJ3mmEclkZY9uuxQ==
-  dependencies:
-    apollo-env "^0.6.6"
-    lodash.sortby "^4.7.0"
 
 apollo-graphql@^0.9.0, apollo-graphql@^0.9.2:
   version "0.9.2"
