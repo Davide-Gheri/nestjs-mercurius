@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@apollo/federation": "^0.23.2",
-    "@commitlint/cli": "^12.1.1",
+    "@commitlint/cli": "^12.1.4",
     "@commitlint/config-angular": "^12.0.1",
     "@graphql-tools/utils": "^7.9.1",
     "@nestjs/common": "^7.6.15",
