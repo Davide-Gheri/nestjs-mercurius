@@ -1,3 +1,10 @@
+## [0.9.1](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.9.0...0.9.1) (2021-05-25)
+
+
+### Bug Fixes
+
+* **factory:** return undefined if no validation rules are provided ([326965c](https://github.com/Davide-Gheri/nestjs-mercurius/commit/326965c93d4d7226648bc14f92689acd7c4bf2dd))
+
 # [0.9.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.8.1...0.9.0) (2021-05-11)
 
 
