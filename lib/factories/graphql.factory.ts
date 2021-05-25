@@ -50,9 +50,9 @@ export class GraphQLFactory extends NestGraphQLFactory {
         skipCheck: true,
       };
     }
-    const parentOptions = ((await super.mergeOptions(
+    const parentOptions = (await super.mergeOptions(
       options as any,
-    )) as unknown) as MercuriusModuleOptions & {
+    )) as unknown as MercuriusModuleOptions & {
       plugins: any[];
       schema: GraphQLSchema;
     };
@@ -81,6 +81,9 @@ export class GraphQLFactory extends NestGraphQLFactory {
 
   mergeValidationRules(existingValidationRules?: ValidationRules) {
     const rules = this.validationRuleExplorerService.explore();
+    if (rules.length === 0 && !existingValidationRules) {
+      return;
+    }
     return (params) => [
       ...(existingValidationRules ? existingValidationRules(params) : []),
       ...rules.map((rule) => (context) => rule.validate(params, context)),
