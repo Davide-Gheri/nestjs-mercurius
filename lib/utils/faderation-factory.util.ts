@@ -73,7 +73,12 @@ export function transformFederatedSchema(schema: GraphQLSchema) {
     'FederationFactory',
     () => require('@apollo/federation'),
   );
-  const schemaString = printSchema(schema);
+
+  // Workaround for https://github.com/mercurius-js/mercurius/issues/273
+  const schemaString = printSchema(schema)
+    .replace('type Query {', 'type Query @extends {')
+    .replace('type Mutation {', 'type Mutation @extends {')
+    .replace('type Subscription {', 'type Subscription @extends {');
 
   schema = extendSchema(schema, parse(FEDERATION_SCHEMA), {
     assumeValidSDL: true,

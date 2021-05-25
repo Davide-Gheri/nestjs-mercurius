@@ -1,4 +1,4 @@
-import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import { Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { Post } from './post';
 import { User } from './user';
 
@@ -19,6 +19,11 @@ export const posts: Post[] = [
 
 @Resolver(() => Post)
 export class PostResolver {
+  @Query(() => [Post])
+  posts() {
+    return posts;
+  }
+
   @ResolveField(() => User)
   author(@Parent() post: Post) {
     return { __typename: 'User', id: post.authorId };
