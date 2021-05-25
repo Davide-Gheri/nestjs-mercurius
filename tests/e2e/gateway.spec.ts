@@ -88,4 +88,36 @@ graphqlSuite('Should call service query', async (t) => {
     });
 });
 
+graphqlSuite('Should call another service query', async (t) => {
+  await request(t.app.getHttpServer())
+    .post('/graphql')
+    .send({
+      query: `
+        {
+          posts {
+            id
+            title
+            authorId
+          }
+        }
+      `,
+    })
+    .expect(200, {
+      data: {
+        posts: [
+          {
+            id: '1',
+            title: 'p1',
+            authorId: 1,
+          },
+          {
+            id: '2',
+            title: 'p2',
+            authorId: 1,
+          },
+        ],
+      },
+    });
+});
+
 graphqlSuite.run();
