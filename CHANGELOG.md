@@ -1,3 +1,10 @@
+## [0.9.2](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.9.1...0.9.2) (2021-05-25)
+
+
+### Bug Fixes
+
+* **federation-factory:** implement workaround for federated schema ([ed5ed68](https://github.com/Davide-Gheri/nestjs-mercurius/commit/ed5ed687225e86314679bae8b890268e93768cf7))
+
 ## [0.9.1](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.9.0...0.9.1) (2021-05-25)
 
 
