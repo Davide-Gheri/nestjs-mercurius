@@ -7,6 +7,9 @@ import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 import { Test } from '@nestjs/testing';
 import { AppModule } from '../code-first/app.module';
+import * as Websocket from 'ws';
+import { FastifyInstance } from 'fastify';
+import { cats } from '../code-first/services/cat.service';
 
 interface Context {
   app: NestFastifyApplication;
@@ -261,5 +264,73 @@ gqlSuite(
     });
   },
 );
+
+gqlSuite('subscriber should work', async ({ app }) => {
+  return new Promise<void>((resolve, reject) => {
+    app.listen(0, (err) => {
+      if (err) {
+        return reject(err);
+      }
+      const port = app.getHttpServer().address().port;
+      const fastifyApp = app.getHttpAdapter().getInstance() as FastifyInstance;
+
+      const ws = new Websocket(`ws://localhost:${port}/graphql`, 'graphql-ws');
+
+      const client = Websocket.createWebSocketStream(ws, {
+        encoding: 'utf8',
+        objectMode: true,
+      });
+      client.setEncoding('utf8');
+      client.write(
+        JSON.stringify({
+          type: 'connection_init',
+        }),
+      );
+
+      client.write(
+        JSON.stringify({
+          id: 1,
+          type: 'start',
+          payload: {
+            query: `
+          subscription {
+            onCatSub {
+              id
+              lives
+              name
+              hasFur
+            }
+          }
+        `,
+          },
+        }),
+      );
+
+      client.on('data', (chunk) => {
+        const data = JSON.parse(chunk);
+
+        if (data.type === 'connection_ack') {
+          fastifyApp.graphql.pubsub.publish({
+            topic: 'CAT_SUB_TOPIC',
+            payload: cats[0],
+          });
+        } else if (data.id === 1) {
+          const expectedCat = expectedCats[0];
+          const receivedCat = data.payload.data?.onCatSub;
+          assert.ok(receivedCat);
+          assert.equal(expectedCat.id, receivedCat.id);
+          assert.type(receivedCat.hasFur, 'boolean');
+
+          client.end();
+        }
+      });
+
+      client.on('end', () => {
+        client.destroy();
+        app.close().then(resolve).catch(reject);
+      });
+    });
+  });
+});
 
 gqlSuite.run();

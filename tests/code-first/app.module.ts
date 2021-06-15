@@ -13,6 +13,7 @@ import { UpperCaseDirective } from '../example/directives/upper-case.directive';
       schemaDirectives: {
         uppercase: UpperCaseDirective,
       },
+      subscription: true,
     }),
   ],
   providers: [CatService, DogService, AnimalResolver, CatResolver],
