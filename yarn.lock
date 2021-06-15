@@ -3289,13 +3289,6 @@ graphql-jit@^0.5.0:
     lodash.merge "4.6.2"
     lodash.mergewith "4.6.2"
 
-graphql-query-complexity@^0.8.0:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/graphql-query-complexity/-/graphql-query-complexity-0.8.1.tgz#a08e30497b136c8d9dd425936ec92db7f26fbfe7"
-  integrity sha512-EGD77GBjbONFBkmvHmTO/6Ig+9E9PwtRF32vDn/MmTwVxT93MaGg8GD6e3M85hBlCkyRoJvFu+0ua1xWUKOaFw==
-  dependencies:
-    lodash.get "^4.4.2"
-
 graphql-scalars@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/graphql-scalars/-/graphql-scalars-1.9.3.tgz#84d27e42d280a16821ab0ef59cddaac84f798575"
@@ -4150,11 +4143,6 @@ lodash.clonedeep@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
 
-lodash.get@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
-  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
-
 lodash.ismatch@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.ismatch/-/lodash.ismatch-4.4.0.tgz#756cb5150ca3ba6f11085a78849645f188f85f37"
@@ -4355,10 +4343,10 @@ mercurius-upload@^1.1.1:
     fastify-plugin "^2.3.4"
     graphql-upload "^11.0.0"
 
-mercurius@^7.3.0:
-  version "7.6.1"
-  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.6.1.tgz#354afb09640ea7edcbe4fe3589a995c9cbf14eae"
-  integrity sha512-GLY6sO7OkHD85pBPQh4sPw6IxYuwRaHi0FhjV6PaqML0wrD2QyfRP8VrrGUwMLRUeW8YdQWonTtaQo+nuqBv+w==
+mercurius@^7.9.0:
+  version "7.9.0"
+  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.9.0.tgz#62ebb7fcd443f148e8a2a0c7d4b7d689b649585c"
+  integrity sha512-o+PYgPx9bvwvnHJEiqyaKMO5RZhq/TFsV+CVG6a2BrG+BNSTpm3eTwVNRmvAd6F5cuBh7VniBONRWd6REKQwWw==
   dependencies:
     "@types/isomorphic-form-data" "^2.0.0"
     end-of-stream "^1.4.4"

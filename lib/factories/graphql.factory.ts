@@ -12,11 +12,7 @@ import {
 } from '@nestjs/graphql/dist/services';
 import { GraphQLSchemaBuilder } from '@nestjs/graphql/dist/graphql-schema.builder';
 import { MercuriusModuleOptions } from '../interfaces';
-import { ValidationRules } from '../interfaces/base-mercurius-module-options.interface';
-import {
-  LoadersExplorerService,
-  ValidationRuleExplorerService,
-} from '../services';
+import { LoadersExplorerService } from '../services';
 import { transformFederatedSchema } from '../utils/faderation-factory.util';
 
 @Injectable()
@@ -31,7 +27,6 @@ export class GraphQLFactory extends NestGraphQLFactory {
     gqlSchemaBuilder: GraphQLSchemaBuilder,
     gqlSchemaHost: GraphQLSchemaHost,
     protected readonly loaderExplorerService: LoadersExplorerService,
-    protected readonly validationRuleExplorerService: ValidationRuleExplorerService,
   ) {
     super(
       resolversExplorerService,
@@ -68,25 +63,10 @@ export class GraphQLFactory extends NestGraphQLFactory {
     }
     delete parentOptions.plugins;
     parentOptions.loaders = this.loaderExplorerService.explore();
-    parentOptions.validationRules = this.mergeValidationRules(
-      options.validationRules,
-    );
-
     if (options.federationMetadata) {
       parentOptions.schema = transformFederatedSchema(parentOptions.schema);
     }
 
     return parentOptions;
-  }
-
-  mergeValidationRules(existingValidationRules?: ValidationRules) {
-    const rules = this.validationRuleExplorerService.explore();
-    if (rules.length === 0 && !existingValidationRules) {
-      return;
-    }
-    return (params) => [
-      ...(existingValidationRules ? existingValidationRules(params) : []),
-      ...rules.map((rule) => (context) => rule.validate(params, context)),
-    ];
   }
 }

@@ -2,86 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User implements IPerson {
+type User {
   id: ID!
-  name: String
-  uniqueName: String!
-  uniqueId: String!
-  lastName: String!
-  birthDay: DateTime!
-  secret: Hash
-  meta: JSON
-  age: Int!
-  fullName(filter: String): String
-  posts: [PostType!]!
-}
-
-interface IPerson {
-  id: ID!
-  name: String
-  uniqueName: String!
-  uniqueId: String!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-"""Hash scalar"""
-scalar Hash
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
-
-type PostType {
-  id: ID!
-  title: String!
-  authorId: String!
-  status: Status!
-}
-
-enum Status {
-  PUBLISHED
-  DRAFT
-}
-
-type Customer implements IPerson {
-  id: ID!
-  name: String
-  uniqueName: String!
-  uniqueId: String!
+  name: String!
+  isActive: Boolean!
 }
 
 type Query {
   users: [User!]!
-  user(id: ID!): User
-  search: [SearchUnion!]!
-  customers: [Customer!]!
 }
 
-union SearchUnion = PostType | User
-
 type Mutation {
-  uploadImage(file: Upload!): Boolean!
   createUser(input: CreateUserInput!): User!
 }
 
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
 input CreateUserInput {
-  name: String
-  lastName: String = "noone"
-  birthDay: DateTime!
-  secret: Hash
-  meta: JSON
+  name: String!
+  isActive: Boolean = true
 }
 
 type Subscription {
-  userAdded: User!
-  userAddedId: String!
-  specificUserAdded(id: ID!): User!
+  onCreateUser: User!
 }

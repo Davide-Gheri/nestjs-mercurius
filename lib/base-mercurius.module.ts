@@ -1,14 +1,12 @@
-import { MercuriusModuleOptions } from './interfaces';
 import { loadPackage } from '@nestjs/common/utils/load-package.util';
 import { FastifyInstance } from 'fastify';
-import { MercuriusOptions } from 'mercurius';
 import { normalizeRoutePath } from '@nestjs/graphql/dist/utils';
 import { ApplicationConfig, HttpAdapterHost } from '@nestjs/core';
 import { BaseMercuriusModuleOptions } from './interfaces/base-mercurius-module-options.interface';
 import { HookExplorerService } from './services';
 
 export abstract class BaseMercuriusModule<
-  Opts extends BaseMercuriusModuleOptions
+  Opts extends BaseMercuriusModuleOptions,
 > {
   constructor(
     protected readonly httpAdapterHost: HttpAdapterHost,
