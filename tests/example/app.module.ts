@@ -5,7 +5,6 @@ import { ImageResolver } from './resolvers/image.resolver';
 import { HashScalar } from './scalars/hash.scalar';
 import { JSONResolver } from 'graphql-scalars';
 import { UpperCaseDirective } from './directives/upper-case.directive';
-import { ComplexityModule } from './modules/complexity/complexity.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -27,8 +26,8 @@ import { UserModule } from './modules/user/user.module';
                 const value = await next();
 
                 const { info } = ctx;
-                const extensions = info?.parentType.getFields()[info.fieldName]
-                  .extensions;
+                const extensions =
+                  info?.parentType.getFields()[info.fieldName].extensions;
                 //...
 
                 return value;
@@ -51,7 +50,6 @@ import { UserModule } from './modules/user/user.module';
         };
       },
     }),
-    ComplexityModule,
     UserModule,
   ],
   controllers: [AppController],

@@ -6,7 +6,6 @@ import {
   OmitType,
   Query,
   Resolver,
-  ResolveReference,
   Subscription,
 } from '@nestjs/graphql';
 import { User } from './user';

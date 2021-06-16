@@ -1,11 +1,9 @@
 import { MercuriusCommonOptions } from 'mercurius';
-import { ValidationRule } from 'graphql';
 
 export interface BaseMercuriusModuleOptions extends MercuriusCommonOptions {
   path?: string;
   useGlobalPrefix?: boolean;
   uploads?: boolean | FileUploadOptions;
-  validationRules?: ValidationRules;
   altair?: boolean | any;
 }
 
@@ -17,9 +15,3 @@ export interface FileUploadOptions {
   //Max allowed number of files (default: Infinity).
   maxFiles?: number;
 }
-
-export type ValidationRules = (params: {
-  source: string;
-  variables?: Record<string, any>;
-  operationName?: string;
-}) => ValidationRule[];

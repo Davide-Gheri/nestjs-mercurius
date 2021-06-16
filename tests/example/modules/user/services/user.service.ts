@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserType } from '../../../types/user.type';
 import { CreateUserInput } from '../inputs/create-user.input';
-import { PubSubHost } from '../../../../../lib';
+import { GraphQLHook, PubSubHost } from '../../../../../lib';
 
 export const users: UserType[] = [
   {
@@ -34,6 +34,9 @@ let nextId = 5;
 @Injectable()
 export class UserService {
   constructor(private readonly pubSubHost: PubSubHost) {}
+
+  @GraphQLHook('preParsing')
+  async preParse() {}
 
   users() {
     return users;

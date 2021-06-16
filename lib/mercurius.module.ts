@@ -30,11 +30,7 @@ import {
   MercuriusModuleOptions,
   MercuriusOptionsFactory,
 } from './interfaces';
-import {
-  HookExplorerService,
-  LoadersExplorerService,
-  ValidationRuleExplorerService,
-} from './services';
+import { HookExplorerService, LoadersExplorerService } from './services';
 import { mergeDefaults } from './utils/merge-defaults';
 import { MercuriusCoreModule } from './mercurius-core.module';
 import { GraphQLFactory } from './factories/graphql.factory';
@@ -53,13 +49,13 @@ import { BaseMercuriusModule } from './base-mercurius.module';
     GraphQLSchemaBuilder,
     GraphQLSchemaHost,
     LoadersExplorerService,
-    ValidationRuleExplorerService,
     HookExplorerService,
   ],
 })
 export class MercuriusModule
   extends BaseMercuriusModule<MercuriusModuleOptions>
-  implements OnModuleInit {
+  implements OnModuleInit
+{
   constructor(
     private readonly graphqlFactory: GraphQLFactory,
     private readonly graphqlTypesLoader: GraphQLTypesLoader,
@@ -147,10 +143,10 @@ export class MercuriusModule
       )) || [];
     const mergedTypeDefs = extend(typeDefs, this.options.typeDefs);
 
-    const mercuriusOptions = ((await this.graphqlFactory.mergeOptions({
+    const mercuriusOptions = (await this.graphqlFactory.mergeOptions({
       ...this.options,
       typeDefs: mergedTypeDefs,
-    } as any)) as unknown) as MercuriusModuleOptions;
+    } as any)) as unknown as MercuriusModuleOptions;
 
     if (
       this.options.definitions &&
