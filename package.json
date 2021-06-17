@@ -27,7 +27,7 @@
     "@commitlint/config-angular": "^12.1.4",
     "@graphql-tools/utils": "^7.10.0",
     "@nestjs/common": "^7.6.17",
-    "@nestjs/core": "^7.6.15",
+    "@nestjs/core": "^7.6.18",
     "@nestjs/platform-fastify": "^7.6.15",
     "@nestjs/testing": "^7.6.15",
     "@release-it/conventional-changelog": "^2.0.1",
@@ -68,7 +68,7 @@
   "peerDependencies": {
     "@apollo/federation": "^0.23.2",
     "@nestjs/common": "^7.6.17",
-    "@nestjs/core": "^7.6.15",
+    "@nestjs/core": "^7.6.18",
     "@nestjs/platform-fastify": "^7.6.15",
     "altair-fastify-plugin": "^3.2.2",
     "fastify": "^3.15.1",
