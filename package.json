@@ -22,7 +22,7 @@
     "postpublish": "pinst --enable"
   },
   "devDependencies": {
-    "@apollo/federation": "^0.23.2",
+    "@apollo/federation": "^0.25.1",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-angular": "^12.1.4",
     "@graphql-tools/utils": "^7.10.0",
@@ -66,7 +66,7 @@
     "@nestjs/graphql": "~7.11.0"
   },
   "peerDependencies": {
-    "@apollo/federation": "^0.23.2",
+    "@apollo/federation": "^0.25.1",
     "@nestjs/common": "^7.6.17",
     "@nestjs/core": "^7.6.18",
     "@nestjs/platform-fastify": "^7.6.15",
