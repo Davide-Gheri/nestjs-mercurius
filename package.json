@@ -63,7 +63,7 @@
     "ws": "^7.5.0"
   },
   "dependencies": {
-    "@nestjs/graphql": "~7.10.6"
+    "@nestjs/graphql": "~7.11.0"
   },
   "peerDependencies": {
     "@apollo/federation": "^0.23.2",
