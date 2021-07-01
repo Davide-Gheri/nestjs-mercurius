@@ -34,7 +34,7 @@
     "@types/graphql-upload": "^8.0.5",
     "@types/jest": "^26.0.22",
     "@types/supertest": "^2.0.11",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.22.1",
     "altair-fastify-plugin": "^3.2.2",
     "class-transformer": "^0.4.0",
@@ -58,7 +58,7 @@
     "rxjs": "^6.6.6",
     "supertest": "^6.1.3",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.4",
+    "typescript": "^4.3.5",
     "uvu": "^0.5.1",
     "ws": "^7.5.0"
   },
