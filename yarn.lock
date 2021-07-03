@@ -4484,10 +4484,10 @@ mercurius-upload@^1.1.1:
     fastify-plugin "^2.3.4"
     graphql-upload "^11.0.0"
 
-mercurius@^7.9.0:
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.9.0.tgz#62ebb7fcd443f148e8a2a0c7d4b7d689b649585c"
-  integrity sha512-o+PYgPx9bvwvnHJEiqyaKMO5RZhq/TFsV+CVG6a2BrG+BNSTpm3eTwVNRmvAd6F5cuBh7VniBONRWd6REKQwWw==
+mercurius@^7.9.1:
+  version "7.9.1"
+  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.9.1.tgz#c75355e91389f94ffc69c5deb5ef6a9afef24df9"
+  integrity sha512-x6/6W6eV3QpWOjzvF5DiqBpEL2b+SuCKJzQPXuDHgjflrNLDZAFuAJ57K52DX71vrysn0eOH7Ck9qbLgB2GPpQ==
   dependencies:
     "@types/isomorphic-form-data" "^2.0.0"
     end-of-stream "^1.4.4"
@@ -6609,10 +6609,10 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-"ws@^5.2.0 || ^6.0.0 || ^7.0.0", ws@^7.4.2, ws@^7.4.3, ws@^7.5.0:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.0.tgz#0033bafea031fb9df041b2026fc72a571ca44691"
-  integrity sha512-6ezXvzOZupqKj4jUqbQ9tXuJNo+BR2gU8fFRk3XCP3e0G6WT414u5ELe6Y0vtp7kmSJ3F7YWObSNr1ESsgi4vw==
+"ws@^5.2.0 || ^6.0.0 || ^7.0.0", ws@^7.4.2, ws@^7.4.3, ws@^7.5.1:
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.1.tgz#44fc000d87edb1d9c53e51fbc69a0ac1f6871d66"
+  integrity sha512-2c6faOUH/nhoQN6abwMloF7Iyl0ZS2E9HGtsiLrWn0zOOMWlhtDmdf/uihDt6jnuCxgtwGBNy6Onsoy2s2O2Ow==
 
 ws@^6.0.0:
   version "6.2.1"
