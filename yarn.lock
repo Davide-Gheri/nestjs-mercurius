@@ -1143,19 +1143,28 @@ ajv@^8.0.1:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-altair-fastify-plugin@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/altair-fastify-plugin/-/altair-fastify-plugin-3.2.2.tgz#8bb411d31a2634df5daab0d490303c29e472e8bf"
-  integrity sha512-9nsZTCev69u/yxzgYaM/ChX3MEqD1nXnidM4hp7g94K7rm49NS8FpZB1fECELwTeQfXtrJZeG46/cBiVZsILIg==
+altair-exported-types@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/altair-exported-types/-/altair-exported-types-4.0.6.tgz#6c994e167406c2ed3ecdeb6391205bd404afd0cf"
+  integrity sha512-3CBJgT1Bn+r6sH7f4V02gzVjcjHG1It6qaDQs0Tum78ObTkJdsLUKqSIODAeGh3K6BZrWaJKFmYPpAbJsAUu+g==
   dependencies:
-    altair-static "^3.2.2"
+    uuid "3.4.0"
+
+altair-fastify-plugin@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/altair-fastify-plugin/-/altair-fastify-plugin-4.0.6.tgz#d0828b4ccc8086dabc71495df4941ac835dbd8bb"
+  integrity sha512-hghFfji1wKkrxATgEWMVqy7ydcj/nJ17+dqF56c759pjClEb7KDoXuvgBFwqZRC3K+kx8UklHQWjjuN0Vm1SAA==
+  dependencies:
+    altair-static "^4.0.6"
     fastify-plugin "^2.3.4"
     fastify-static "^3.2.1"
 
-altair-static@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-3.2.2.tgz#940ded3e96064f43637d661a27eeaaa35c7db186"
-  integrity sha512-D+JxxDqAr1GmxtRLVePsoedtyWV6EfUXFN1jXht1vryE5KJ9Hqnfg7b8ZTbHHWdtC9psCuTDlJcR6/7XXpRpGQ==
+altair-static@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-4.0.6.tgz#f5c35b39b18493c1d556e392fcf9deec56a9c8fa"
+  integrity sha512-KDxH8OYUiwz2UWlJy4bhYjaVMhWfQ6OCE2HdIIq8+c/ar+8w4nM5vYI9fQxLbGjkHRn2ukh3pZt8fXm6YqehLQ==
+  dependencies:
+    altair-exported-types "^4.0.6"
 
 ansi-align@^3.0.0:
   version "3.0.0"
@@ -6414,15 +6423,15 @@ util.promisify@^1.0.0:
     has-symbols "^1.0.1"
     object.getownpropertydescriptors "^2.1.1"
 
+uuid@3.4.0, uuid@^3.1.0, uuid@^3.3.2:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
+  integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
+
 uuid@8.3.2, uuid@^8.0.0:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
-
-uuid@^3.1.0, uuid@^3.3.2:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
-  integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
 uvu@^0.5.1:
   version "0.5.1"
