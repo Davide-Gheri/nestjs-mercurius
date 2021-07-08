@@ -2440,6 +2440,11 @@ encodeurl@~1.0.2:
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
   integrity sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
 
+encoding-negotiator@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/encoding-negotiator/-/encoding-negotiator-2.0.1.tgz#79871bb5473b81f6a0670e8de5303fb5ee0868a3"
+  integrity sha512-GSK7qphNR4iPcejfAlZxKDoz3xMhnspwImK+Af5WhePS9jUpK/Oh7rUdyENWu+9rgDflOCTmAojBsgsvM8neAQ==
+
 encoding@^0.1.12:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.13.tgz#56574afdd791f54a8e9b2785c0582a2d26210fa9"
@@ -2856,7 +2861,7 @@ fastify-cors@6.0.1:
     fastify-plugin "^3.0.0"
     vary "^1.1.2"
 
-fastify-error@^0.3.0:
+fastify-error@^0.3.0, fastify-error@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/fastify-error/-/fastify-error-0.3.1.tgz#8eb993e15e3cf57f0357fc452af9290f1c1278d2"
   integrity sha512-oCfpcsDndgnDVgiI7bwFKAun2dO+4h84vBlkWsWnz/OUK9Reff5UFoFl241xTiLeHWX/vU9zkDVXqYUxjOwHcQ==
@@ -2890,12 +2895,13 @@ fastify-static@^3.2.1:
     readable-stream "^3.4.0"
     send "^0.17.1"
 
-fastify-static@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/fastify-static/-/fastify-static-4.0.1.tgz#28947728b2b4c9360eeea8a92ae7b36a0e38b273"
-  integrity sha512-Mjt0My8Gf/nzJqIDai9rz3HsxH4RAJeMGMIPmf40lGMFKAv4SbRiKJ2cmteXoKHrFGPeGxwMq0gXfixwueV8wA==
+fastify-static@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/fastify-static/-/fastify-static-4.2.2.tgz#48bd75bf23f2fb983395ce992a92448d78fe88bb"
+  integrity sha512-C631EuGdMlUzFXuuP4SqXBoQEiit9S0uYRd97cF2mFhgStvZvQKIjtzUk/GMQu6EfEdm0ddj3UAc0C6dVeNyKA==
   dependencies:
     content-disposition "^0.5.3"
+    encoding-negotiator "^2.0.1"
     fastify-plugin "^3.0.0"
     glob "^7.1.4"
     readable-stream "^3.4.0"
@@ -2906,7 +2912,7 @@ fastify-warning@^0.2.0:
   resolved "https://registry.yarnpkg.com/fastify-warning/-/fastify-warning-0.2.0.tgz#e717776026a4493dc9a2befa44db6d17f618008f"
   integrity sha512-s1EQguBw/9qtc1p/WTY4eq9WMRIACkj+HTcOIK1in4MV5aFaQC9ZCIt0dJ7pr5bIf4lPpHvAtP2ywpTNgs7hqw==
 
-fastify-websocket@^3.0.0:
+fastify-websocket@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/fastify-websocket/-/fastify-websocket-3.2.0.tgz#69421740671cec95f2001a9dccd393c923d482c0"
   integrity sha512-O1I04Y6aV2rkO+RRMYQzIe2h7omA20p+Nk/HAdJmfHvNErY7OCani06+rDMmQCKYbZT6RWrsy13U+GrJPhSO6Q==
@@ -3393,10 +3399,10 @@ graphql-extensions@^0.15.0:
     apollo-server-env "^3.1.0"
     apollo-server-types "^0.9.0"
 
-graphql-jit@^0.5.0:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/graphql-jit/-/graphql-jit-0.5.1.tgz#738cb2c772a65e9682f04f20dc8edac4365023da"
-  integrity sha512-gzgnlu9/R/SnMnPe7MGQWh6sIpK7Tva2mT2ulhUenD0GZD1izbakevGGRT6ApTMenCOiClSVcugDNziXC5KKYg==
+graphql-jit@^0.5.1:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/graphql-jit/-/graphql-jit-0.5.2.tgz#f1fe88e106f6e5b6daa43f9f9a021f733697aee6"
+  integrity sha512-8XNFsdFTUujjqu2q26Vkh4U6ZJ5dKZ2KxtiuCe95VlHK9Xn4+yz1P/nOj7ipZvXhMG4/s2gwoEhkSig9IEoahQ==
   dependencies:
     fast-json-stringify "^1.13.0"
     generate-function "^2.3.1"
@@ -3441,7 +3447,7 @@ graphql-upload@^11.0.0:
     isobject "^4.0.0"
     object-path "^0.11.4"
 
-graphql@^15.3.0, graphql@^15.4.0, graphql@^15.5.1:
+graphql@^15.3.0, graphql@^15.5.1:
   version "15.5.1"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.1.tgz#f2f84415d8985e7b84731e7f3536f8bb9d383aad"
   integrity sha512-FeTRX67T3LoE3LWAxxOlW2K3Bz+rMYAC18rRguK4wgXaTZMiJwSUwDmPFo3UadAKbzirKIg5Qy+sNJXbpPRnQw==
@@ -4450,29 +4456,29 @@ mercurius-upload@^1.1.1:
     fastify-plugin "^2.3.4"
     graphql-upload "^11.0.0"
 
-mercurius@^7.9.1:
-  version "7.9.1"
-  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-7.9.1.tgz#c75355e91389f94ffc69c5deb5ef6a9afef24df9"
-  integrity sha512-x6/6W6eV3QpWOjzvF5DiqBpEL2b+SuCKJzQPXuDHgjflrNLDZAFuAJ57K52DX71vrysn0eOH7Ck9qbLgB2GPpQ==
+mercurius@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/mercurius/-/mercurius-8.0.0.tgz#c1342c48f786a0526327dfb0f5b625a3fb7c932a"
+  integrity sha512-KnDTkrt+Q89VhPla3xqCU/6HTA2KCoaqpg6aRfSTlo+oUJf5RfjWzmXSNe/P8dI90FIMdh3PYvhZojxN0YTSLQ==
   dependencies:
     "@types/isomorphic-form-data" "^2.0.0"
     end-of-stream "^1.4.4"
     events.on "^1.0.1"
-    fastify-error "^0.3.0"
+    fastify-error "^0.3.1"
     fastify-plugin "^3.0.0"
-    fastify-static "^4.0.1"
-    fastify-websocket "^3.0.0"
-    graphql "^15.4.0"
-    graphql-jit "^0.5.0"
-    mqemitter "^4.0.0"
+    fastify-static "^4.2.2"
+    fastify-websocket "^3.2.0"
+    graphql "^15.5.1"
+    graphql-jit "^0.5.1"
+    mqemitter "^4.4.1"
     p-map "^4.0.0"
-    promise.allsettled "^1.0.2"
-    readable-stream "^3.5.0"
-    secure-json-parse "^2.2.0"
+    promise.allsettled "^1.0.4"
+    readable-stream "^3.6.0"
+    secure-json-parse "^2.4.0"
     single-user-cache "^0.4.0"
-    tiny-lru "^7.0.2"
-    undici "^3.0.0"
-    ws "^7.4.2"
+    tiny-lru "^7.0.6"
+    undici "^4.1.0"
+    ws "^7.5.2"
 
 merge-stream@^2.0.0:
   version "2.0.0"
@@ -4633,7 +4639,7 @@ modify-values@^1.0.0:
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
 
-mqemitter@^4.0.0:
+mqemitter@^4.4.1:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/mqemitter/-/mqemitter-4.4.1.tgz#4cd2bc7d2fd5f2ba8c0c33ec68a8d70c9ff994ea"
   integrity sha512-tXSsyzhsD70Jc7WFz1tjbfczGOAyObMhJ8O15ZFkpDI+g9ENmWFUo5BseAuS9HCxNnFtnMWo4lHh7yDi5CjVTQ==
@@ -5203,7 +5209,7 @@ promise-retry@^2.0.1:
     err-code "^2.0.2"
     retry "^0.12.0"
 
-promise.allsettled@^1.0.2:
+promise.allsettled@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/promise.allsettled/-/promise.allsettled-1.0.4.tgz#65e71f2a604082ed69c548b68603294090ee6803"
   integrity sha512-o73CbvQh/OnPFShxHcHxk0baXR2a1m4ozb85ha0H14VEoi/EJJLa9mnPfEWJx9RjA9MLfhdjZ8I6HhWtBa64Ag==
@@ -5360,7 +5366,7 @@ read-pkg@^5.2.0:
     parse-json "^5.0.0"
     type-fest "^0.6.0"
 
-readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.2, readable-stream@^3.4.0, readable-stream@^3.5.0, readable-stream@^3.6.0:
+readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.2, readable-stream@^3.4.0, readable-stream@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.6.0.tgz#337bbda3adc0706bd3e024426a286d4b4b2c9198"
   integrity sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==
@@ -5627,7 +5633,7 @@ safe-stable-stringify@^1.1.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-secure-json-parse@^2.0.0, secure-json-parse@^2.2.0:
+secure-json-parse@^2.0.0, secure-json-parse@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/secure-json-parse/-/secure-json-parse-2.4.0.tgz#5aaeaaef85c7a417f76271a4f5b0cc3315ddca85"
   integrity sha512-Q5Z/97nbON5t/L/sH6mY2EacfjVGwrCcSi5D3btRO2GZ8pf1K1UN7Z9H5J57hjVU2Qzxr1xO+FmBhOvEkzCMmg==
@@ -6146,7 +6152,7 @@ through@2, "through@>=2.2.7 <3", through@^2.3.6, through@^2.3.8:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
-tiny-lru@^7.0.0, tiny-lru@^7.0.2:
+tiny-lru@^7.0.0, tiny-lru@^7.0.6:
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/tiny-lru/-/tiny-lru-7.0.6.tgz#b0c3cdede1e5882aa2d1ae21cb2ceccf2a331f24"
   integrity sha512-zNYO0Kvgn5rXzWpL0y3RS09sMK67eGaQj9805jlK9G6pSadfriTczzLHFXa/xcW4mIRfmlB9HyQ/+SgL0V1uow==
@@ -6323,10 +6329,10 @@ unbox-primitive@^1.0.0, unbox-primitive@^1.0.1:
     has-symbols "^1.0.2"
     which-boxed-primitive "^1.0.2"
 
-undici@^3.0.0:
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-3.3.6.tgz#06d3b97b7eeff46bce6f8a71079c09f64dd59dc1"
-  integrity sha512-/j3YTZ5AobMB4ZrTY72mzM54uFUX32v0R/JRW9G2vOyF1uSKYAx+WT8dMsAcRS13TOFISv094TxIyWYk+WEPsA==
+undici@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-4.1.0.tgz#1e1f83e5064c67eddd53707d7819ccfad6c208a4"
+  integrity sha512-Y1e/pSDLtNT4nXSQc4C7eiqoiV7pq8QmsvD7/6cbUuUER0MewR3xwBswYiHYWqVI4FcUptjHixrdqW4xrmo4uA==
 
 unique-filename@^1.1.1:
   version "1.1.1"

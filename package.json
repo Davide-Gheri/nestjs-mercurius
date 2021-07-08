@@ -48,7 +48,7 @@
     "graphql-tag": "^2.12.5",
     "husky": "7",
     "lint-staged": "^11.0.0",
-    "mercurius": "^7.9.1",
+    "mercurius": "^8.0.0",
     "mercurius-integration-testing": "^3.2.0",
     "mercurius-upload": "^1.1.1",
     "pinst": "^2.1.6",
