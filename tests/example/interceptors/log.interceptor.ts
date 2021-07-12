@@ -9,7 +9,7 @@ import { GqlExecutionContext } from '../../../lib';
 import { tap } from 'rxjs/operators';
 
 export class LogInterceptor implements NestInterceptor {
-  private logger = new Logger(LogInterceptor.name, true);
+  private logger = new Logger(LogInterceptor.name, { timestamp: true });
 
   intercept(
     context: ExecutionContext,
