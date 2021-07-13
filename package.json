@@ -37,7 +37,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
-    "altair-fastify-plugin": "^4.0.6",
+    "altair-fastify-plugin": "^4.0.7",
     "apollo-server-core": "^3.0.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
