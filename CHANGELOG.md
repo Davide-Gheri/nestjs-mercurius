@@ -1,5 +1,8 @@
 # [0.20.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.10.1...0.20.0) (2021-07-13)
 
+* Nestjs 8 support
+* Mercurius 8 support
+
 ## [0.10.1](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.10.0...0.10.1) (2021-06-21)
 
 # [0.10.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.9.2...0.10.0) (2021-06-16)
