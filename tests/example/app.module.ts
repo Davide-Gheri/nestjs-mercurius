@@ -14,6 +14,7 @@ import { UserModule } from './modules/user/user.module';
         return {
           autoSchemaFile: './schema.graphql',
           fieldResolverEnhancers: ['guards', 'interceptors', 'filters'],
+          graphiql: true,
           resolvers: {
             JSON: JSONResolver,
           },
