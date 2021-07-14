@@ -416,12 +416,12 @@
   resolved "https://registry.yarnpkg.com/@nestjs/mapped-types/-/mapped-types-1.0.0.tgz#52a0441795f6da8144a35970d3ebc19281f31cfd"
   integrity sha512-26AW5jHadLXtvHs+M+Agd9KZ92dDlBrmD0rORlBlvn2KvsWs4JRaKl2mUsrW7YsdZeAu3Hc4ukqyYyDdyCmMWQ==
 
-"@nestjs/platform-fastify@^8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-fastify/-/platform-fastify-8.0.1.tgz#b022480897e3042b367b95bc2a7641fe6c98eb66"
-  integrity sha512-JjdyItpzuzO8/CigT5LQJ62DIpRcA20LU/d+TKnIqSlQQodvOLcQXv+NZQFUhtt24N3zbq1KrhehJeO2b122tg==
+"@nestjs/platform-fastify@^8.0.2":
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-fastify/-/platform-fastify-8.0.2.tgz#7ad931111bdc51b494174462a95cd0a547bda53e"
+  integrity sha512-dZWYXebKEr1/xsxAiX/Twt5+YPrQX2u4+Sec2JUaMoRIEJN812m3f+RToRKuerOCe5lX8nArqe0zCdITCe/iLg==
   dependencies:
-    fastify "3.18.1"
+    fastify "3.19.0"
     fastify-cors "6.0.1"
     fastify-formbody "5.0.0"
     light-my-request "4.4.1"
@@ -2863,10 +2863,10 @@ fastify-websocket@^3.2.0:
     fastify-plugin "^3.0.0"
     ws "^7.4.2"
 
-fastify@3.18.1:
-  version "3.18.1"
-  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.18.1.tgz#b91ac3b4e0a84a670a18e4062bed45572a669c50"
-  integrity sha512-OA0imy/bQCMzf7LUCb/1JI3ZSoA0Jo0MLpYULxV7gpppOpJ8NBxDp2PQoQ0FDqJevZPb7tlZf5JacIQft8x9yw==
+fastify@3.19.0:
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.19.0.tgz#05b8c1d388fced9243528209a60ccbfa9d5e1aa8"
+  integrity sha512-BCRysn+IAcGk03khcUnqfawti93rK67VCD9xN42W1FESDR4pRWFNyuWMVowGTjy1rcKKM91pUfVr05lNu49RfQ==
   dependencies:
     "@fastify/ajv-compiler" "^1.0.0"
     abstract-logging "^2.0.0"
