@@ -1,3 +1,10 @@
+## [0.20.1](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.20.0...0.20.1) (2021-07-19)
+
+
+### Bug Fixes
+
+* npm dependency fixes ([656a784](https://github.com/Davide-Gheri/nestjs-mercurius/commit/656a784108a7bf93a6d73a7e355729182e2508f3))
+
 # [0.20.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.10.1...0.20.0) (2021-07-13)
 
 * Nestjs 8 support
