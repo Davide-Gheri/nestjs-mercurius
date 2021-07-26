@@ -1083,19 +1083,19 @@ ajv@^8.0.1:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-altair-fastify-plugin@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/altair-fastify-plugin/-/altair-fastify-plugin-4.0.7.tgz#32a8de1f9e8e5876ccffa3738f15b74535ed3a8a"
-  integrity sha512-qUUefmwMDfjC5+zqiOfLrta4bVoDoiXKy7dEkIiW6Uw81r4ena1wmInS8Oaa8DszSXgBrfj32lWRug2SrMSlAA==
+altair-fastify-plugin@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/altair-fastify-plugin/-/altair-fastify-plugin-4.0.8.tgz#22f41ff36ef8425af495c52d980b3e1e7c91c950"
+  integrity sha512-R9Bxb3QCwysGVh8qOs8t2t7exKk5l/L48uwn/0PDNkI3a2u2ovKXgKK1Ixz9X6wby0OSQ5niIDywRgPTQMfTGw==
   dependencies:
-    altair-static "^4.0.7"
+    altair-static "^4.0.8"
     fastify-plugin "^2.3.4"
     fastify-static "^3.2.1"
 
-altair-graphql-core@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/altair-graphql-core/-/altair-graphql-core-4.0.7.tgz#bf9b3a6aee767a262910828f45e241db7bef8c65"
-  integrity sha512-WwGaQ/S/u4x/vJXb7cjbc0T89rR635lJCGC3nccjkjZVm6OokXkOFB3Zn/rkmzvGCanaYzUZf9X+EIuBTGC3Og==
+altair-graphql-core@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/altair-graphql-core/-/altair-graphql-core-4.0.8.tgz#74fab1c3bfb43ed270b0a15c2f955d43acd0f0a2"
+  integrity sha512-vxrUvdN9lxZgXrGGOvhaADfLDk31mOXu/WxjrvF/UEkrqxGSOdjAGe2hpRcLNifn2CBL9UxX1AlhuIPzs6Hssg==
   dependencies:
     "@apollo/client" "^3.3.20"
     actioncable "^5.2.6"
@@ -1114,12 +1114,12 @@ altair-graphql-core@^4.0.7:
     util "^0.12.4"
     uuid "^8.3.2"
 
-altair-static@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-4.0.7.tgz#af96f0c1176abf03750359a09abe3242e008442e"
-  integrity sha512-rn3UjM7FhQbPMzsZUzu85r/i28EMPq4z7KItZrWPeIKqD4qyyWcaJTwAVZcDdqKt4vG08EeYR6THmGitj42juQ==
+altair-static@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-4.0.8.tgz#a3c93e82ae3c9de14d699659e3bf0581f3e87f25"
+  integrity sha512-/qnhe3Rrx9BI7gWPYm0l0Ubldc/ypAUC9L/0xRGA94yIQXb0DibTUQ0/ATaLmuRbYKKkF7oYy/9EOfosh//OMw==
   dependencies:
-    altair-graphql-core "^4.0.7"
+    altair-graphql-core "^4.0.8"
 
 ansi-align@^3.0.0:
   version "3.0.0"
