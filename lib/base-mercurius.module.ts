@@ -72,6 +72,20 @@ export abstract class BaseMercuriusModule<
       });
     }
 
+    if (mercuriusOptions.openTelemetry) {
+      const openTelemetry = loadPackage(
+        '@autotelic/fastify-opentelemetry',
+        'MercuriusModule',
+        () => require('@autotelic/fastify-opentelemetry'),
+      );
+      await app.register(
+        openTelemetry,
+        typeof mercuriusOptions.openTelemetry !== 'boolean'
+          ? mercuriusOptions.openTelemetry
+          : undefined,
+      );
+    }
+
     await app.register(mercurius, options);
 
     this.addHooks(app);

@@ -69,6 +69,7 @@
     "@nestjs/common": "^8.0.4",
     "@nestjs/core": "^8.0.4",
     "@nestjs/platform-fastify": "^8.0.4",
+    "@autotelic/fastify-opentelemetry": "0.16.0",
     "altair-fastify-plugin": "4.0.7",
     "fastify": "^3.19.1",
     "graphql": "^15.5.1",
@@ -84,6 +85,9 @@
       "optional": true
     },
     "mercurius-upload": {
+      "optional": true
+    },
+    "@autotelic/fastify-opentelemetry": {
       "optional": true
     }
   },
