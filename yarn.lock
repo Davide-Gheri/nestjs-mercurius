@@ -1083,19 +1083,19 @@ ajv@^8.0.1:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-altair-fastify-plugin@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/altair-fastify-plugin/-/altair-fastify-plugin-4.0.7.tgz#32a8de1f9e8e5876ccffa3738f15b74535ed3a8a"
-  integrity sha512-qUUefmwMDfjC5+zqiOfLrta4bVoDoiXKy7dEkIiW6Uw81r4ena1wmInS8Oaa8DszSXgBrfj32lWRug2SrMSlAA==
+altair-fastify-plugin@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/altair-fastify-plugin/-/altair-fastify-plugin-4.0.10.tgz#da3967c30e515d084d2d2b345eca941f3d6f9c48"
+  integrity sha512-pL8ywdRubdzP5z0rBUHYpqfdgYNR/8NNxDFCyLZz5tCGftBbYm178uQNFSwxxszFACx/Fbc9TElf3Sso/wFh2Q==
   dependencies:
-    altair-static "^4.0.7"
+    altair-static "^4.0.10"
     fastify-plugin "^2.3.4"
     fastify-static "^3.2.1"
 
-altair-graphql-core@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/altair-graphql-core/-/altair-graphql-core-4.0.7.tgz#bf9b3a6aee767a262910828f45e241db7bef8c65"
-  integrity sha512-WwGaQ/S/u4x/vJXb7cjbc0T89rR635lJCGC3nccjkjZVm6OokXkOFB3Zn/rkmzvGCanaYzUZf9X+EIuBTGC3Og==
+altair-graphql-core@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/altair-graphql-core/-/altair-graphql-core-4.0.10.tgz#3c44e19f25e8699796bf87df3318a97032586688"
+  integrity sha512-pU9mWCh7NFF7nPqVVf9AmR5Gw8sd1EbgetfHzLUNc3VouvsVrUi26otV42dewWPQ+PaLWCBhL0js8mhKAFbn9w==
   dependencies:
     "@apollo/client" "^3.3.20"
     actioncable "^5.2.6"
@@ -1105,7 +1105,7 @@ altair-graphql-core@^4.0.7:
     aws-appsync-auth-link "^3.0.2"
     aws-appsync-subscription-link "^3.0.3"
     deepmerge "^4.2.2"
-    graphql "15.0.0"
+    graphql "^15.5.1"
     graphql-ws "^5.1.2"
     loglevel "^1.7.1"
     loglevel-plugin-prefix "^0.8.4"
@@ -1114,12 +1114,12 @@ altair-graphql-core@^4.0.7:
     util "^0.12.4"
     uuid "^8.3.2"
 
-altair-static@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-4.0.7.tgz#af96f0c1176abf03750359a09abe3242e008442e"
-  integrity sha512-rn3UjM7FhQbPMzsZUzu85r/i28EMPq4z7KItZrWPeIKqD4qyyWcaJTwAVZcDdqKt4vG08EeYR6THmGitj42juQ==
+altair-static@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-4.0.10.tgz#ad995f0c8357f93d767d570ffc2104c3c992a3a4"
+  integrity sha512-lJZlRn46WsCzMmiFGRuiMW4sExy4k+h52DdGiU/nvhFcJV0JnS8GEsX/1G/TKAoIfwiBcNlSc29F62bPJzqwqg==
   dependencies:
-    altair-graphql-core "^4.0.7"
+    altair-graphql-core "^4.0.10"
 
 ansi-align@^3.0.0:
   version "3.0.0"
@@ -3244,11 +3244,6 @@ graphql-ws@^5.1.2:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-5.3.0.tgz#345f73686b639735f1f4ef0b9ea28e17c7f6a745"
   integrity sha512-53MbSTOmgx5i6hf3DHVD5PrXix1drDmt2ja8MW7NG+aTpKGzkXVLyNcyNpxme4SK8jVtIV6ZIHkiwirqN0efpw==
-
-graphql@15.0.0:
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.0.0.tgz#042a5eb5e2506a2e2111ce41eb446a8e570b8be9"
-  integrity sha512-ZyVO1xIF9F+4cxfkdhOJINM+51B06Friuv4M66W7HzUOeFd+vNzUn4vtswYINPi6sysjf1M2Ri/rwZALqgwbaQ==
 
 graphql@^15.3.0, graphql@^15.5.1:
   version "15.5.1"
