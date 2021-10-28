@@ -3,7 +3,7 @@ import { isFunction } from '@nestjs/common/utils/shared.utils';
 
 // TODO better define this
 const defaultOptions: MercuriusModuleOptions = {
-  graphiql: 'playground',
+  graphiql: true,
   routes: true,
   path: '/graphql',
   fieldResolverEnhancers: [],
