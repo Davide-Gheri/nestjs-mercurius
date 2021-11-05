@@ -1,3 +1,9 @@
+# [0.21.0](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.20.1...0.21.0) (2021-11-05)
+
+* Nestjs 9 support
+* Updated Mercurius to v8.8
+* Replaced @apollo/federation with @apollo/subgraph
+
 ## [0.20.1](https://github.com/Davide-Gheri/nestjs-mercurius/compare/0.20.0...0.20.1) (2021-07-19)
 
 
