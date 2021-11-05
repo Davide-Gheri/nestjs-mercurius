@@ -439,7 +439,7 @@
     tslib "2.3.0"
     uuid "8.3.2"
 
-"@nestjs/graphql@~9.1.1":
+"@nestjs/graphql@^9.1.1":
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/@nestjs/graphql/-/graphql-9.1.1.tgz#b12185d14fd4a20c429e96161699f6ddec331f64"
   integrity sha512-NHMR+VRHFeHBa8/ACy9RnyMVv/581VvXDWenpPFW5RFnZiy4aNeUDCv6sdCh/EydE4CpWzmdliuUei+NrlLWEQ==
