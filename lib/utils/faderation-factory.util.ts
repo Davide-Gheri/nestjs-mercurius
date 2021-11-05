@@ -68,14 +68,14 @@ function addTypeNameToResult(result, typename) {
 export function transformFederatedSchema(schema: GraphQLSchema) {
   // FIXME remove this dependency
   // but graphql#printSchema does not print necessary federation directives
-  const { printSchema } = loadPackage(
-    '@apollo/federation',
+  const { printSubgraphSchema } = loadPackage(
+    '@apollo/subgraph',
     'FederationFactory',
-    () => require('@apollo/federation'),
+    () => require('@apollo/subgraph'),
   );
 
   // Workaround for https://github.com/mercurius-js/mercurius/issues/273
-  const schemaString = printSchema(schema)
+  const schemaString = printSubgraphSchema(schema)
     .replace('type Query {', 'type Query @extends {')
     .replace('type Mutation {', 'type Mutation @extends {')
     .replace('type Subscription {', 'type Subscription @extends {');

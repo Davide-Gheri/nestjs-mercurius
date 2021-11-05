@@ -4,7 +4,7 @@ import mercurius from 'mercurius';
 const gateway = Fastify();
 
 gateway.register(mercurius, {
-  graphiql: 'playground',
+  graphiql: true,
   subscription: true,
   logLevel: 'trace',
   gateway: {

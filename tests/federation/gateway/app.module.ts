@@ -5,7 +5,7 @@ import { MercuriusGatewayModule } from '../../../lib';
   imports: [
     MercuriusGatewayModule.forRootAsync({
       useFactory: () => ({
-        graphiql: 'playground',
+        graphiql: true,
         subscription: true,
         gateway: {
           services: [
