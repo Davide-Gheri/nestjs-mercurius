@@ -33,7 +33,7 @@
     "@nestjs/platform-fastify": "^8.0.4",
     "@nestjs/testing": "^8.0.4",
     "@release-it/conventional-changelog": "^3.0.1",
-    "@types/graphql-upload": "^8.0.6",
+    "@types/graphql-upload": "^8.0.9",
     "@types/jest": "^26.0.22",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
