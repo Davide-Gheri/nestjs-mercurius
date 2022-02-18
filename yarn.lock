@@ -817,15 +817,15 @@
   dependencies:
     "@types/node" "*"
 
-"@types/graphql-upload@^8.0.4", "@types/graphql-upload@^8.0.6":
-  version "8.0.6"
-  resolved "https://registry.yarnpkg.com/@types/graphql-upload/-/graphql-upload-8.0.6.tgz#6212b69fabb171389ca3c29e0a54b8c0d7b12301"
-  integrity sha512-PNFVwWMy1btDKN51ncAZbD2sTFdqGq416Tk/pUC/U5op97Vg0uw9/4psOPkDn+oEZMJjH0xMMFyJAH2lnoOxSA==
+"@types/graphql-upload@^8.0.11", "@types/graphql-upload@^8.0.4":
+  version "8.0.11"
+  resolved "https://registry.yarnpkg.com/@types/graphql-upload/-/graphql-upload-8.0.11.tgz#0fef061be3dfc1f370d86cbc28bcb6a968c6b003"
+  integrity sha512-AE8RWANHutpsQt945lQZKlkq0V/zBxU5R0xhKLZN3KkBMlW95/5uJzk01HUl8gbDkG7hGl8l8lJKbi91k0UnPw==
   dependencies:
     "@types/express" "*"
     "@types/fs-capacitor" "*"
     "@types/koa" "*"
-    graphql "^15.3.0"
+    graphql "0.13.1 - 16"
 
 "@types/http-assert@*":
   version "1.5.1"
@@ -3423,7 +3423,12 @@ graphql-ws@^5.1.2:
   resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-5.3.0.tgz#345f73686b639735f1f4ef0b9ea28e17c7f6a745"
   integrity sha512-53MbSTOmgx5i6hf3DHVD5PrXix1drDmt2ja8MW7NG+aTpKGzkXVLyNcyNpxme4SK8jVtIV6ZIHkiwirqN0efpw==
 
-graphql@^15.3.0, graphql@^15.5.1:
+"graphql@0.13.1 - 16":
+  version "16.3.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.3.0.tgz#a91e24d10babf9e60c706919bb182b53ccdffc05"
+  integrity sha512-xm+ANmA16BzCT5pLjuXySbQVFwH3oJctUVdy81w1sV0vBU0KgDdBGtxQOUd5zqOBk/JayAFeG8Dlmeq74rjm/A==
+
+graphql@^15.5.1:
   version "15.5.1"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.1.tgz#f2f84415d8985e7b84731e7f3536f8bb9d383aad"
   integrity sha512-FeTRX67T3LoE3LWAxxOlW2K3Bz+rMYAC18rRguK4wgXaTZMiJwSUwDmPFo3UadAKbzirKIg5Qy+sNJXbpPRnQw==
