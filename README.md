@@ -1,3 +1,7 @@
+<blockquote>
+<h1>If you want to use Mercurius with @nestjs/graphql > v10, please use the @nestjs/mercurius package</h1>
+</blockquote>
+
 
 # Nestjs Mercurius
 
