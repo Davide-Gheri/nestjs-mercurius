@@ -26,7 +26,7 @@ import { MercuriusModule } from 'nestjs-mercurius';
   imports: [
     // Work also with async configuration (MercuriusModule.forRootAsync)
     MercuriusModule.forRoot({
-      autoschemaFile: true,
+      autoSchemaFile: true,
       context: (request, reply) => ({
         user: request.user,
       }),
