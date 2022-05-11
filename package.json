@@ -36,7 +36,7 @@
     "@types/graphql-upload": "^8.0.6",
     "@types/jest": "^26.0.22",
     "@types/supertest": "^2.0.11",
-    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "altair-fastify-plugin": "^4.1.0",
     "apollo-server-core": "^3.0.0",
